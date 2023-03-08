@@ -27,16 +27,28 @@ VGAN, a Yelp clone, is a website for users to post their restaurant businesses a
 ## 5. Map
 
 
+businesses model for database mark-up
 ```python
 
-class BusinessPage(db.Model):
+class Business(db.Model):
+    __tablename__ = 'businesses'
+
     id = db.Column(db.Integer, primary_key=True)
-    owner_id = db.Column(db.Integer, nullable=False)
+    owner_id = db.Column(db.Integer, db.foreignKey('user.id'), nullable=False)
     name = db.Column(db.String(150), nullable=False)
-    description = db.Column(db.String(2000), nullable=False)
+    description = db.Column(db.String, nullable=False)
     address = db.Column(db.String(150), nullable=False)
     city = db.Column(db.String(150), nullable=False)
     state = db.Column(db.String(2), nullable=False)
-    category_id = db.Column(db.Integer, nullable=False)
+    category_id = db.Column(db.Integer, db.foreignKey('category.id'), nullable=False)
+
+    owner = db.relationship("User", back_populates="owners")
+    category = db.relationship("Category", back_populates="categories")
+    images = db.relationship("BusinessImage", back_populates="business", cascade="all,delete")
+    reviews = db.relationship("Reviews", back_populates='business')
+
+    # ponies = relationship("Pony",
+    #                       back_populates="owner",
+    #                       cascade="all, delete-orphan")
 
 ```
