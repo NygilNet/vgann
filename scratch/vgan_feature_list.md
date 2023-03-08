@@ -45,10 +45,24 @@ class Business(db.Model):
     owner = db.relationship("User", back_populates="owners")
     category = db.relationship("Category", back_populates="categories")
     images = db.relationship("BusinessImage", back_populates="business", cascade="all,delete")
-    reviews = db.relationship("Reviews", back_populates='business')
+    reviews = db.relationship("Review", back_populates='business')
 
     # ponies = relationship("Pony",
     #                       back_populates="owner",
     #                       cascade="all, delete-orphan")
 
+```
+
+reviews model for database mark-up
+```python
+class Review(db.Model):
+    __tablename__ = 'reviews'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.foreignKey('user.id'), nullable=False)
+    business_id = db.Column(db.Integer, db.foreignKey('business.id'), nullable=False)
+    stars = db.Column(db.Integer, nullable=False)
+    review = db.Column(db.String(),nullable=False)
+
+    business = db.relationship('Business', back_populates="reviews")
+    user = db.relationship("User", back_populates="reviews")
 ```
