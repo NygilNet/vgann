@@ -12,19 +12,27 @@ VGAN, a Yelp clone, is a website for users to post their restaurant businesses a
 
 * Logged in users can post businesses
 * Logged in users can edit and delete their own businesses
-* All user can view all businesses
+* All users can view all businesses
+* All users can search for businesses and search for businesses using filters
 
-## 3. Search / filters
-
-* read
-
-## 4. Reviews / ratings (full)
+## 3. Reviews / ratings (full)
 
 * Logged in users can post review
 * Logged in users can edit and delete their own reviews
 * All users can view reviews related to a business
 
-## 5. Map
+## 4. Images (partial)
+
+* Logged in users can post images for their businesses or reviews
+* Logged in users can delete their own images
+
+## 5. Profile
+
+* Logged in users can access profile page where they can view all their businesses, reviews, and their favorite businesses
+
+## 6. Map
+
+* implement google map api
 
 
 businesses model for database mark-up
