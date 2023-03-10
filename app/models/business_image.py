@@ -19,3 +19,13 @@ class BusinessImage(db.Model):
     )
 
     business = db.relationship("Business", back_populates="images")
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'businessId': self.business_id,
+            'url': self.url,
+            'preview': self.preview,
+            'createdAt': self.created_at,
+            'updatedAt': self.updated_at
+        }

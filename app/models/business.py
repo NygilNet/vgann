@@ -32,3 +32,19 @@ class Business(db.Model):
     categories = db.relationship("Category",secondary=business_categories, back_populates='businesses')
     images = db.relationship("BusinessImage", back_populates="business", cascade="all,delete")
     reviews = db.relationship("Review", back_populates='business')
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'ownerId': self.owner_id,
+            'name': self.name,
+            'description': self.description,
+            'features': self.features,
+            'address': self.address,
+            'city': self.city,
+            'state': self.state,
+            'lng': self.lng,
+            'lat': self.lat,
+            'createdAt': self.created_at,
+            'updatedAt': self.updated_at
+        }
