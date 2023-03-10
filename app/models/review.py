@@ -23,3 +23,14 @@ class Review(db.Model):
     business = db.relationship('Business', back_populates="reviews")
     images = db.relationship("ReviewImage", back_populates="review", cascade='all,delete')
     user = db.relationship("User", back_populates="reviews")
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'business_id': self.business_id,
+            'stars':self.stars,
+            'review':self.review,
+            'created_at':self.created_at,
+            'updated_at':self.updated_at,
+        }
