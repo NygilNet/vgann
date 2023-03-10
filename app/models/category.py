@@ -13,3 +13,9 @@ class Category(db.Model):
     category_name = db.Column(db.String(), nullable=False)
 
     businesses = db.relationship("Business",secondary=business_categories, back_populates='categories')
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'categoryName': self.category_name
+        }
