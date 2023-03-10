@@ -2,7 +2,7 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 
 class Review(db.Model):
-    tablename = 'reviews'
+    __tablename__ = 'reviews'
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
@@ -21,5 +21,5 @@ class Review(db.Model):
     )
 
     business = db.relationship('Business', back_populates="reviews")
-    images = db.realationship("ReviewImage", back_populates="review", cascade='all,delete')
+    images = db.relationship("ReviewImage", back_populates="review", cascade='all,delete')
     user = db.relationship("User", back_populates="reviews")

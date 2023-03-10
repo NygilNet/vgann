@@ -1,6 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
-from models import business_category
+# from models import business_category
+from .business_category import business_categories
 
 class Business(db.Model):
     __tablename__ = 'businesses'
@@ -27,7 +28,7 @@ class Business(db.Model):
     )
     # category_id = db.Column(db.Integer, db.foreignKey('category.id'), nullable=False)
 
-    owner = db.relationship("User", back_populates="owners")
-    categories = db.relationship("Category",secondary=business_category, back_populates='businesses')
+    owner = db.relationship("User", back_populates="businesses")
+    categories = db.relationship("Category",secondary=business_categories, back_populates='businesses')
     images = db.relationship("BusinessImage", back_populates="business", cascade="all,delete")
     reviews = db.relationship("Review", back_populates='business')

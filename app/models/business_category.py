@@ -1,9 +1,13 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
-from models import Business, Category
+# # from .models import Business, Category
+# from .business import Business
+# from .category import Category
 
-business_category = db.Table(
+
+business_categories = db.Table(
     'business_categories',
-    db.Column('business_id', db.ForeingKey(add_prefix_for_prod('businesses.id')), primary_key=True),
-    db.Column('category_id', db.ForeingKey(add_prefix_for_prod('categories.id')), primary_key=True)
+    db.Model.metadata,
+    db.Column('categories', db.Integer, db.ForeignKey(add_prefix_for_prod('categories.id'))),
+    db.Column('businesses', db.Integer, db.ForeignKey(add_prefix_for_prod('businesses.id'))),
 )
