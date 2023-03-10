@@ -11,3 +11,5 @@ class Category(db.Model):
     category_name = db.Column(db.String(), nullable=False)
 
     businesses = db.relationship("Business",secondary=business_category, back_populates='categories')
+
+    
