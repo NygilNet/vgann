@@ -47,6 +47,6 @@ class Business(db.Model):
             'lat': self.lat,
             'createdAt': self.created_at,
             'updatedAt': self.updated_at,
-
+            
             # 'images': self.images
         }

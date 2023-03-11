@@ -53,7 +53,7 @@ def seed_reviews():
             "2022-06-05 20:00:00", "%Y-%m-%d %H:%M:%S")
     )
 
-    db.session.add([review1,review2,review3,review4,review5]) 
+    db.session.add_all([review1,review2,review3,review4,review5]) 
     db.session.commit()
 def undo_reviews():
     if environment == "production":
