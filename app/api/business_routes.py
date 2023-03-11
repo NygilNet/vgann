@@ -93,11 +93,11 @@ def create_review(businessId):
             "statusCode": 400
         }), 400
 
-    # Error handler 3: Review from the current user already exists for the Spot
+    # Error handler 3: Review from the current user already exists for the business
     reviews = Review.query.filter_by(user_id=user_id).all()
     if reviews:
         return jsonify({
-            "message": "User already has a review for this spot",
+            "message": "User already has a review for this business",
             "statusCode": 403
         }), 403
 
