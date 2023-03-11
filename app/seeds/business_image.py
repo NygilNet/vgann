@@ -1,6 +1,6 @@
 import random
 from app import db
-from app.models import Business, BusinessImage
+from app.models import Business, BusinessImage, SCHEMA, environment
 
 # Seed the database with 25 business images, with one preview image per business
 def seed_business_images():
