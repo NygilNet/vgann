@@ -74,12 +74,14 @@ def single_business(id):
     business['avgRating'] = db.session.query(
         func.avg(Review.id)).filter(Review.business_id == id).scalar()
     return jsonify(business)
-@business_routes.route('/<businessId>/reviews', methods=['POST'])
+
+
+@business_routes.route('/<int:id>/reviews', methods=['POST'])
 @login_required
-def create_review(businessId):
+def create_review(id):
     # Error handler 1: Business is not found
-    business = Business.query.filter_by(id=businessId).all()
-    if businessId is None or not business:
+    business = Business.query.filter_by(id=id).all()
+    if id is None or not business:
         return jsonify({
         "message": "Business couldn't be found",
         "statusCode": 404
@@ -119,7 +121,7 @@ def create_review(businessId):
             review=review,
             stars=stars,
             user_id=user_id,
-            business_id=businessId
+            business_id=id
         )
         db.session.add(review)
         db.session.commit()
@@ -130,6 +132,19 @@ def create_review(businessId):
             'message': 'Review created successfully',
             'review': review.to_dict()
         }), 201
+
+
+@business_routes.route('/<int:id>/reviews')
+def business_reviews(id):
+    # Error handler 1: Business is not found
+    business = Business.query.filter_by(id=id).all()
+    if id is None or not business:
+        return jsonify({
+        "message": "Business couldn't be found",
+        "statusCode": 404
+        }), 404
+    reviews = Review.query.filter_by(business_id=id).all()
+    return jsonify([rev.to_dict() for rev in reviews])
 
 
 @business_routes.route('/test')
