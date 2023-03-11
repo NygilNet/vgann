@@ -3,6 +3,7 @@ from datetime import datetime
 
 class ReviewImage(db.Model):
     __tablename__ = "review_images"
+    
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 

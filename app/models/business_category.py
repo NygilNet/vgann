@@ -11,3 +11,5 @@ business_categories = db.Table(
     db.Column('categories', db.Integer, db.ForeignKey(add_prefix_for_prod('categories.id'))),
     db.Column('businesses', db.Integer, db.ForeignKey(add_prefix_for_prod('businesses.id'))),
 )
+if environment == "production":
+    business_categories.schema = SCHEMA
