@@ -19,7 +19,7 @@ def seed_businesses():
     biz4 = Business(owner_id=2, name='Sally\'s Salon', description='Full-service hair salon.', features="Open All Day", address='321 5th Ave', city='Brooklyn', state='NY', lng=-73.975952, lat=40.678178)
     biz4.categories = categories[6:9]
 
-    biz5 = Business(owner_id=4, name='Moe\'s Deli', description='Fresh sandwiches and salads.', address='654 Smith St', city='Brooklyn', state='NY', lng=-73.998606, lat=40.678701)
+    biz5 = Business(owner_id=3, name='Moe\'s Deli', description='Fresh sandwiches and salads.', address='654 Smith St', city='Brooklyn', state='NY', lng=-73.998606, lat=40.678701)
     biz5.categories = categories[0:5]
 
     # Add the businesses to the database
