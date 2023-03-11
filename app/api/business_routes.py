@@ -1,5 +1,7 @@
 from flask import Blueprint, jsonify, request
 from app.models import Business, BusinessImage, User, Category, Review, db
+from ..forms.review_form import ReviewForm
+from flask_login import login_required, current_user
 from sqlalchemy import func
 
 business_routes = Blueprint('businesses', __name__)
@@ -59,6 +61,33 @@ def businesses():
     } for business in query.all()]
 
     return jsonify({'businesses': businesses_dict})
+
+@business_routes.route('/<businessId>/reviews', methods=['POST'])
+@login_required
+def create_review(businessId):
+    # Get the review data from the form fields
+    form=ReviewForm()
+    # Get the user id from the session
+    user_id = current_user.id
+
+    form["csrf_token"].data = request.cookies["csrf_token"]
+    if form.validate_on_submit():
+        review = Review(
+            review=form.review.data,
+            stars=form.stars.data,
+            user_id=user_id,
+            business_id=businessId
+        )
+        db.session.add(review)
+        db.session.commit()
+
+        # Return a successful response
+        return jsonify({
+            'success': True,
+            'message': 'Review created successfully',
+            'review': review.to_dict()
+        })
+
 
 @business_routes.route('/test')
 def tester():
