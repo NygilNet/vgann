@@ -33,11 +33,7 @@ def seed_reviews():
         review="The atmosphere here is great, and the food is pretty good too. Service could be a bit better though."
     )
 
-<<<<<<< HEAD
-    db.session.add_all([review1,review2,review3,review4,review5]) 
-=======
     db.session.add_all([review1,review2,review3,review4,review5])
->>>>>>> 01e336a (order)
     db.session.commit()
 def undo_reviews():
     if environment == "production":

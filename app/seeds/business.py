@@ -1,9 +1,5 @@
 from app import db
-<<<<<<< HEAD
 from app.models import Business, Category, SCHEMA
-=======
-from app.models import Business, Category, SCHEMA, environment
->>>>>>> 01e336a (order)
 
 # Seed the database with 5 businesses
 def seed_businesses():
