@@ -65,16 +65,47 @@ def businesses():
 @business_routes.route('/<businessId>/reviews', methods=['POST'])
 @login_required
 def create_review(businessId):
+    # Error handler 1: Business is not found
+    business = Business.query.filter_by(id=businessId).all()
+    if businessId is None or not business:
+        return jsonify({
+        "message": "Business couldn't be found",
+        "statusCode": 404
+        }), 404
+
     # Get the review data from the form fields
     form=ReviewForm()
     # Get the user id from the session
     user_id = current_user.id
+    # Get review and stars data from form
+    review=form.review.data
+    stars=form.stars.data
+
+    # Error handler 2: Either Review or stars data is missing
+    if stars is None or review is None:
+        errors = {}
+        if stars is None:
+            errors['stars'] = "Stars must be an integer from 1 to 5"
+        if review is None:
+            errors['review'] = "Review text is required"
+        return jsonify({
+            "errors": errors,
+            "statusCode": 400
+        }), 400
+
+    # Error handler 3: Review from the current user already exists for the Spot
+    reviews = Review.query.filter_by(user_id=user_id).all()
+    if reviews:
+        return jsonify({
+            "message": "User already has a review for this spot",
+            "statusCode": 403
+        }), 403
 
     form["csrf_token"].data = request.cookies["csrf_token"]
     if form.validate_on_submit():
         review = Review(
-            review=form.review.data,
-            stars=form.stars.data,
+            review=review,
+            stars=stars,
             user_id=user_id,
             business_id=businessId
         )
@@ -86,7 +117,7 @@ def create_review(businessId):
             'success': True,
             'message': 'Review created successfully',
             'review': review.to_dict()
-        })
+        }), 201
 
 
 @business_routes.route('/test')
