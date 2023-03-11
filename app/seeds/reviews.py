@@ -27,7 +27,7 @@ def seed_reviews():
         review="I was really disappointed with my meal here. The food was bland and the service was terrible."
     )
     review5 = Review(
-        user_id=4,
+        user_id=1,
         business_id=3,
         stars=4,
         review="The atmosphere here is great, and the food is pretty good too. Service could be a bit better though."
