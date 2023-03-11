@@ -16,6 +16,7 @@ def businesses():
     if city:
         query = query.filter(Business.city == city)
     if name:
+
         query = query.filter(Business.name == name)
     # if category:
     #     query = query.filter(Business.categories[0].categoryName == category)
@@ -95,6 +96,8 @@ def businesses():
         'images': [img.to_dict() for img in business.images],
         'categories':[category.to_dict() for category in business.categories],
     } for business in query.all()]
+   
+
 
 
 
