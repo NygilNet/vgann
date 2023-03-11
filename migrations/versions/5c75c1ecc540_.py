@@ -2,11 +2,11 @@
 
 <<<<<<<< HEAD:migrations/versions/cab74a5fe5e1_.py
 Revision ID: cab74a5fe5e1
-Revises: 
+Revises:
 Create Date: 2023-03-10 16:43:44.002549
 ========
 Revision ID: 5c75c1ecc540
-Revises: 
+Revises:
 Create Date: 2023-03-11 14:47:53.632744
 >>>>>>>> 01e336a (order):migrations/versions/5c75c1ecc540_.py
 
@@ -16,11 +16,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-<<<<<<<< HEAD:migrations/versions/cab74a5fe5e1_.py
 revision = 'cab74a5fe5e1'
-========
-revision = '5c75c1ecc540'
->>>>>>>> 01e336a (order):migrations/versions/5c75c1ecc540_.py
+
 down_revision = None
 branch_labels = None
 depends_on = None
