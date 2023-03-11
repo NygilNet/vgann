@@ -60,6 +60,19 @@ def businesses():
 
     return jsonify({'businesses': businesses_dict})
 
+
+@business_routes.route('/<int:id>')
+def single_business(id):
+    res = db.session.query(Business).filter_by(id=id).first()
+    business = res.to_dict()
+    business['images'] = [img.to_dict() for img in db.session.query(
+        BusinessImage).filter_by(business_id=id).all()]
+    business['numReviews'] = db.session.query(func.count(
+        Review.id)).filter(Review.business_id == id).scalar()
+    business['avgRating'] = db.session.query(
+        func.avg(Review.id)).filter(Review.business_id == id).scalar()
+    return jsonify(business)
+
 @business_routes.route('/test')
 def tester():
     query = Business.query
