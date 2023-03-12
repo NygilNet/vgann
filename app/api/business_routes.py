@@ -24,8 +24,6 @@ def businesses():
     """
     Query for all businesses and returns them in a list of business dictionaries
     """
-
-
     query = Business.query.join(BusinessImage)
     city = request.args.get('city')
     name = request.args.get('name')
@@ -68,11 +66,26 @@ def businesses():
         'updatedAt': business.updated_at,
         'numReviews': db.session.query(func.count(Review.id)).filter(Review.business_id == business.id).scalar(),
         'avgRating': db.session.query(func.avg(Review.id)).filter(Review.business_id == business.id).scalar(),
-        'images': [img.to_dict() for img in business.images],
+        'previewImage': [img.to_dict() for img in business.images if img.preview == True],
         'categories':[category.to_dict() for category in business.categories],
     } for business in query.all()]
 
-    return jsonify({'businesses': businesses_dict})
+    #Create pins for Mapbox map
+    pins = []
+    for business in businesses_dict:
+        pin = {
+            'type': 'Feature',
+            'geometry': {
+                'type': 'Point',
+                'coordinates': [business['lng'], business['lat']]
+            },
+            'properties': {
+                'title': business['name'],
+                'description': business['description']
+            }
+        }
+        pins.append(pin)
+    return jsonify({'businesses': businesses_dict, 'pins': pins})
 
 @business_routes.route('', methods=["POST"])
 def create_new_business():
