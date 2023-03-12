@@ -171,6 +171,37 @@ def business_reviews(id):
     return jsonify([rev.to_dict() for rev in reviews])
 
 
+@business_routes.route("/<int:id>/images", methods=["POST"])
+def post_business_image(id):
+    json_data = request.json
+    business_image = BusinessImage(
+        business_id=id,
+        url=json_data.get('url'),
+        preview=json_data.get('preview')
+    )
+    db.session.add(business_image)
+    db.session.commit()
+    return jsonify(business_image.to_dict())
+
+
+#DELETE BUSINESS
+
+@business_routes.route('/<int:id>', methods=["DELETE"])
+@login_required
+def delete_business(id):
+    business = Business.query.get(id)
+    if business.owner_id==current_user.id:
+        db.session.delete(business)
+        db.session.commit()
+        return {"message": "successfully deleted"}
+    else:
+        return {'message':'forbidden'}
+
+
+
+
+
+
 @business_routes.route('/test')
 def tester():
     img=BusinessImage(
