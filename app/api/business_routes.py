@@ -1,6 +1,7 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, redirect
 from app.models import Business, BusinessImage, User, Category, Review, db
 from ..forms.review_form import ReviewForm
+from ..forms.new_business_form import BusinessForm
 from flask_login import login_required, current_user
 from sqlalchemy import func
 
@@ -12,14 +13,13 @@ def businesses():
     Query for all businesses and returns them in a list of business dictionaries
     """
 
-    query = Business.query.join(BusinessImage)
+   
     query = Business.query.join(BusinessImage)
     city = request.args.get('city')
     name = request.args.get('name')
     categories = request.args.getlist('category')
 
     if city:
-        query = query.filter(Business.city == city)
         query = query.filter(Business.city == city)
     if name:
         query = query.filter(Business.name == name)
@@ -61,6 +61,30 @@ def businesses():
     } for business in query.all()]
 
     return jsonify({'businesses': businesses_dict})
+
+@business_routes.route('', methods=["POST"])
+def create_new_business():
+    form = BusinessForm()
+    form["csrf_token"].data = request.cookies["csrf_token"]
+    if form.validate_on_submit():
+        business = Business(
+            name=form.name.data,
+            description=form.description.data,
+            features=form.features.data,
+            address=form.address.data,
+            city=form.city.data,
+            state=form.state.data,
+            lng=form.lng.data,
+            lat=form.lat.data,
+            owner_id=current_user.id
+        )
+        categories=form.categories.data.split(",")
+        for cat in categories:
+            business.categories.append(Category.query.get(cat))
+        db.session.add(business)
+        db.session.commit()
+        return jsonify(business.to_dict())
+
 
 
 @business_routes.route('/<int:id>')
@@ -108,7 +132,7 @@ def create_review(id):
         }), 400
 
     # Error handler 3: Review from the current user already exists for the business
-    reviews = Review.query.filter_by(user_id=user_id).all()
+    reviews = Review.query.filter_by(user_id=user_id,business_id=id).all()
     if reviews:
         return jsonify({
             "message": "User already has a review for this business",
@@ -149,8 +173,11 @@ def business_reviews(id):
 
 @business_routes.route('/test')
 def tester():
-    query = Business.query
-    businessesBefore = query.all()
-    dicto = {biz for biz in businessesBefore}
-    print(dicto)
+    img=BusinessImage(
+        business_id=6,
+        url="siisih.jpg",
+        preview=True
+    )
+    db.session.add(img)
+    db.session.commit()
     return "Hello"
