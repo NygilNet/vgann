@@ -6,7 +6,7 @@ import BusinessTile from './BusinessTile'
 const Businesses = () => {
   const dispatch = useDispatch();
 
-  const businesses = useSelector(state => state.businesses.all_businesses);
+  const businesses = useSelector(state => state.businesses.businesses);
 
   useEffect(() => {dispatch(getBusinesses())}, [dispatch]);
 
