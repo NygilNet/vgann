@@ -8,18 +8,13 @@ from sqlalchemy import func
 
 image_routes = Blueprint('images', __name__)
 
-@image_routes.route("/<int:id>", methods=["POST"])
-def post_business_image(id):
-    json_data = request.json
-    business_image=BusinessImage(
-        business_id=id,
-        url=json_data.get('url'),
-        preview= json_data.get('preview')
-    )
-    db.session.add(business_image)
+@image_routes.route('/business/<int:id>', methods=["DELETE"])
+@login_required
+def delete_image(id):
+    img=BusinessImage.query.get(id)
+    db.session.delete(img)
     db.session.commit()
-    return jsonify(business_image.to_dict())
-
+    return {"message":"successfully deleted"}
 
 # @image_routes.route('/test',methods=['POST'])
 # def some():
