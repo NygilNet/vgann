@@ -13,4 +13,5 @@ class BusinessForm(FlaskForm):
     state = StringField('State', validators=[DataRequired(), Length(max=2)])
     lng = FloatField('Longitude', validators=[DataRequired()])
     lat = FloatField('Latitude', validators=[DataRequired()])
+    price = IntegerField('Price', validators=(DataRequired(), NumberRange(min=1, max=4)))
     categories=StringField("Categories")
