@@ -7,28 +7,81 @@ activity_routes = Blueprint('activites', __name__)
 
 @activity_routes.get('/recent')
 def recent_activity():
-    activities = (Business.query.order_by(Business.updated_at.desc()).limit(10).all() +
-                  Review.query.order_by(Review.updated_at.desc()).limit(10).all() +
-                  BusinessImage.query.order_by(BusinessImage.updated_at.desc()).limit(10).all() +
-                  ReviewImage.query.order_by(ReviewImage.updated_at.desc()).limit(10).all())
-    activities.sort(key=lambda x: x.updated_at, reverse=True)
-    res_list = []
-    for act in activities[0:10]:
-        if isinstance(act,Review):
-            res = act.to_dict()
-            res['type'] = 'review'
-            res_list.append(res)
-        elif isinstance(act,Business):
-            res = act.to_dict()
-            res['type'] = 'business'
-            res_list.append(res)
-        elif isinstance(act,BusinessImage):
-            res = act.to_dict()
-            res['type'] = 'businessImage'
-            res_list.append(res)
-        else:
-            res = act.to_dict()
-            res['type'] = 'reviewImage'
-            res_list.append(res)
 
-    return jsonify(res_list)
+    #Getting 10 most recent business
+    businesses = Business.query.order_by(Business.created_at.desc()).limit(10).all()
+    business_dict = []
+    for biz in businesses:
+        dic = biz.to_dict()
+        bizImg = BusinessImage.query.filter_by(business_id=dic['id'], preview=True).first()
+        bizImg = bizImg.to_dict()
+        dic['previewImageId'] = bizImg["id"]
+        dic['previewImageUrl'] = bizImg["url"]
+        dic['type'] = 'business'
+        business_dict.append(dic)
+
+    #Getting 10 most recent reviews
+    reviews = Review.query \
+    .join(User, Review.user_id == User.id) \
+    .join(Business, Review.business_id == Business.id) \
+    .outerjoin(ReviewImage, Review.id == ReviewImage.review_id) \
+    .with_entities(
+        Review.id,
+        Review.stars,
+        Review.review,
+        Review.created_at,
+        Review.updated_at,
+        User.username,
+        Business.id,
+        Business.name,
+        ReviewImage.url,
+        ReviewImage.id
+    ) \
+    .order_by(Review.created_at.desc()) \
+    .limit(10) \
+    .all()
+    reviews_dicts = []
+    for rev in reviews:
+        dic = {
+            'id': rev[0],
+            'stars': rev[1],
+            'review': rev[2],
+            'createdAt':rev[3],
+            'updatedAt': rev[4],
+            'username': rev[5],
+            'businessId': rev[6],
+            'businessNmae': rev[7],
+            'revImgUrl': rev[8],
+            'revImgId': rev[9],
+            'type': 'review'
+        }
+        reviews_dicts.append(dic)
+
+    #Getting 10 most recent business images
+    business_images = BusinessImage.query\
+    .join(Business, BusinessImage.business_id==Business.id)\
+    .with_entities(
+        BusinessImage.id,
+        BusinessImage.created_at,
+        BusinessImage.updated_at,
+        BusinessImage.url,
+        Business.name,
+        Business.id,
+    ).order_by(BusinessImage.created_at.desc()) \
+    .limit(10) \
+    .all()
+    business_image_dicts = []
+    for bizImg in business_images:
+        dic = {
+        'id': bizImg[0],
+        'createdAt': bizImg[1],
+        'updatedAt': bizImg[2],
+        'url':bizImg[3],
+        'businessName': bizImg[4],
+        'type': 'businessImage'
+        }
+        business_image_dicts.append(dic)
+    activities = business_dict+business_image_dicts+reviews_dicts
+    activities.sort(key=lambda x: x['updatedAt'], reverse=True)
+
+    return jsonify(activities[0:9])
