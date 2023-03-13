@@ -25,7 +25,7 @@ function Navigation({ isLoaded }) {
 			</div>
 			{isLoaded && (
 				<div className='navStyle'>
-					<div> {sessionUser && <NavLink to={'/spots/new'} style={{ textDecoration: 'none', }} ><h4 style={{ fontStyle: 'italic', marginTop: '5px', marginRight: '10px' }}>Create a New Spot</h4> </NavLink>
+					<div> {sessionUser && <NavLink to={'/spots/new'} style={{ textDecoration: 'none', }} ><h4 style={{ fontStyle: 'italic', marginTop: '5px', marginRight: '10px' }}>Yelp for Business</h4> </NavLink>
 
 					}</div>
 					<div className='forProfile'>  <ProfileButton user={sessionUser} /> </div>
