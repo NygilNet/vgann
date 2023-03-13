@@ -5,7 +5,7 @@ from ..forms.new_business_form import BusinessForm
 from flask_login import login_required, current_user
 from sqlalchemy import func
 
-
+ALLOWWED_FORMATS=['jpeg','jpg','png']
 image_routes = Blueprint('images', __name__)
 
 @image_routes.route('/business/<int:id>', methods=["DELETE"])
@@ -15,6 +15,38 @@ def delete_image(id):
     db.session.delete(img)
     db.session.commit()
     return {"message":"successfully deleted"}
+
+
+@image_routes.route('/business/<int:id>', methods=["PUT"])
+@login_required
+def update_business_image(id):
+    img = BusinessImage.query.get(id)
+    
+    if not img:
+        return jsonify({
+            "message": "Business image couldn't be found",
+            "statusCode": 404
+        }), 404
+    business= Business.query.get(img.business_id)
+    if business.owner_id == current_user.id:
+        req = request.json
+        
+        if req.get('url'):
+            if (req.get('url').split('.')[-1]) in ALLOWWED_FORMATS:
+                img.url=req.get('url')
+            else:
+                return jsonify({
+                    "message": "Image format not supported",
+                    "statusCode": 404
+                }), 404
+        if req.get('preview'):
+            curpreviewimg=BusinessImage.query.filter_by(business_id=business.id, preview=True).first()
+            curpreviewimg.preview=False
+            #print("bxxbn∆bn∆bn∆xbn", ct)
+            img.preview=True
+    
+        db.session.commit()
+        return jsonify(img.to_dict()), 200
 
 # @image_routes.route('/test',methods=['POST'])
 # def some():
