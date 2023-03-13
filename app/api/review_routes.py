@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request, redirect
-from app.models import Review, db
+from app.models import Review, ReviewImage, db
 from flask_login import login_required, current_user
 from sqlalchemy import func
 
@@ -69,3 +69,35 @@ def get_review(id):
         }), 404
     else:
         return jsonify(review.to_dict())
+
+
+# Add image to review route
+@review_routes.route('/<int:id>/images', methods=['POST'])
+@login_required
+def post_review_image(id):
+    review = Review.query.get(id)
+    if not review:
+        return jsonify(({
+            "message": "Review couldn't be found",
+            "statusCode": 404
+        })), 404
+    if not current_user.id == review.user_id:
+        return jsonify({
+            "message": "Review must belong to the current user",
+            "statusCode": 403
+        }), 403
+    if len(ReviewImage.query.filter_by(business_id=id)) >= 10:
+        return jsonify({
+            "message": "Maximum number of images for this resource was reached",
+            "statusCode": 403
+        }), 403
+
+    json_data = request.json
+    img = ReviewImage(review_id=json_data.get('business_id'), url=json_data.get('url'))
+    db.session.add(img)
+    db.session.commit()
+
+    return jsonify({
+        "id": img['id'],
+        "url": img['url']
+    }), 200
