@@ -84,4 +84,4 @@ def recent_activity():
     activities = business_dict+business_image_dicts+reviews_dicts
     activities.sort(key=lambda x: x['updatedAt'], reverse=True)
 
-    return jsonify(activities[0:39])
+    return jsonify(activities[0:9])
