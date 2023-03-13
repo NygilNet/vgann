@@ -9,6 +9,7 @@ import Navigation from "./components/Navigation";
 import FilterSearch from "./components/FilterSearch";
 import HomePage from "./components/HomePage";
 import CreateBusinessForm from "./components/CreateBusiness";
+import WriteReviewForm from "./components/WriteReview";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,6 +40,9 @@ function App() {
           </Route>
           <Route path="/businesses/new">
             <CreateBusinessForm />
+          </Route>
+          <Route path="/businesses/:id/reviews/new">
+            <WriteReviewForm />
           </Route>
         </Switch>
       )}
