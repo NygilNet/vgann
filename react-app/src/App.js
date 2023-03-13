@@ -6,6 +6,7 @@ import LoginFormPage from "./components/LoginFormPage";
 import AllBusiness from "./components/AllBusiness";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
+import CreateBusinessForm from "./components/CreateBusiness";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,8 +26,11 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
-          <Route path="/businesses">
+          <Route exact path="/businesses">
             <AllBusiness />
+          </Route>
+          <Route path="/businesses/new">
+            <CreateBusinessForm />
           </Route>
         </Switch>
       )}
