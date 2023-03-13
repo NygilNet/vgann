@@ -6,6 +6,7 @@ import LoginFormPage from "./components/LoginFormPage";
 import AllBusinessPage from "./components/AllBusinessPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
+import Footer from "./components/Footer";
 import FilterSearch from "./components/FilterSearch";
 import HomePage from "./components/HomePage";
 import CreateBusinessForm from "./components/CreateBusiness";
@@ -42,6 +43,7 @@ function App() {
           </Route>
         </Switch>
       )}
+      <Footer />
     </>
   );
 }
