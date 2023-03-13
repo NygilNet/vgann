@@ -18,18 +18,18 @@ export const getBusinesses = () => async dispatch => {
 };
 
 const initialState = {
-  businesses: {}
+  all_businesses: {}
 };
 
 
 const businessesReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_BUSINESSES:
-      const businesses = {};
-      action.payload.businesses.forEach(business => (businesses[business.id] = business));
+      const all_businesses = {};
+      action.payload.businesses.forEach(business => (all_businesses[business.id] = business));
       return {
         ...state,
-        businesses
+        all_businesses
       }
     default:
       return state;
