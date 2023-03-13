@@ -122,11 +122,13 @@ def single_business(id):
         Review.id)).filter(Review.business_id == id).scalar()
     business['avgRating'] = db.session.query(
         func.avg(Review.id)).filter(Review.business_id == id).scalar()
+    business['categories'] = [category.to_dict() for category in res.categories]
+    business['reviews'] = [rev.to_dict() for rev in res.reviews]
+
     return jsonify(business)
 
 
 #Get Business of Current USer
-
 
 @business_routes.route('/current')
 @login_required
@@ -185,7 +187,7 @@ def update_business(id):
     #             preview=image_data.get('preview', False)
     #         )
     #         db.session.add(image)
-        
+
 
         return jsonify(business.to_dict()), 200
     else:
