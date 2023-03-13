@@ -86,7 +86,7 @@ def post_review_image(id):
             "message": "Review must belong to the current user",
             "statusCode": 403
         }), 403
-    if len(ReviewImage.query.filter_by(business_id=id)) >= 10:
+    if len(ReviewImage.query.filter_by(business_id=id)) >= 3:
         return jsonify({
             "message": "Maximum number of images for this resource was reached",
             "statusCode": 403

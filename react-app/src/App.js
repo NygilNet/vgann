@@ -8,6 +8,7 @@ import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import FilterSearch from "./components/FilterSearch";
 import HomePage from "./components/HomePage";
+import CreateBusinessForm from "./components/CreateBusiness";
 
 function App() {
   const dispatch = useDispatch();
@@ -30,11 +31,14 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
-          <Route path="/businesses">
+          <Route exact path="/businesses">
             <AllBusinessPage />
           </Route>
           <Route path="/testing">
             <FilterSearch/>
+          </Route>
+          <Route path="/businesses/new">
+            <CreateBusinessForm />
           </Route>
         </Switch>
       )}
