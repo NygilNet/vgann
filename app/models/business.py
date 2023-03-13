@@ -19,6 +19,7 @@ class Business(db.Model):
     state = db.Column(db.String(2), nullable=False)
     lng = db.Column(db.Float,nullable=False)
     lat = db.Column(db.Float,nullable=False)
+    price = db.Column(db.Integer)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(
         db.DateTime,
@@ -45,8 +46,9 @@ class Business(db.Model):
             'state': self.state,
             'lng': self.lng,
             'lat': self.lat,
+            'price': self.price,
             'createdAt': self.created_at,
             'updatedAt': self.updated_at,
-            
+
             # 'images': self.images
         }

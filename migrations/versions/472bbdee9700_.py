@@ -1,18 +1,18 @@
 """empty message
 
-Revision ID: d4a4868466e4
+Revision ID: 472bbdee9700
 Revises:
-Create Date: 2023-03-11 13:11:16.604802
+Create Date: 2023-03-13 12:28:27.990052
 
 """
+import os
 from alembic import op
 import sqlalchemy as sa
-import os
 environment = os.getenv("FLASK_ENV")
 SCHEMA = os.environ.get("SCHEMA")
 
 # revision identifiers, used by Alembic.
-revision = 'd4a4868466e4'
+revision = '472bbdee9700'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -51,6 +51,7 @@ def upgrade():
     sa.Column('state', sa.String(length=2), nullable=False),
     sa.Column('lng', sa.Float(), nullable=False),
     sa.Column('lat', sa.Float(), nullable=False),
+    sa.Column('price', sa.Integer(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['owner_id'], ['users.id'], ),
@@ -98,16 +99,15 @@ def upgrade():
 
     op.create_table('review_images',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('business_id', sa.Integer(), nullable=False),
+    sa.Column('review_id', sa.Integer(), nullable=False),
     sa.Column('url', sa.String(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
-    sa.ForeignKeyConstraint(['business_id'], ['reviews.id'], ),
+    sa.ForeignKeyConstraint(['review_id'], ['reviews.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     if environment == "production":
         op.execute(f"ALTER TABLE review_images SET SCHEMA {SCHEMA};")
-
     # ### end Alembic commands ###
 
 
