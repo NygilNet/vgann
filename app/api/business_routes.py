@@ -7,13 +7,23 @@ from sqlalchemy import func
 
 business_routes = Blueprint('businesses', __name__)
 
+# Middleware verifies if business exists
+def business_exists_middleware(view_func):
+    def nested_func(id):
+        if Business.query.get(id) is None:
+            return jsonify({
+                'message': 'Business not found',
+                'statusCode': 404
+            }), 404
+        return view_func(id=id)
+    return nested_func
+
+
 @business_routes.route('')
 def businesses():
     """
     Query for all businesses and returns them in a list of business dictionaries
     """
-
-   
     query = Business.query.join(BusinessImage)
     city = request.args.get('city')
     name = request.args.get('name')
@@ -56,11 +66,26 @@ def businesses():
         'updatedAt': business.updated_at,
         'numReviews': db.session.query(func.count(Review.id)).filter(Review.business_id == business.id).scalar(),
         'avgRating': db.session.query(func.avg(Review.id)).filter(Review.business_id == business.id).scalar(),
-        'images': [img.to_dict() for img in business.images if img.preview == True],
+        'previewImage': [img.to_dict() for img in business.images if img.preview == True],
         'categories':[category.to_dict() for category in business.categories],
     } for business in query.all()]
 
-    return jsonify({'businesses': businesses_dict})
+    #Create pins for Mapbox map
+    pins = []
+    for business in businesses_dict:
+        pin = {
+            'type': 'Feature',
+            'geometry': {
+                'type': 'Point',
+                'coordinates': [business['lng'], business['lat']]
+            },
+            'properties': {
+                'title': business['name'],
+                'description': business['description']
+            }
+        }
+        pins.append(pin)
+    return jsonify({'businesses': businesses_dict, 'pins': pins})
 
 @business_routes.route('', methods=["POST"])
 def create_new_business():
@@ -170,15 +195,8 @@ def update_business(id):
 
 @business_routes.route('/<int:id>/reviews', methods=['POST'])
 @login_required
+@business_exists_middleware
 def create_review(id):
-    # Error handler 1: Business is not found
-    business = Business.query.filter_by(id=id).all()
-    if id is None or not business:
-        return jsonify({
-        "message": "Business couldn't be found",
-        "statusCode": 404
-        }), 404
-
     # Get the review data from the form fields
     form=ReviewForm()
     # Get the user id from the session
@@ -187,7 +205,7 @@ def create_review(id):
     review=form.review.data
     stars=form.stars.data
 
-    # Error handler 2: Either Review or stars data is missing
+    # Error handler 1: Either Review or stars data is missing
     if stars is None or review is None:
         errors = {}
         if stars is None:
@@ -199,7 +217,7 @@ def create_review(id):
             "statusCode": 400
         }), 400
 
-    # Error handler 3: Review from the current user already exists for the business
+    # Error handler 2: Review from the current user already exists for the business
     reviews = Review.query.filter_by(user_id=user_id,business_id=id).all()
     if reviews:
         return jsonify({
