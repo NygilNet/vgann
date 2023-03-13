@@ -125,6 +125,74 @@ def single_business(id):
     return jsonify(business)
 
 
+#Get Business of Current USer
+
+
+@business_routes.route('/current')
+@login_required
+def current_user_businesses():
+    allbusinesses = db.session.query(Business).filter_by(owner_id=current_user.id).all()
+    togo={}
+    for res in allbusinesses:
+        business = res.to_dict()
+        business['images'] = [img.to_dict() for img in db.session.query(
+            BusinessImage).filter_by(business_id=business["id"]).all()]
+        business['numReviews'] = db.session.query(func.count(
+            Review.id)).filter(Review.business_id == business["id"]).scalar()
+        business['avgRating'] = db.session.query(
+            func.avg(Review.id)).filter(Review.business_id == business["id"]).scalar()
+        togo.update(business)
+    return jsonify(togo)
+
+@business_routes.route('/<int:id>', methods=["PUT"])
+@login_required
+def update_business(id):
+    business = Business.query.get(id)
+
+    # check if the business exists
+    if not business:
+        return jsonify({'message': 'Business not found'}), 404
+
+    # update the business attributes
+    if business.owner_id == current_user.id:
+        business_data=request.get_json()
+        business.name = business_data.get('name', business.name)
+        business.description = business_data.get(
+            'description', business.description)
+        business.features = business_data.get('features', business.features)
+        business.address = business_data.get('address', business.address)
+        business.city = business_data.get('city', business.city)
+        business.state = business_data.get('state', business.state)
+        business.lng = business_data.get('lng', business.lng)
+        business.lat = business_data.get('lat', business.lat)
+        db.session.commit()
+    # commit the changes to the database
+    # images_data = business_data.get('images', [])
+    # for image_data in images_data:
+    #     image_id = image_data.get('id')
+    #     if image_id:
+    #         # Update existing image
+    #         image = BusinessImage.query.filter_by(
+    #             id=image_id, business_id=id).first()
+    #         if image:
+    #             image.url = image_data.get('url', image.url)
+    #             image.preview = image_data.get('preview', image.preview)
+    #     else:
+    #         # Create new image
+    #         image = BusinessImage(
+    #             business_id=id,
+    #             url=image_data.get('url'),
+    #             preview=image_data.get('preview', False)
+    #         )
+    #         db.session.add(image)
+        
+
+        return jsonify(business.to_dict()), 200
+    else:
+        return {"message":'forbidden'}
+
+
+
 @business_routes.route('/<int:id>/reviews', methods=['POST'])
 @login_required
 @business_exists_middleware
