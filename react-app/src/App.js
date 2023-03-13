@@ -6,6 +6,7 @@ import LoginFormPage from "./components/LoginFormPage";
 import AllBusinessPage from "./components/AllBusinessPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
+import Footer from "./components/Footer";
 import FilterSearch from "./components/FilterSearch";
 import HomePage from "./components/HomePage";
 import CreateBusinessForm from "./components/CreateBusiness";
@@ -17,10 +18,10 @@ function App() {
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
-
+const categories=['Chiness','THai', 'salam', 'mellim']
   return (
     <>
-      <Navigation isLoaded={isLoaded} />
+      <Navigation isLoaded={isLoaded} categories={categories} />
       {isLoaded && (
         <Switch>
           <Route exact path="/" >
@@ -46,6 +47,7 @@ function App() {
           </Route>
         </Switch>
       )}
+      <Footer />
     </>
   );
 }
