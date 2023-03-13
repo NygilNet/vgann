@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getBusinesses } from '../../store/business'
 import BusinessTile from './BusinessTile'
 import BusinessesMap from './BusinessesMap'
+import FilterForm from './FilterForm'
+import './index.css'
 
 const Businesses = () => {
   const dispatch = useDispatch();
@@ -20,15 +22,18 @@ const Businesses = () => {
   if (!businesses) return null
 
   return (
-    <div>
-    {/* <section style={{ height: "500px" }}>
-        <BusinessesMap />
-    </section> */}
-    <section id='business-gallery'>
-        <div id='business-tiles'>
-        {Object.values(businesses).map(business => <BusinessTile business={business} key={business.id}/>)}
-        </div>
-    </section>
+    <div id='business-container'>
+      <section id='business-filter'>
+        <FilterForm />
+      </section>
+      <section id='business-gallery'>
+          <div id='business-tiles'>
+          {Object.values(businesses).map(business => <BusinessTile business={business} key={business.id}/>)}
+          </div>
+      </section>
+      <section id='business-map'>
+          <BusinessesMap businesses={Object.values(businesses)} />
+      </section>
     </div>
   )
 };

@@ -1,10 +1,12 @@
 import React, { useRef, useEffect, useState } from 'react';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
+import './BusinessMap.css'
+require('dotenv').config();
 
-mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN
+mapboxgl.accessToken = 'pk.eyJ1IjoiYWRhbWJhenppMTQiLCJhIjoiY2xmNjV2a3Z2MTlnMzNwbGVpMTM5cDU3ayJ9.psIMJSetkGNFHegR3jir1g'
 
-export default function BusinessesMap() {
+export default function BusinessesMap({ businesses }) {
   const mapContainer = useRef(null);
     const map = useRef(null);
     const [lng, setLng] = useState(-70.9);
@@ -21,46 +23,34 @@ export default function BusinessesMap() {
       });
     });
 
+  useEffect(() => {
+    // add markers for each business
+    if (map.current) {
+      const markers = businesses.map((business) => {
+        const marker = new mapboxgl.Marker()
+          .setLngLat([business.lng, business.lat])
+          .setPopup(new mapboxgl.Popup().setHTML(`<p>${business.name}</p>`))
+          .addTo(map.current);
+        return marker;
+      });
+
+      // fit map to markers
+      if (markers.length > 0) {
+        const bounds = new mapboxgl.LngLatBounds();
+        markers.forEach((marker) => {
+          bounds.extend(marker.getLngLat());
+        });
+        map.current.fitBounds(bounds, {
+          padding: 50,
+          maxZoom: 15,
+        });
+      }
+    }
+  }, [businesses]);
+
   return (
-      <div style={{ width: '100%', height: '500px' }}>
-        <div ref={mapContainer} className="map-container" style={{ width: '100%', height: '100%' }} />
+      <div className="map-container-wrapper">
+        <div ref={mapContainer} className="map-container" />
       </div>
         );
 }
-
-
-
-
-// import React, { useState } from 'react';
-// import 'mapbox-gl/dist/mapbox-gl.css';
-// import Map, { Marker } from 'react-mapbox-gl';
-
-// const BusinessesMap = () => {
-//   const mapboxAccessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
-//   const [lng, setLng] = useState(54.37);
-//   const [lat, setLat] = useState(24.45);
-
-//   return (
-//     <div>
-//       <Map
-//         mapboxAccessToken = {mapboxAccessToken}
-//         style={{
-//           width: "500px",
-//           height: "500px",
-//           borderRadius: "15px",
-//           border: "2px solid red"
-//         }}
-//         mapStyle="mapbox://styles/mapbox/streets-v12"
-//       >
-//       <Marker
-//         longitude={lng}
-//         latitude={lat}
-//       />
-
-//       </Map>
-
-//     </div>
-//   );
-// };
-
-// export default BusinessesMap;
