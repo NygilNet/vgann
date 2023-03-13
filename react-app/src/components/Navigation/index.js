@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import Image from '../../Logo/image';
@@ -9,9 +9,17 @@ import './Navigation.css';
 function Navigation({ isLoaded }) {
 	const sessionUser = useSelector(state => state.session.user);
 	const [openForm, setOpenForm] = useState(false)
+
+	//Navbar background color will be transparent on the homepage
+	const location = useLocation();
+	const [isHomePage, setIsHomePage] = useState(false);
+
+	useEffect(() => {
+	  setIsHomePage(location.pathname === '/');
+	}, [location]);
 	return (
 
-		<div className='headerStyle'>
+		<div className={`headerStyle ${isHomePage ? 'homePageNav' : ''}`}>
 			<div style={{ marginLeft: '50px' }}>
 				<NavLink style={{ marginLeft: '50px', }} exact to="/"><Image /></NavLink>
 			</div>
