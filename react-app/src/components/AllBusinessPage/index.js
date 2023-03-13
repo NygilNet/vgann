@@ -3,10 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getBusinesses } from '../../store/business'
 import BusinessTile from './BusinessTile'
 import BusinessesMap from './BusinessesMap'
-import FilterForm from './FilterForm'
+// import FilterForm from './FilterForm'
 import './index.css'
 
-const Businesses = () => {
+const AllBusinessPage = () => {
   const dispatch = useDispatch();
   const businesses = useSelector(state => state.business.all_businesses);
 //   const [markers, setMarkers] = useState([
@@ -24,7 +24,7 @@ const Businesses = () => {
   return (
     <div id='business-container'>
       <section id='business-filter'>
-        <FilterForm />
+        {/* <FilterForm /> */}
       </section>
       <section id='business-gallery'>
           <div id='business-tiles'>
@@ -38,4 +38,4 @@ const Businesses = () => {
   )
 };
 
-export default Businesses;
+export default AllBusinessPage;
