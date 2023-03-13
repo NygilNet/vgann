@@ -6,6 +6,7 @@ import LoginFormPage from "./components/LoginFormPage";
 import AllBusiness from "./components/AllBusiness";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
+import FilterSearch from "./components/FilterSearch";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,6 +28,9 @@ function App() {
           </Route>
           <Route path="/businesses">
             <AllBusiness />
+          </Route>
+          <Route path="/testing">
+            <FilterSearch/>
           </Route>
         </Switch>
       )}
