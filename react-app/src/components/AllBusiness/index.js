@@ -6,7 +6,7 @@ import BusinessesMap from './BusinessesMap'
 
 const Businesses = () => {
   const dispatch = useDispatch();
-  const businesses = useSelector(state => state.businesses.all_businesses);
+  const businesses = useSelector(state => state.business.all_businesses);
 //   const [markers, setMarkers] = useState([
 //     { id: 1, name: 'Marker 1', lat: 40.748817, lng: -73.985664 },
 //     { id: 2, name: 'Marker 2', lat: 40.712776, lng: -74.005974 },
@@ -21,9 +21,9 @@ const Businesses = () => {
 
   return (
     <div>
-    <section style={{ height: "500px" }}>
+    {/* <section style={{ height: "500px" }}>
         <BusinessesMap />
-    </section>
+    </section> */}
     <section id='business-gallery'>
         <div id='business-tiles'>
         {Object.values(businesses).map(business => <BusinessTile business={business} key={business.id}/>)}
