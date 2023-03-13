@@ -30,6 +30,8 @@ function CreateBusinessForm() {
             categories
         }
 
+
+
     }
 
     return (
