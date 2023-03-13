@@ -149,6 +149,9 @@ function CreateBusinessForm() {
                         />
                     </label>
                 </div>
+                <div>
+                    <input type="submit" />
+                </div>
             </form>
         </>
     );
