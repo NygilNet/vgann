@@ -14,10 +14,10 @@ function App() {
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
-
+const categories=['Chiness','THai', 'salam', 'mellim']
   return (
     <>
-      <Navigation isLoaded={isLoaded} />
+      <Navigation isLoaded={isLoaded} categories={categories} />
       {isLoaded && (
         <Switch>
           <Route path="/login" >
