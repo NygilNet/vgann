@@ -5,6 +5,7 @@ import { getBusinesses } from '../../store/business'
 import './index.css'
 import ReviewTile from './ReviewTile';
 import BusinessTile from './BusinessTile'
+import CategoriesGrid from '../CategoriesGrid';
 
 function shuffleArray(array) {
   const shuffledArray = [...array];
@@ -54,6 +55,9 @@ const HomePage = () => {
             }
           })}
         </div>
+      </section>
+      <section className='categories-tiles'>
+        <CategoriesGrid />
       </section>
     </>
   )

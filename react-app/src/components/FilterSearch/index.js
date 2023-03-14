@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import {useSearchParams} from "../../context/SearchParamsContext"
 import { isFiltered } from '../../utils/searchAndFilters';
+import './index.css'
 
 export default function FilterSearch(){
     const {searchParams, setSearchParams} = useSearchParams()
@@ -26,7 +27,7 @@ export default function FilterSearch(){
 			...searchParams,
 			query: {
 				...searchParams.query,
-				price: priceString
+				price: priceString.slice(0,priceString.length-1)
 			}
 		}
         newContext.filters = isFiltered(newContext)
@@ -34,25 +35,43 @@ export default function FilterSearch(){
     },[priceFilter])
 
     useEffect(()=>{
-        console.log("^^^^^^^----",searchParams)
+        // console.log("^^^^^^^----",searchParams)
     },[searchParams])
     return (
-        <div>
-            <label>
+        // <div>
+        //     <label>
+        //       <input type="checkbox" value="1" onChange={handleChange} />
+        //       $
+        //     </label>
+        //     <label>
+        //       <input type="checkbox" value="2" onChange={handleChange} />
+        //       $$
+        //     </label>
+        //     <label>
+        //       <input type="checkbox" value="3" onChange={handleChange} />
+        //       $$$
+        //     </label>
+        //     <label>
+        //       <input type="checkbox" value="4" onChange={handleChange} />
+        //       $$$$
+        //     </label>
+        // </div>
+        <div class="button-group">
+            <label class="checkbox-label">
               <input type="checkbox" value="1" onChange={handleChange} />
-              ${1}
+              <span class="label-text">$</span>
             </label>
-            <label>
+            <label class="checkbox-label">
               <input type="checkbox" value="2" onChange={handleChange} />
-              ${2}
+              <span class="label-text">$$</span>
             </label>
-            <label>
+            <label class="checkbox-label">
               <input type="checkbox" value="3" onChange={handleChange} />
-              ${3}
+              <span class="label-text">$$$</span>
             </label>
-            <label>
+            <label class="checkbox-label">
               <input type="checkbox" value="4" onChange={handleChange} />
-              ${4}
+              <span class="label-text">$$$$</span>
             </label>
         </div>
     )
