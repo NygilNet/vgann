@@ -1,0 +1,44 @@
+.button-group {
+    display: inline-block;
+    font-size: 16px;
+  }
+
+  .checkbox-label {
+    display: inline-block;
+    position: relative;
+    padding: 10px 10px;
+    margin: 0;
+    cursor: pointer;
+    font-weight: 200;
+    color: #fff;
+    background-color: #ccc;
+    border: none;
+    border-radius: 0;
+  }
+
+  .checkbox-label:first-child {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+
+  .checkbox-label:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  .checkbox-label input[type="checkbox"] {
+    display: none;
+  }
+
+  .checkbox-label:hover {
+    background-color: #aaa;
+  }
+
+  .checkbox-label input:checked ~ .label-text {
+    font-weight: bold;
+    color: #d27575;
+  }
+
+  .label-text {
+    margin: 0;
+  }

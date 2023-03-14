@@ -40,10 +40,12 @@ function queryCategories(list,query){
     return filteredList
 }
 function queryPrice(list,query){
-    let filteredList = list
+    let filteredList = []
+    console.log("incoming list", list)
     let prices = query.split(',')
+    console.log("prices", prices)
     for(let price of prices){
-        filteredList.concat(list.filter(el=>el.price == price))
+        filteredList = [...filteredList,...list.filter(el=>el.price == Number(price))]
     }
     return filteredList
 }

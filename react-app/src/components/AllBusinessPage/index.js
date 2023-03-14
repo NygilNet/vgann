@@ -16,12 +16,13 @@ const AllBusinessPage = () => {
   const filteredBusinesses = useSelector(state => state.business.filtered_businesses);
   const [businessList,setBusinessList] = useState([])
 
-  useEffect(() => {
-    dispatch(getBusinesses());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getBusinesses());
+  // }, [dispatch]);
 
   useEffect(()=>{
     // console.log("from useEffect", searchParams)
+    console.log("Context change noticed in allBusinesses")
     if(searchParams.filters && businesses){
       setBusinessList( filterResults(Object.values(businesses),searchParams.search,searchParams.query))
     }else{
@@ -31,9 +32,7 @@ const AllBusinessPage = () => {
   },[searchParams])
 
   useEffect(()=>{
-    // console.log("businessList useEffect-->", businessList)
     dispatch(loadFiltered(businessList))
-    // console.log(Object.values(businesses))
   },[businessList])
 
   if (!businesses || !filteredBusinesses) return null
