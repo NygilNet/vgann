@@ -1,6 +1,9 @@
-from flask import Blueprint, jsonify
-from flask_login import login_required
-from app.models import User
+from flask import Blueprint, jsonify, request, redirect
+from app.models import Business, BusinessImage, User, Category, Review, db
+from ..forms.review_form import ReviewForm
+from ..forms.new_business_form import BusinessForm
+from flask_login import login_required, current_user
+from sqlalchemy import func
 
 user_routes = Blueprint('users', __name__)
 
@@ -23,3 +26,21 @@ def user(id):
     """
     user = User.query.get(id)
     return user.to_dict()
+
+
+@user_routes.route('/<int:userId>/current')
+@login_required
+def current_user_businesses(userId):
+    allbusinesses = db.session.query(Business).filter_by(
+        owner_id=userId).all()
+    togo = {}
+    for res in allbusinesses:
+        business = res.to_dict()
+        business['images'] = [img.to_dict() for img in db.session.query(
+            BusinessImage).filter_by(business_id=business["id"]).all()]
+        business['numReviews'] = db.session.query(func.count(
+            Review.id)).filter(Review.business_id == business["id"]).scalar()
+        business['avgRating'] = db.session.query(
+            func.avg(Review.id)).filter(Review.business_id == business["id"]).scalar()
+        togo.update(business)
+    return jsonify(togo)
