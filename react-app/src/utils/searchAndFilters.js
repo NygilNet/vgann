@@ -55,7 +55,6 @@ function queryFeatures(list,query){
     }
     return filteredList
 }
-
 // function querySearch(list,query){
 //     filteredList = []
 //     for(let biz in list){
