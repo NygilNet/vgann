@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
+import { useSearchParams } from '../../context/SearchParamsContext';
 import Image from '../../Logo/image';
 import './Navigation.css';
 
@@ -10,13 +11,31 @@ function Navigation({ isLoaded }) {
 	const sessionUser = useSelector(state => state.session.user);
 	const [searchValue, setSearchValue] = useState('');
 	const [selectedCategory, setSelectedCategory] = useState('');
-
+	const {searchParams, setSearchParams} = useSearchParams()
+	console.log("GAGAGAGAG", searchParams)
 	const handleSearchChange = (e) => {
-		setSearchValue(e.target.value);
+
+		setSearchValue(e.target.value)
+		let newContext = {
+			...searchParams,
+			search: e.target.value
+		}
+		setSearchParams(newContext)
+		console.log(searchParams)
 	};
 
 	const handleCategoryChange = (e) => {
 		setSelectedCategory(e.target.value);
+		// console.log(selectedCategory)
+		let newContext = {
+			...searchParams,
+			query: {
+				...searchParams.query,
+				categories: e.target.value
+			}
+		}
+		setSearchParams(newContext)
+		console.log(searchParams)
 	};
 
 
@@ -71,7 +90,7 @@ function Navigation({ isLoaded }) {
 							</NavLink>
 						)}
 					</div>
-				
+
 					<div className='forProfile'>
 						<ProfileButton user={sessionUser} />
 					</div>
