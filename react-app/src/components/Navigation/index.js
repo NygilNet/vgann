@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useHistory, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import { useSearchParams } from '../../context/SearchParamsContext';
@@ -7,24 +7,25 @@ import './index.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { isFiltered } from '../../utils/searchAndFilters';
 
 function Navigation({ isLoaded }) {
 	const sessionUser = useSelector(state => state.session.user);
 	const [searchValue, setSearchValue] = useState('');
 	const [selectedCategory, setSelectedCategory] = useState('');
 	const {searchParams, setSearchParams} = useSearchParams();
+	const [openForm, setOpenForm] = useState(false)
+	const history = useHistory()
+	const location = useLocation();
+	const [isHomePage, setIsHomePage] = useState(false);
+
 	const handleSearchChange = (e) => {
-		setSearchValue(e.target.value);
-		let newContext = {
-			...searchParams,
-			search: e.target.value
-		}
-		setSearchParams(newContext);
+		setSearchValue(()=>e.target.value);
+
 	};
 
 	const handleCategoryChange = (e) => {
-		setSelectedCategory(e.target.value);
-		// console.log(selectedCategory)
+		setSelectedCategory(()=>e.target.value);
 		let newContext = {
 			...searchParams,
 			query: {
@@ -32,15 +33,28 @@ function Navigation({ isLoaded }) {
 				categories: e.target.value
 			}
 		}
-		setSearchParams(newContext)
+		newContext.filters = isFiltered(newContext)
+		setSearchParams(()=>newContext)
 	};
 
+	const searchClicked = e => {
 
-	const [openForm, setOpenForm] = useState(false)
+		let newContext = {
+			...searchParams,
+			search: searchValue
+		}
+		newContext.filters = isFiltered(newContext)
+		setSearchParams(()=>newContext);
+		if(location.pathname === '/businesses'){
+			// filterResults(asdad)
+		}else{
+			return history.push('/businesses')
+		}
+
+	}
+
 
 	//Navbar background color will be transparent on the homepage
-	const location = useLocation();
-	const [isHomePage, setIsHomePage] = useState(false);
 
 	useEffect(() => {
 	  setIsHomePage(location.pathname === '/');
@@ -58,7 +72,6 @@ function Navigation({ isLoaded }) {
 					value={searchValue}
 					onChange={handleSearchChange}
 				/>
-				<FontAwesomeIcon icon={faSearch}/>
 				<select value={selectedCategory} onChange={handleCategoryChange}>
 					<option value=''>All Categories</option>
 					<option value='Breakfast'>Breakfast</option>
@@ -72,6 +85,7 @@ function Navigation({ isLoaded }) {
 					<option value='Vietnamese'>Vietnamese</option>
 					<option value='Cafe'>Cafe</option>
 				</select>
+				<FontAwesomeIcon icon={faSearch} onClick={searchClicked}/>
 			</div>
 			{isLoaded && (
 				<div className='navStyle'>
