@@ -50,7 +50,7 @@ def recent_activity():
             'updatedAt': rev[4],
             'username': rev[5],
             'businessId': rev[6],
-            'businessNmae': rev[7],
+            'businessName': rev[7],
             'revImgUrl': rev[8],
             'revImgId': rev[9],
             'type': 'review'
