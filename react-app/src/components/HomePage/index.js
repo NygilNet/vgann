@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getRecentActivity } from '../../store/recentActivity';
+import { clearRecentActivity, getRecentActivity } from '../../store/recentActivity';
 import { getBusinesses } from '../../store/business'
 import './index.css'
 import ReviewTile from './ReviewTile';
@@ -23,6 +23,7 @@ const HomePage = () => {
   useEffect(() => {
     dispatch(getBusinesses());
     dispatch(getRecentActivity());
+    return () => dispatch(clearRecentActivity())
   }, [dispatch]);
 
   if (recentActivity.length === 0) {
