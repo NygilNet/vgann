@@ -63,7 +63,7 @@ function Navigation({ isLoaded }) {
 					value={searchValue}
 					onChange={handleSearchChange}
 				/>
-				<FontAwesomeIcon icon={faSearch} />
+				<FontAwesomeIcon icon={faSearch}/>
 				<select value={selectedCategory} onChange={handleCategoryChange}>
 					<option value=''>All Categories</option>
 					<option value='Breakfast'>Breakfast</option>
