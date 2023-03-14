@@ -1,105 +1,112 @@
-import React, {useState, useEffect} from 'react';
-import { NavLink, useLocation, useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { NavLink, useHistory, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import { useSearchParams } from '../../context/SearchParamsContext';
-import Image from '../../Logo/image';
-import './Navigation.css';
+import './index.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { isFiltered } from '../../utils/searchAndFilters';
 
 function Navigation({ isLoaded }) {
-	const sessionUser = useSelector(state => state.session.user);
-	const [searchValue, setSearchValue] = useState('');
-	const [selectedCategory, setSelectedCategory] = useState('');
-	const {searchParams, setSearchParams} = useSearchParams()
-	const [createbusines, setcreatebusiness] = useState('')
-	const history = useHistory()
-	console.log("GAGAGAGAG", searchParams)
-	
-	const handleSearchChange = (e) => {
+  const sessionUser = useSelector((state) => state.session.user);
+  const [searchValue, setSearchValue] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const { searchParams, setSearchParams } = useSearchParams();
+  const history = useHistory();
+  const location = useLocation();
+  const [isHomePage, setIsHomePage] = useState(false);
 
-		setSearchValue(e.target.value)
-		let newContext = {
-			...searchParams,
-			search: e.target.value
-		}
-		setSearchParams(newContext)
-		console.log(searchParams)
-	};
+  const handleSearchChange = (e) => {
+    setSearchValue(e.target.value);
+  };
 
-	const handleCategoryChange = (e) => {
-		setSelectedCategory(e.target.value);
-		// console.log(selectedCategory)
-		let newContext = {
-			...searchParams,
-			query: {
-				...searchParams.query,
-				categories: e.target.value
-			}
-		}
-		setSearchParams(newContext)
-		console.log(searchParams)
-	};
-	const handleCreateAndMAnag = (e) =>{
-		if (e.target.value==='new') history.push(`/businesses/${e.target.value}`)
-		if (e.target.value === 'manage') history.push(`/users/${sessionUser.id}/businesses`)
-	}
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(e.target.value);
+    let newContext = {
+      ...searchParams,
+      query: {
+        ...searchParams.query,
+        categories: e.target.value,
+      },
+    };
+    newContext.filters = isFiltered(newContext);
+    setSearchParams(newContext);
+  };
 
-	const [openForm, setOpenForm] = useState(false)
+  const searchClicked = (e) => {
+    let newContext = {
+      ...searchParams,
+      search: searchValue,
+    };
+    newContext.filters = isFiltered(newContext);
+    setSearchParams(newContext);
+    if (location.pathname === '/businesses') {
+      // filterResults(asdad)
+    } else {
+      history.push('/businesses');
+    }
+  };
 
-	//Navbar background color will be transparent on the homepage
-	const location = useLocation();
-	const [isHomePage, setIsHomePage] = useState(false);
+  //Determines if the current page is '/'
+  useEffect(() => {
+    setIsHomePage(location.pathname === '/');
+  }, [location]);
 
-	useEffect(() => {
-	  setIsHomePage(location.pathname === '/');
-	}, [location]);
-	return (
-
-		<div className={`headerStyle ${isHomePage ? 'homePageNav' : ''}`}>
-			<div style={{ marginLeft: '50px' }}>
-				<NavLink style={{ marginLeft: '50px', }} exact to="/"><Image /></NavLink>
-			</div>
-			<div className='searchBar'>
-				<input
-					type='text'
-					placeholder='Search'
-					value={searchValue}
-					onChange={handleSearchChange}
-				/>
-				<FontAwesomeIcon icon={faSearch} />
-				<select value={selectedCategory} onChange={handleCategoryChange}>
-					<option value=''>All Categories</option>
-					<option value='Breakfast'>Breakfast</option>
-					<option value='Burger'>Burger</option>
-					<option value='Italian'>Italian</option>
-					<option value='Breakfast'>Breakfast</option>
-					<option value='Thai'>Thai</option>
-					<option value='Chinese'>Chinese</option>
-					<option value='Pizza'>Pizza</option>
-					<option value='French'>French</option>
-					<option value='Vietnamese'>Vietnamese</option>
-					<option value='Cafe'>Cafe</option>
-					{/* Add more categories here */}
-				</select>
-			</div>
+  return (
+    <div className={`${isHomePage ? 'homePageNav' : 'otherPage'}`}>
+      <div id="logo-container">
+        <NavLink style={{ marginLeft: '50px' }} exact to="/">
+          <img
+            src={
+              isHomePage
+                ? 'https://i.imgur.com/bL6SK8e.png'
+                : 'https://i.imgur.com/9YEsE9Z.png'
+            }
+            alt="logo"
+            id="logo-image"
+          />
+        </NavLink>
+      </div>
+      <div className="searchBar">
+        <input
+          type="text"
+          placeholder="Search"
+          value={searchValue}
+          onChange={handleSearchChange}
+        />
+        <select value={selectedCategory} onChange={handleCategoryChange}>
+          <option value="">All Categories</option>
+          <option value="Breakfast">Breakfast</option>
+          <option value="Burger">Burger</option>
+          <option value="Italian">Italian</option>
+          <option value="Breakfast">Breakfast</option>
+          <option value="Thai">Thai</option>
+          <option value="Chinese">Chinese</option>
+          <option value="Pizza">Pizza</option>
+          <option value="French">French</option>
+          <option value="Vietnamese">Vietnamese</option>
+          <option value="Cafe">Cafe</option>
+        </select>
+        <FontAwesomeIcon icon={faSearch} onClick={searchClicked} />
+      </div>
 			{isLoaded && (
 				<div className='navStyle'>
 					<div>
 						{sessionUser && (
-							<>
-							<select value={selectedCategory} onChange={handleCreateAndMAnag}>
-							<option value=''>Yelp For Business</option>
-							<option value='new'>Create Business</option>
-							<option value='manage'>Manage Your Business</option>
-							</select>
-							</>
+							<NavLink
+								to={'/businesses/new'}
+								style={{ textDecoration: 'none', }}
+							>
+								<h4 className={isHomePage ? 'navbar-business-homepage' : 'navbar-business-otherpage'}>
+									For Businesses
+								</h4>
+							</NavLink>
 						)}
 					</div>
 
-					<div className='forProfile'>
+					<div className='navbar-profile'>
 						<ProfileButton user={sessionUser} />
 					</div>
 				</div>
@@ -107,23 +114,6 @@ function Navigation({ isLoaded }) {
 		</div>
 	);
 }
-
-// function Navigation({ isLoaded }){
-// 	const sessionUser = useSelector(state => state.session.user);
-
-// 	return (
-// 		<ul>
-// 			<li>
-// 				<NavLink exact to="/">Home</NavLink>
-// 			</li>
-// 			{isLoaded && (
-// 				<li>
-// 					<ProfileButton user={sessionUser} />
-// 				</li>
-// 			)}
-// 		</ul>
-// 	);
-// }
 
 export default Navigation;
 // <NavLink to={'/businesses/new'} style={{textDecoration:'none'}} >Create New Business</NavLink>

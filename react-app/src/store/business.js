@@ -4,6 +4,8 @@ const LOAD_BUSINESSES = 'spots/LOAD_BUSINESSES'
 const ADD_BUSINESS = 'spots/ADD_BUSINESS'
 const LOAD_CURRENT_USER_BUSINESSES = 'spots/LOAD_CURRENT_USER_BUSINESSES'
 const Load_Single_Businness_Details = 'spots/Load_Single_Businness_Details'
+const LOAD_FILTERED = 'spots/LOAD_FILTERED'
+
 // action creators
 const loadBusinesses = payload => ({
   type: LOAD_BUSINESSES,
@@ -27,6 +29,11 @@ const loadSingleBusiness = payload =>({
   payload
 })
 
+
+export const loadFiltered = payload =>({
+  type: LOAD_FILTERED,
+  payload
+})
 
 //thunk functions
 export const getBusinesses = () => async dispatch => {
@@ -89,7 +96,8 @@ export const getSingleBusiness = (id) => async dispatch =>{
 
 const initialState = {
   all_businesses: {},
-  business: {}
+  business: {},
+  filtered_businesses: {}
 };
 
 
@@ -117,7 +125,15 @@ const businessesReducer = (state = initialState, action) => {
       action.payload.businesses.forEach(business => (all_businesses[business.id] = business));
       return {
         ...state,
-        all_businesses
+        all_businesses,
+        filtered_businesses: all_businesses
+      }
+    case LOAD_FILTERED:
+      const filtered_businesses = {}
+      action.payload.forEach(biz=> filtered_businesses[biz.id] = biz)
+      return {
+        ...state,
+        filtered_businesses
       }
     default:
       return state;
