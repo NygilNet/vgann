@@ -6,6 +6,8 @@ import { useSearchParams } from '../../context/SearchParamsContext';
 import Image from '../../Logo/image';
 import './Navigation.css';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 function Navigation({ isLoaded }) {
 	const sessionUser = useSelector(state => state.session.user);
@@ -61,6 +63,7 @@ function Navigation({ isLoaded }) {
 					value={searchValue}
 					onChange={handleSearchChange}
 				/>
+				<FontAwesomeIcon icon={faSearch} />
 				<select value={selectedCategory} onChange={handleCategoryChange}>
 					<option value=''>All Categories</option>
 					<option value='Breakfast'>Breakfast</option>
