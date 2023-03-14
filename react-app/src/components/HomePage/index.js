@@ -26,8 +26,11 @@ const HomePage = () => {
               <img src='https://i.imgur.com/HnO4Ygx.jpg' alt='Preview image' />
           </div>
       </section>
-      <section>
-        {reviews.map(review => <ReviewTile review={review} key={review.id}/>)}
+      <div className='recent-activity-title'>Recent Activity</div>
+      <section className='recent-activity-container'>
+        <div className='recent-activity-tiles'>
+          {reviews.map(review => <ReviewTile review={review} key={review.id}/>)}
+        </div>
       </section>
     </>
   )
