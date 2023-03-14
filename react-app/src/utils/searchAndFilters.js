@@ -3,8 +3,9 @@ export default function filterResults(list,search,query){
     let filteredList = list
 
     if(search.length){
-        filteredList = (broadSearch(filteredList,search))
+        filteredList = broadSearch(filteredList,search)
     }
+    console.log("filteredList between-->",filteredList)
     if(query.city.length){
         filteredList = queryCity(filteredList,query.city)
     }
@@ -33,73 +34,32 @@ function queryState(list,query){
 function queryCategories(list,query){
     let filteredList = list
     let queries = query.split(',')
-    for(let cat in queries){
+    for(let cat of queries){
         filteredList = filteredList.filter(el=> scanCategories(cat,el.categories))
     }
     return filteredList
 }
 function queryPrice(list,query){
-    let filteredList = []
+    let filteredList = list
     let prices = query.split(',')
-    for(let price in prices){
+    for(let price of prices){
         filteredList.concat(list.filter(el=>el.price == price))
     }
     return filteredList
 }
 
 function queryFeatures(list,query){
-    features = query.split(',')
+    let features = query.split(',')
     let filteredList = list
-    for(let feat in featues){
+    for(let feat of features){
         filteredList = filteredList.filter(el=> new RegExp(feat, 'gi').test(el.features))
     }
     return filteredList
 }
-// function querySearch(list,query){
-//     filteredList = []
-//     for(let biz in list){
-//         if(query.city && new RegExp(query.city, 'gi').test(biz.city)){
-//             filteredList.push(biz)
-//             continue
-//         }
-//         if(query.state && new RegExp(query.state, 'gi').test(biz.state)){
-//             filteredList.push(biz)
-//             continue
-//         }
-//         if(query.price){
-//             let prices = query.price.split(',')
-//             for(let price in prices){
-//                 if(price == biz.price){
-//                     filteredList.push(biz)
-//                     continue
-//                 }
-//             }
-//         }
-//         if(query.categories){
-//             let categories = query.categories.split(',')
-//             for(let cat in categories){
-//                 if(scanCategories(cat,biz.categories)){
-//                     filteredList.push(biz)
-//                     continue
-//                 }
-//             }
-//         }
-//         if(query.features){
-//             let features = query.features.split(',')
-//             for(let feat in features){
-//                 if(new RegExp(feat, 'gi').test(biz.features)){
-//                     filteredList.push(biz)
-//                     continue
-//                 }
-//             }
-//         }
-//     }
-//     return filteredList
-// }
 
 function broadSearch(list,searchTerm){
-    const filteredList = []
-    for(let biz in list){
+    let filteredList = []
+    for(let biz of list){
         if (new RegExp(searchTerm, 'gi').test(biz.name)){
             filteredList.push(biz)
             continue
@@ -116,12 +76,23 @@ function broadSearch(list,searchTerm){
             filteredList.push(biz)
         }
     }
+
     return filteredList
 }
 
 function scanCategories(searchTerm,categoriesList){
-    for(let cat in categoriesList){
-        if(cat.categoryName.toLowerCase()==searchTerm.toLowerCase()) return true
+    for(let cat of categoriesList){
+        if(cat.categoryName && cat.categoryName.toLowerCase()==searchTerm.toLowerCase()) return true
     }
+    return false
+}
+
+export function isFiltered(QuObj){
+    if(QuObj.search.length > 1 ||
+        QuObj.query.city.length ||
+        QuObj.query.state.length ||
+        QuObj.query.price.length ||
+        QuObj.query.categories.length ||
+        QuObj.query.features.length) return true
     return false
 }

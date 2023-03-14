@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getRecentActivity } from '../../store/recentActivity';
+import { getBusinesses } from '../../store/business'
 import './index.css'
 import ReviewTile from './ReviewTile';
 import BusinessTile from './BusinessTile'
@@ -10,6 +11,7 @@ const HomePage = () => {
   const recentActivity = useSelector(state => state.recentActivity);
 
   useEffect(() => {
+    dispatch(getBusinesses());
     dispatch(getRecentActivity());
   }, [dispatch]);
 
