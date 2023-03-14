@@ -33,14 +33,13 @@ def user(id):
 def current_user_businesses(userId):
     allbusinesses = db.session.query(Business).filter_by(
         owner_id=userId).all()
-    togo = {}
+    togo = []
     for res in allbusinesses:
         business = res.to_dict()
-        business['images'] = [img.to_dict() for img in db.session.query(
-            BusinessImage).filter_by(business_id=business["id"]).all()]
+        business['previewimage'] =  db.session.query(BusinessImage).filter_by(business_id=business["id"], preview=True).first().to_dict()
         business['numReviews'] = db.session.query(func.count(
             Review.id)).filter(Review.business_id == business["id"]).scalar()
         business['avgRating'] = db.session.query(
             func.avg(Review.id)).filter(Review.business_id == business["id"]).scalar()
-        togo.update(business)
+        togo.append(business)
     return jsonify(togo)

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import { useSearchParams } from '../../context/SearchParamsContext';
@@ -14,7 +14,10 @@ function Navigation({ isLoaded }) {
 	const [searchValue, setSearchValue] = useState('');
 	const [selectedCategory, setSelectedCategory] = useState('');
 	const {searchParams, setSearchParams} = useSearchParams()
+	const [createbusines, setcreatebusiness] = useState('')
+	const history = useHistory()
 	console.log("GAGAGAGAG", searchParams)
+	
 	const handleSearchChange = (e) => {
 
 		setSearchValue(e.target.value)
@@ -39,7 +42,10 @@ function Navigation({ isLoaded }) {
 		setSearchParams(newContext)
 		console.log(searchParams)
 	};
-
+	const handleCreateAndMAnag = (e) =>{
+		if (e.target.value==='new') history.push(`/businesses/${e.target.value}`)
+		if (e.target.value === 'manage') history.push(`/users/${sessionUser.id}/businesses`)
+	}
 
 	const [openForm, setOpenForm] = useState(false)
 
@@ -83,14 +89,13 @@ function Navigation({ isLoaded }) {
 				<div className='navStyle'>
 					<div>
 						{sessionUser && (
-							<NavLink
-								to={'/businesses/new'}
-								style={{ textDecoration: 'none', }}
-							>
-								<h4 style={{ fontStyle: 'italic', marginTop: '5px', marginRight: '10px' }}>
-									Yelp for Business
-								</h4>
-							</NavLink>
+							<>
+							<select value={selectedCategory} onChange={handleCreateAndMAnag}>
+							<option value=''>Yelp For Business</option>
+							<option value='new'>Create Business</option>
+							<option value='manage'>Manage Your Business</option>
+							</select>
+							</>
 						)}
 					</div>
 
@@ -121,3 +126,4 @@ function Navigation({ isLoaded }) {
 // }
 
 export default Navigation;
+// <NavLink to={'/businesses/new'} style={{textDecoration:'none'}} >Create New Business</NavLink>

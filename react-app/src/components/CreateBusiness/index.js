@@ -4,6 +4,19 @@ import { useDispatch } from 'react-redux'
 import { createBusiness } from '../../store/business';
 
 function CreateBusinessForm() {
+    let catList = [
+        {id:1, category:'Breakfast'},
+         {id:2, category:'Burger'},
+         { id: 3, category: 'Italian' },
+        { id: 4, category: 'Breakfast' },
+        { id: 5, category: 'Thai' },
+        { id: 6, category: 'Chinese' },
+        { id: 7, category: 'Pizza' },
+        { id: 8, category: 'French' },
+        { id: 9, category: 'Vietnamese' },
+        { id: 10, category: 'Cafe' },
+        ]
+
 
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
@@ -15,6 +28,13 @@ function CreateBusinessForm() {
     const [lat, setLat] = useState('');
     const [price, setPrice] = useState('');
     const [categories, setCategories] = useState('');
+    // seperate state for each category
+
+    const [selectedCategory, setSelectedCategory] = useState('');
+    let togo=''
+    function handleCategoryChange(category) {
+        setSelectedCategory(category);
+    }
 
     const history = useHistory();
     const dispatch = useDispatch();
@@ -142,11 +162,21 @@ function CreateBusinessForm() {
                 <div>
                     <label>
                         What are some miscellaneous categories you want to add to your business?
-                        <input
-                        type='text'
-                        onChange={(e) => setCategories(e.target.value)}
-                        value={categories}
-                        />
+                        <div>
+                            {catList.map(({id,category}) => (
+                                <label key={category}>
+                                    
+                                    <input
+                                        type="radio"
+                                        name="category"
+                                        value={id}
+                                        checked={selectedCategory == category}
+                                        onChange={(e) => handleCategoryChange(e.target.value)}
+                                    />
+                                    {category}
+                                </label>
+                            ))}
+                        </div>
                     </label>
                 </div>
                 <div>
