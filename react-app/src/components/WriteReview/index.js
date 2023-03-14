@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { postReview } from "../../store/review";
 
 
 function WriteReviewForm() {
@@ -22,6 +23,8 @@ function WriteReviewForm() {
             stars,
             review
         }
+
+        dispatch(postReview(newReview));
 
         return history.push(`/businesses/${id}`)
     };
