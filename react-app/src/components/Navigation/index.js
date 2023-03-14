@@ -2,21 +2,42 @@ import React, {useState, useEffect} from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
+import { useSearchParams } from '../../context/SearchParamsContext';
 import Image from '../../Logo/image';
 import './Navigation.css';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 function Navigation({ isLoaded }) {
 	const sessionUser = useSelector(state => state.session.user);
 	const [searchValue, setSearchValue] = useState('');
 	const [selectedCategory, setSelectedCategory] = useState('');
-
+	const {searchParams, setSearchParams} = useSearchParams()
+	console.log("GAGAGAGAG", searchParams)
 	const handleSearchChange = (e) => {
-		setSearchValue(e.target.value);
+
+		setSearchValue(e.target.value)
+		let newContext = {
+			...searchParams,
+			search: e.target.value
+		}
+		setSearchParams(newContext)
+		console.log(searchParams)
 	};
 
 	const handleCategoryChange = (e) => {
 		setSelectedCategory(e.target.value);
+		// console.log(selectedCategory)
+		let newContext = {
+			...searchParams,
+			query: {
+				...searchParams.query,
+				categories: e.target.value
+			}
+		}
+		setSearchParams(newContext)
+		console.log(searchParams)
 	};
 
 
@@ -42,6 +63,7 @@ function Navigation({ isLoaded }) {
 					value={searchValue}
 					onChange={handleSearchChange}
 				/>
+				<FontAwesomeIcon icon={faSearch} />
 				<select value={selectedCategory} onChange={handleCategoryChange}>
 					<option value=''>All Categories</option>
 					<option value='Breakfast'>Breakfast</option>
@@ -71,7 +93,7 @@ function Navigation({ isLoaded }) {
 							</NavLink>
 						)}
 					</div>
-				
+
 					<div className='forProfile'>
 						<ProfileButton user={sessionUser} />
 					</div>
