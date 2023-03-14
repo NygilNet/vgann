@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux'
 import { createBusiness } from '../../store/business';
 
-function CreateBusinessForm() {
+export default function CreateBusinessForm () {
     let catList = [
         {id:1, category:'Breakfast'},
          {id:2, category:'Burger'},
@@ -28,12 +28,27 @@ function CreateBusinessForm() {
     const [lat, setLat] = useState('');
     const [price, setPrice] = useState('');
     const [categories, setCategories] = useState('');
+    const [image, setImage] = useState('')
     // seperate state for each category
 
-    const [selectedCategory, setSelectedCategory] = useState('');
-    let togo=''
-    function handleCategoryChange(category) {
-        setSelectedCategory(category);
+    const [selectedCategory, setSelectedCategory] = useState({ 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9:false
+    , 10:false });
+    function handleCategoryChange(e) {  
+        let categoryObj = {
+            ...selectedCategory,
+            [e.target.value]: !selectedCategory[e.target.value]
+        }
+
+        setSelectedCategory(categoryObj)
+        let togo=''
+        for (let i = 1; i <11; i++) {
+            if (selectedCategory[i]) {
+                togo += `${i},`
+                console.log(togo)
+            } 
+        setCategories(togo)
+        
+      }
     }
 
     const history = useHistory();
@@ -52,10 +67,14 @@ function CreateBusinessForm() {
             lng,
             lat,
             price,
-            categories
+            categories,
+            image
+
+
         }
 
-        dispatch(createBusiness(newBusiness)).then(newBiz => history.push(`/businesses/${newBiz.id}`))
+        // dispatch(createBusiness(newBusiness)).then(newBiz => history.push(`/businesses/${newBiz.id}`))
+        dispatch(createBusiness(newBusiness)).then(console.log('succesfully cretaed'))
 
     }
 
@@ -164,19 +183,38 @@ function CreateBusinessForm() {
                         What are some miscellaneous categories you want to add to your business?
                         <div>
                             {catList.map(({id,category}) => (
+                                <>
                                 <label key={category}>
                                     
                                     <input
-                                        type="radio"
+                                        type="checkbox"
                                         name="category"
                                         value={id}
-                                        checked={selectedCategory == category}
-                                        onChange={(e) => handleCategoryChange(e.target.value)}
+                                        onChange={handleCategoryChange}
                                     />
                                     {category}
                                 </label>
+                                   
+                                </>
                             ))}
                         </div>
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <h3>Liven up your spot with photos</h3>
+                        <p>
+                            Competitive pricing can help your listing stand out and rank
+                            higher in search results.
+                        </p>
+                        <input
+                            type="text"
+                            name="previewPhoto"
+                            required
+                            value={image}
+                            placeholder="Preview Image URL"
+                            onChange={(e) =>setImage(e.target.value)}
+                        />
                     </label>
                 </div>
                 <div>
@@ -185,7 +223,21 @@ function CreateBusinessForm() {
             </form>
         </>
     );
-
+    
 }
 
-export default CreateBusinessForm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
