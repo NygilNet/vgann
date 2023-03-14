@@ -130,21 +130,6 @@ def single_business(id):
 
 #Get Business of Current USer
 
-@business_routes.route('/current')
-@login_required
-def current_user_businesses():
-    allbusinesses = db.session.query(Business).filter_by(owner_id=current_user.id).all()
-    togo={}
-    for res in allbusinesses:
-        business = res.to_dict()
-        business['images'] = [img.to_dict() for img in db.session.query(
-            BusinessImage).filter_by(business_id=business["id"]).all()]
-        business['numReviews'] = db.session.query(func.count(
-            Review.id)).filter(Review.business_id == business["id"]).scalar()
-        business['avgRating'] = db.session.query(
-            func.avg(Review.id)).filter(Review.business_id == business["id"]).scalar()
-        togo.update(business)
-    return jsonify(togo)
 
 @business_routes.route('/<int:id>', methods=["PUT"])
 @login_required
