@@ -55,9 +55,9 @@ export default function CategoriesGrid(){
             <img value="French" src="https://i.imgur.com/NOFrSst.png" alt="French"/>
             <h2 value="French">French</h2>
           </div>
-          <div class="card" value="Viatnamese" onClick={handleClick}>
-            <img value="Viatnamese" src="https://i.imgur.com/E48mZBv.png" alt="Vietnamese"/>
-            <h2 value="Viatnamese">Vietnamese</h2>
+          <div class="card" value="Vietnamese" onClick={handleClick}>
+            <img value="Vietnamese" src="https://i.imgur.com/E48mZBv.png" alt="Vietnamese"/>
+            <h2 value="Vietnamese">Vietnamese</h2>
           </div>
           <div class="card" value="Cafe" onClick={handleClick}>
             <img value="Cafe" src="https://i.imgur.com/BM760dU.png" alt="Cafe"/>
