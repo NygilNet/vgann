@@ -3,8 +3,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import { useSearchParams } from '../../context/SearchParamsContext';
-import Image from '../../Logo/image';
-import './Navigation.css';
+import './index.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -52,9 +51,9 @@ function Navigation({ isLoaded }) {
 	}, [location]);
 	return (
 
-		<div className={`headerStyle ${isHomePage ? 'homePageNav' : ''}`}>
-			<div style={{ marginLeft: '50px' }}>
-				<NavLink style={{ marginLeft: '50px', }} exact to="/"><Image /></NavLink>
+		<div className={`${isHomePage ? 'homePageNav' : 'otherPage'}`}>
+			<div id='logo-container'>
+				<NavLink style={{ marginLeft: '50px', }} exact to="/"><img src={isHomePage ? "https://i.imgur.com/bL6SK8e.png" : 'https://i.imgur.com/9YEsE9Z.png'} alt='logo' id='logo-image' /></NavLink>
 			</div>
 			<div className='searchBar'>
 				<input

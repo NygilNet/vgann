@@ -1,23 +1,44 @@
-/* .profile-dropdown {
+.hidden {
+  display: none;
+}
+
+.homePageNav {
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 80%, rgba(0, 0, 0, 0) 100%);
+  opacity: 60%;
+  background-color: transparent;
   position: absolute;
+  display: flex;
+  font-family: Helvetica, sans-serif;
+  justify-content: space-between;
+  padding: 10px;
+  width: 100%;
 }
 
-.hidden {
-  display: none;
-} */
-.hidden {
-  display: none;
-}
-
-.headerStyle {
+.otherPage {
   display: flex;
   font-family: Helvetica, sans-serif;
   justify-content: space-between;
   border-bottom: solid;
   border-color: lightgray;
   padding: 10px;
-
 }
+
+#logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 150px;
+  margin-right: 20px;
+}
+
+
+#logo-image {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+}
+
 
 .navStyle {
   display: flex;
@@ -91,11 +112,4 @@
   margin-top: 1px;
   color: white;
   background-color: rgb(186, 184, 184);
-}
-
-.homePageNav {
-  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 80%, rgba(0, 0, 0, 0) 100%);
-  opacity: 60%;
-  background-color: transparent;
-  position: absolute;
 }
