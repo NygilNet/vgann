@@ -40,6 +40,13 @@
   margin-bottom: 10px;
   width: 100%;
   height: 93px;
+  overflow: hidden;
+}
+
+.review-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .business-name {

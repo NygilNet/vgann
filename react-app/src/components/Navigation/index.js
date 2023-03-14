@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink, useHistory, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
@@ -10,11 +10,11 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { isFiltered } from '../../utils/searchAndFilters';
 
 function Navigation({ isLoaded }) {
+
 	const {searchParams, setSearchParams} = useSearchParams();
 	const sessionUser = useSelector(state => state.session.user);
 	const [searchValue, setSearchValue] = useState('');
 	const [selectedCategory, setSelectedCategory] = useState(searchParams.query.categories);
-	// const [selectedCategory, setSelectedCategory] = useState('');
 	const [openForm, setOpenForm] = useState(false)
 	const history = useHistory()
 	const location = useLocation();
@@ -26,42 +26,37 @@ function Navigation({ isLoaded }) {
 		return setSelectedCategory(searchParams.query.categories)
 	},[searchParams])
 
-	const handleSearchChange = (e) => {
-		setSearchValue(()=>e.target.value);
+  	const handleSearchChange = (e) => {
+  	  setSearchValue(e.target.value);
+  	};
 
-	};
+  	const handleCategoryChange = (e) => {
+  	  setSelectedCategory(e.target.value);
+  	  let newContext = {
+  	    ...searchParams,
+  	    query: {
+  	      ...searchParams.query,
+  	      categories: e.target.value,
+  	    },
+  	  };
+  	  newContext.filters = isFiltered(newContext);
+  	  setSearchParams(newContext);
+  	};
 
-	const handleCategoryChange = (e) => {
-		setSelectedCategory(()=>e.target.value);
-		let newContext = {
-			...searchParams,
-			query: {
-				...searchParams.query,
-				categories: e.target.value
-			}
-		}
-		newContext.filters = isFiltered(newContext)
-		setSearchParams(()=>newContext)
-	};
+  	const searchClicked = (e) => {
+  	  let newContext = {
+  	    ...searchParams,
+  	    search: searchValue,
+  	  };
+  	  newContext.filters = isFiltered(newContext);
+  	  setSearchParams(newContext);
+  	  if (location.pathname === '/businesses') {
+  	    // filterResults(asdad)
+  	  } else {
+  	    history.push('/businesses');
+  	  }
+  	};
 
-	const searchClicked = e => {
-
-		let newContext = {
-			...searchParams,
-			search: searchValue
-		}
-		newContext.filters = isFiltered(newContext)
-		setSearchParams(()=>newContext);
-		if(location.pathname === '/businesses'){
-			// filterResults(asdad)
-		}else{
-			return history.push('/businesses')
-		}
-
-	}
-
-
-	//Navbar background color will be transparent on the homepage
 
 	useEffect(() => {
 	  setIsHomePage(location.pathname === '/');
@@ -96,7 +91,6 @@ function Navigation({ isLoaded }) {
 					<option value='Breakfast'>Breakfast</option>
 					<option value='Burger'>Burger</option>
 					<option value='Italian'>Italian</option>
-					{/* <option value='Breakfast'>Breakfast</option> */}
 					<option value='Thai'>Thai</option>
 					<option value='Chinese'>Chinese</option>
 					<option value='Pizza'>Pizza</option>
@@ -114,14 +108,14 @@ function Navigation({ isLoaded }) {
 								to={'/businesses/new'}
 								style={{ textDecoration: 'none', }}
 							>
-								<h4 style={{ fontStyle: 'italic', marginTop: '5px', marginRight: '10px' }}>
-									Yelp for Business
+								<h4 className={isHomePage ? 'navbar-business-homepage' : 'navbar-business-otherpage'}>
+									For Businesses
 								</h4>
 							</NavLink>
 						)}
 					</div>
 
-					<div className='forProfile'>
+					<div className='navbar-profile'>
 						<ProfileButton user={sessionUser} />
 					</div>
 				</div>

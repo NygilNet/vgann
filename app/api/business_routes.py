@@ -107,6 +107,8 @@ def create_new_business():
         categories=form.categories.data.split(",")
         for cat in categories:
             business.categories.append(Category.query.get(cat))
+        img=BusinessImage(url=request.json.get('image'))
+        business.images.append(img)
         db.session.add(business)
         db.session.commit()
         return jsonify(business.to_dict())
@@ -131,21 +133,6 @@ def single_business(id):
 
 #Get Business of Current USer
 
-@business_routes.route('/current')
-@login_required
-def current_user_businesses():
-    allbusinesses = db.session.query(Business).filter_by(owner_id=current_user.id).all()
-    togo={}
-    for res in allbusinesses:
-        business = res.to_dict()
-        business['images'] = [img.to_dict() for img in db.session.query(
-            BusinessImage).filter_by(business_id=business["id"]).all()]
-        business['numReviews'] = db.session.query(func.count(
-            Review.id)).filter(Review.business_id == business["id"]).scalar()
-        business['avgRating'] = db.session.query(
-            func.avg(Review.id)).filter(Review.business_id == business["id"]).scalar()
-        togo.update(business)
-    return jsonify(togo)
 
 @business_routes.route('/<int:id>', methods=["PUT"])
 @login_required
