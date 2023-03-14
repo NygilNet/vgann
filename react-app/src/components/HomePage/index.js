@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getRecentActivity } from '../../store/recentActivity';
 import './index.css'
 import ReviewTile from './ReviewTile';
+import BusinessTile from './BusinessTile'
 
 const HomePage = () => {
   const dispatch = useDispatch()
@@ -18,7 +19,7 @@ const HomePage = () => {
     );
   }
   const reviews = recentActivity.filter(el => el.type === 'review')
-
+  // const businesses = recentActivity.filter(el => el.type === 'business')
   return (
     <>
       <section id='homePage'>
