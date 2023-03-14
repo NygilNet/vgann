@@ -10,5 +10,31 @@
     width: 100%;
     height: auto;
     object-fit: cover;
+  }
 
+  .recent-activity-container {
+    display: flex;
+    width: 100%;
+    justify-items: center;
+    padding: 0px;
+    margin: 0px;
+  }
+
+  .recent-activity-tiles {
+    margin: 50px 300px 0 300px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center; /* center items horizontally */
+    align-items: center; /* center items vertically */
+  }
+
+  .recent-activity-title{
+    margin: 80px 0 80px 0;
+    font-size: 40px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
   }
