@@ -11,7 +11,8 @@ import FilterSearch from "./components/FilterSearch";
 import HomePage from "./components/HomePage";
 import CreateBusinessForm from "./components/CreateBusiness";
 import WriteReviewForm from "./components/WriteReview";
-
+import ManageBusinesses from "./components/ManageBusinesses";
+import UpdateBusiness from "./components/UpdateBusiness/updatebusiness";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -42,9 +43,16 @@ const categories=['Chiness','THai', 'salam', 'mellim']
           <Route path="/businesses/new">
             <CreateBusinessForm />
           </Route>
-          <Route path="/businesses/:id/reviews/new">
+          <Route exact path="/businesses/:id/reviews/new">
             <WriteReviewForm />
           </Route>
+          <Route path="/businesses/:id/edit" >
+            <UpdateBusiness />
+          </Route>
+          <Route path="/users/:userId/businesses" >
+            <ManageBusinesses />
+          </Route>
+         
         </Switch>
       )}
       <Footer />
