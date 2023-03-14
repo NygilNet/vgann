@@ -55,7 +55,8 @@ export const createBusiness = (business) => async dispatch => {
 
 
 const initialState = {
-  all_businesses: {}
+  all_businesses: {},
+  business: {}
 };
 
 
