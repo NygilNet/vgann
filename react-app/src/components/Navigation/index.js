@@ -3,8 +3,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import { useSearchParams } from '../../context/SearchParamsContext';
-import Image from '../../Logo/image';
-import './Navigation.css';
+import './index.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -13,17 +12,14 @@ function Navigation({ isLoaded }) {
 	const sessionUser = useSelector(state => state.session.user);
 	const [searchValue, setSearchValue] = useState('');
 	const [selectedCategory, setSelectedCategory] = useState('');
-	const {searchParams, setSearchParams} = useSearchParams()
-	// console.log("GAGAGAGAG", searchParams)
+	const {searchParams, setSearchParams} = useSearchParams();
 	const handleSearchChange = (e) => {
-
-		setSearchValue(e.target.value)
+		setSearchValue(e.target.value);
 		let newContext = {
 			...searchParams,
 			search: e.target.value
 		}
-		setSearchParams(newContext)
-		console.log(searchParams)
+		setSearchParams(newContext);
 	};
 
 	const handleCategoryChange = (e) => {
@@ -37,7 +33,6 @@ function Navigation({ isLoaded }) {
 			}
 		}
 		setSearchParams(newContext)
-		console.log(searchParams)
 	};
 
 
@@ -52,9 +47,9 @@ function Navigation({ isLoaded }) {
 	}, [location]);
 	return (
 
-		<div className={`headerStyle ${isHomePage ? 'homePageNav' : ''}`}>
-			<div style={{ marginLeft: '50px' }}>
-				<NavLink style={{ marginLeft: '50px', }} exact to="/"><Image /></NavLink>
+		<div className={`${isHomePage ? 'homePageNav' : 'otherPage'}`}>
+			<div id='logo-container'>
+				<NavLink style={{ marginLeft: '50px', }} exact to="/"><img src={isHomePage ? "https://i.imgur.com/bL6SK8e.png" : 'https://i.imgur.com/9YEsE9Z.png'} alt='logo' id='logo-image' /></NavLink>
 			</div>
 			<div className='searchBar'>
 				<input
@@ -76,7 +71,6 @@ function Navigation({ isLoaded }) {
 					<option value='French'>French</option>
 					<option value='Vietnamese'>Vietnamese</option>
 					<option value='Cafe'>Cafe</option>
-					{/* Add more categories here */}
 				</select>
 			</div>
 			{isLoaded && (
@@ -102,22 +96,5 @@ function Navigation({ isLoaded }) {
 		</div>
 	);
 }
-
-// function Navigation({ isLoaded }){
-// 	const sessionUser = useSelector(state => state.session.user);
-
-// 	return (
-// 		<ul>
-// 			<li>
-// 				<NavLink exact to="/">Home</NavLink>
-// 			</li>
-// 			{isLoaded && (
-// 				<li>
-// 					<ProfileButton user={sessionUser} />
-// 				</li>
-// 			)}
-// 		</ul>
-// 	);
-// }
 
 export default Navigation;
