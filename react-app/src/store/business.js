@@ -107,21 +107,21 @@ const businessesReducer = (state = initialState, action) => {
   switch (action.type) {
     case Load_Single_Businness_Details:
       newState.business=action.payload
-      return newState  
+      return newState
 
     case LOAD_CURRENT_USER_BUSINESSES:
       action.payload.forEach(business => (all_businesses[business.id] = business));
-      
+
       return {
         ...state,
         all_businesses
       }
-      
+
     case ADD_BUSINESS:
       newState.all_businesses[action.payload.id] = action.payload;
       return newState;
     case LOAD_BUSINESSES:
-      
+
       action.payload.businesses.forEach(business => (all_businesses[business.id] = business));
       return {
         ...state,
