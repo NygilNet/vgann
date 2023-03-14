@@ -1,5 +1,6 @@
 
 import { Link } from 'react-router-dom'
+import './BusinessTile.css'
 
 const BusinessTile = ({ business }) => {
 
@@ -15,7 +16,7 @@ const BusinessTile = ({ business }) => {
                     <div className='bussiness-tile-city-state'>{business.name}</div>
                     <div className="bussiness-tile-stars"><i className="fa-regular fa-star"></i>{avgRating}</div>
                 </div>
-                <div className="bussiness-tile-price">${price} night</div>
+                <div className="bussiness-tile-price">${price}</div>
             </div>
         </Link>
     )

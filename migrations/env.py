@@ -30,6 +30,7 @@ def get_engine():
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
+from flask import current_app
 config.set_main_option(
     'sqlalchemy.url', str(get_engine().url).replace('%', '%%'))
 target_db = current_app.extensions['migrate'].db
@@ -97,7 +98,6 @@ def run_migrations_online():
 
         with context.begin_transaction():
             context.run_migrations()
-
 
 if context.is_offline_mode():
     run_migrations_offline()

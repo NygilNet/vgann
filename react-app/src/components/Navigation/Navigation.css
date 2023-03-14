@@ -1,7 +1,101 @@
-.profile-dropdown {
+/* .profile-dropdown {
   position: absolute;
 }
 
 .hidden {
   display: none;
+} */
+.hidden {
+  display: none;
+}
+
+.headerStyle {
+  display: flex;
+  font-family: Helvetica, sans-serif;
+  justify-content: space-between;
+  border-bottom: solid;
+  border-color: lightgray;
+  padding: 10px;
+
+}
+
+.navStyle {
+  display: flex;
+  align-items: center;
+  margin-left: -20px;
+  gap: 15px;
+  margin-right: 60px;
+
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  padding-top: 33%;
+
+
+
+}
+
+.logOut {
+  width: 60px;
+  border-radius: 50%;
+  border: 5px solid black;
+  color: white;
+}
+
+#box {
+  position: relative;
+  height: 1vh;
+}
+
+.forProfile {
+  background-color: white;
+  height: 40px;
+  width: 80px;
+  border-radius: 20px;
+  margin-right: 20px;
+}
+
+.sonMenu {
+  position: absolute;
+  background-color: white;
+  /* border: solid black; */
+  margin: 5px 0px 0px -80px;
+  padding: 20px;
+  width: 150px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  justify-content: center;
+}
+
+.profileBut {
+  background-color: white;
+  height: 40px;
+  width: 80px;
+  border-radius: 20px;
+  margin-top: 1px;
+  margin-right: 20px;
+}
+
+.forManage {
+  border-bottom: 1px solid;
+  border-top: 1px solid;
+}
+
+.logOutBut {
+  display: block;
+  margin-left: 55px;
+  border-radius: 20px;
+  height: 40px;
+  width: 80px;
+  margin-top: 1px;
+  color: white;
+  background-color: rgb(186, 184, 184);
+}
+
+.homePageNav {
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 80%, rgba(0, 0, 0, 0) 100%);
+  opacity: 60%;
+  background-color: transparent;
+  position: absolute;
 }
