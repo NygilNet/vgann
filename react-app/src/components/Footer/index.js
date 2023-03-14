@@ -4,8 +4,8 @@ import './index.css'
 export default function Footer() {
 	return (
         <footer>
-        <div class="footer-top">
-            <div class="footer-column">
+        <div className="footer-top">
+            <div className="footer-column">
             <h3>About</h3>
             <ul>
                 <li><a href="">About VGAN</a></li>
@@ -21,7 +21,7 @@ export default function Footer() {
                 <li><a href="">Your Privacy Choices</a></li>
             </ul>
             </div>
-            <div class="footer-column">
+            <div className="footer-column">
             <h3>Discover</h3>
             <ul>
                 <li><a href="">VGAN Project Cost Guides</a></li>
@@ -36,7 +36,7 @@ export default function Footer() {
                 <li><a href="">VGAN for Business</a></li>
             </ul>
             </div>
-            <div class="footer-column">
+            <div className="footer-column">
             <h3>VGAN for Business</h3>
             <ul>
                 <li><a href="">Business Owner Login</a></li>
@@ -49,10 +49,10 @@ export default function Footer() {
                 <li><a href="">VGAN Blog for Business</a></li>
             </ul>
             </div>
-            <div class="footer-column">
+            <div className="footer-column">
             <h3>VGAN for Business</h3>
             <ul>
-            <div class="footer-column">
+            <div className="footer-column">
             <a href="">Languages <span>&#9660;</span></a>
             <ul>
                 <li><a href="">English</a></li>

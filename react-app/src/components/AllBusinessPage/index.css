@@ -25,7 +25,7 @@
 
   #business-tiles > * {
     flex-basis: calc(33.33% - 10px);
-  }
+  } 
 
   #business-map {
     flex: 1;
