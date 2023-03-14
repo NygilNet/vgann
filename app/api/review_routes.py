@@ -71,6 +71,14 @@ def get_review(id):
         return jsonify(review.to_dict())
 
 
+@review_routes.route('')
+def reviews():
+    all_reviews = {}
+    reviews = Review.query.all()
+    for review in reviews:
+        all_reviews[f"{review.id}"] = review
+    return jsonify(all_reviews)
+
 # Add image to review route
 @review_routes.route('/<int:id>/images', methods=['POST'])
 @login_required
