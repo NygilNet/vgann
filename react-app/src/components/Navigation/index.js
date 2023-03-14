@@ -12,17 +12,14 @@ function Navigation({ isLoaded }) {
 	const sessionUser = useSelector(state => state.session.user);
 	const [searchValue, setSearchValue] = useState('');
 	const [selectedCategory, setSelectedCategory] = useState('');
-	const {searchParams, setSearchParams} = useSearchParams()
-	console.log("GAGAGAGAG", searchParams)
+	const {searchParams, setSearchParams} = useSearchParams();
 	const handleSearchChange = (e) => {
-
-		setSearchValue(e.target.value)
+		setSearchValue(e.target.value);
 		let newContext = {
 			...searchParams,
 			search: e.target.value
 		}
-		setSearchParams(newContext)
-		console.log(searchParams)
+		setSearchParams(newContext);
 	};
 
 	const handleCategoryChange = (e) => {
@@ -36,7 +33,6 @@ function Navigation({ isLoaded }) {
 			}
 		}
 		setSearchParams(newContext)
-		console.log(searchParams)
 	};
 
 
@@ -75,7 +71,6 @@ function Navigation({ isLoaded }) {
 					<option value='French'>French</option>
 					<option value='Vietnamese'>Vietnamese</option>
 					<option value='Cafe'>Cafe</option>
-					{/* Add more categories here */}
 				</select>
 			</div>
 			{isLoaded && (
@@ -101,22 +96,5 @@ function Navigation({ isLoaded }) {
 		</div>
 	);
 }
-
-// function Navigation({ isLoaded }){
-// 	const sessionUser = useSelector(state => state.session.user);
-
-// 	return (
-// 		<ul>
-// 			<li>
-// 				<NavLink exact to="/">Home</NavLink>
-// 			</li>
-// 			{isLoaded && (
-// 				<li>
-// 					<ProfileButton user={sessionUser} />
-// 				</li>
-// 			)}
-// 		</ul>
-// 	);
-// }
 
 export default Navigation;
