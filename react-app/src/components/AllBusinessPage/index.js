@@ -7,6 +7,7 @@ import BusinessesMap from './BusinessesMap'
 // import FilterForm from './FilterForm'
 import './index.css'
 import filterResults from '../../utils/searchAndFilters';
+import FilterSearch from '../FilterSearch';
 
 const AllBusinessPage = () => {
   const {searchParams, setSearchParams} = useSearchParams();
@@ -40,7 +41,7 @@ const AllBusinessPage = () => {
   return (
     <div id='business-container'>
       <section id='business-filter'>
-        {/* <FilterForm /> */}
+        <FilterSearch />
       </section>
       <section id='business-gallery'>
           <div id='business-tiles'>
