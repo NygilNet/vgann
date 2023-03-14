@@ -14,7 +14,7 @@ function Navigation({ isLoaded }) {
 	const [searchValue, setSearchValue] = useState('');
 	const [selectedCategory, setSelectedCategory] = useState('');
 	const {searchParams, setSearchParams} = useSearchParams()
-	console.log("GAGAGAGAG", searchParams)
+	// console.log("GAGAGAGAG", searchParams)
 	const handleSearchChange = (e) => {
 
 		setSearchValue(e.target.value)
