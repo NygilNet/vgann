@@ -5,6 +5,7 @@ import { getBusinesses } from '../../store/business'
 import './index.css'
 import ReviewTile from './ReviewTile';
 import BusinessTile from './BusinessTile'
+import CategoriesGrid from '../CategoriesGrid';
 
 const HomePage = () => {
   const dispatch = useDispatch()
@@ -34,6 +35,9 @@ const HomePage = () => {
         <div className='recent-activity-tiles'>
           {reviews.map(review => <ReviewTile review={review} key={review.id}/>)}
         </div>
+      </section>
+      <section className='categories-tiles'>
+        <CategoriesGrid />
       </section>
     </>
   )

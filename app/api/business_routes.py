@@ -62,6 +62,7 @@ def businesses():
         'state': business.state,
         'lng': business.lng,
         'lat': business.lat,
+        'price': business.price,
         'createdAt': business.created_at,
         'updatedAt': business.updated_at,
         'numReviews': db.session.query(func.count(Review.id)).filter(Review.business_id == business.id).scalar(),

@@ -10,14 +10,21 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { isFiltered } from '../../utils/searchAndFilters';
 
 function Navigation({ isLoaded }) {
+	const {searchParams, setSearchParams} = useSearchParams();
 	const sessionUser = useSelector(state => state.session.user);
 	const [searchValue, setSearchValue] = useState('');
-	const [selectedCategory, setSelectedCategory] = useState('');
-	const {searchParams, setSearchParams} = useSearchParams();
+	const [selectedCategory, setSelectedCategory] = useState(searchParams.query.categories);
+	// const [selectedCategory, setSelectedCategory] = useState('');
 	const [openForm, setOpenForm] = useState(false)
 	const history = useHistory()
 	const location = useLocation();
 	const [isHomePage, setIsHomePage] = useState(false);
+
+	useEffect(()=>{
+		setSelectedCategory(searchParams.query.categories)
+
+		return setSelectedCategory(searchParams.query.categories)
+	},[searchParams])
 
 	const handleSearchChange = (e) => {
 		setSearchValue(()=>e.target.value);
@@ -63,7 +70,19 @@ function Navigation({ isLoaded }) {
 
 		<div className={`${isHomePage ? 'homePageNav' : 'otherPage'}`}>
 			<div id='logo-container'>
-				<NavLink style={{ marginLeft: '50px', }} exact to="/"><img src={isHomePage ? "https://i.imgur.com/bL6SK8e.png" : 'https://i.imgur.com/9YEsE9Z.png'} alt='logo' id='logo-image' /></NavLink>
+				<NavLink style={{ marginLeft: '50px', }} exact to="/"><img src={isHomePage ? "https://i.imgur.com/bL6SK8e.png" : 'https://i.imgur.com/9YEsE9Z.png'} alt='logo' id='logo-image'
+					onClick={()=>{setSearchParams({
+						filters:false,
+						search: '',
+						query: {
+						  city: '',
+						  state: '',
+						  price: '',
+						  categories: '',
+						  features: ''
+						}
+					  })}}
+				/></NavLink>
 			</div>
 			<div className='searchBar'>
 				<input
@@ -77,7 +96,7 @@ function Navigation({ isLoaded }) {
 					<option value='Breakfast'>Breakfast</option>
 					<option value='Burger'>Burger</option>
 					<option value='Italian'>Italian</option>
-					<option value='Breakfast'>Breakfast</option>
+					{/* <option value='Breakfast'>Breakfast</option> */}
 					<option value='Thai'>Thai</option>
 					<option value='Chinese'>Chinese</option>
 					<option value='Pizza'>Pizza</option>
