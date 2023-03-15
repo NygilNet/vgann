@@ -257,6 +257,8 @@ def post_business_image(id):
 @login_required
 def delete_business(id):
     business = Business.query.get(id)
+    print('owner idddddd',business.owner_id)
+    print('userrrrr idddddd',current_user.id)
     if business.owner_id==current_user.id:
         db.session.delete(business)
         db.session.commit()
