@@ -57,6 +57,7 @@ const HomePage = () => {
         </div>
       </section>
       <section className='categories-tiles'>
+        <h2>Catergories</h2>
         <CategoriesGrid />
       </section>
     </>
