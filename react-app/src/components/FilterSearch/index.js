@@ -14,7 +14,7 @@ export default function FilterSearch(){
     const [citiesObj,setCitiesObj] = useState({})
     const [categories,setCategories] = useState([])
     const [catObj,setCatObj] = useState({})
-    const [tester,setTester] = useState([])
+    const [activeFilters,setActiveFilters] = useState({})
 
 
     //Setup arrays for filters
@@ -33,25 +33,21 @@ export default function FilterSearch(){
             citiesArr.forEach(el=> newCityObj[el] = false)
             setCitiesObj(()=>newCityObj)
 
-            // let categoriesArr = Object.values(businesses)
-            // .map(el=> el.categories)
-            // categoriesArr = [].concat(...categoriesArr).map(el=>el.categoryName)
-            // categoriesArr = [...new Set(categoriesArr)]
-            // console.log("categoriesArr-------------->", categoriesArr)
-            // setCategories(()=>categoriesArr)
-            // let newCatObj = {}
-            // for(let cat of categoriesArr){
-            //     console.log(cat)
-            //     console.log("searchParams", searchParams.query.categories)
-            // }
-            // categoriesArr.forEach(el=>{
-            //     if(el===searchParams.query.categories){
-            //         newCatObj[el] = true
-            //     }else{
-            //         newCatObj[el] = false
-            //     }
-            // })
-            // setCatObj(()=>newCatObj)
+            let categoriesArr = Object.values(businesses)
+            .map(el=> el.categories)
+            categoriesArr = [].concat(...categoriesArr).map(el=>el.categoryName)
+            categoriesArr = [...new Set(categoriesArr)]
+            console.log("categoriesArr-------------->", categoriesArr)
+            setCategories(()=>categoriesArr)
+            let newCatObj = {}
+            categoriesArr.forEach(el=>{
+                if(el===searchParams.query.categories){
+                    newCatObj[el] = true
+                }else{
+                    newCatObj[el] = false
+                }
+            })
+            setCatObj(()=>newCatObj)
             // console.log("cat object ----->", newCatObj)
         }
     },[businesses])
@@ -74,14 +70,10 @@ export default function FilterSearch(){
 
 
     useEffect(()=>{
-        // console.log("features111111=====>",featuresObj)
-        // console.log("features555555=====>",tester)
         let featuresQuery = []
         Object.entries(featuresObj).forEach(el=>{
             if(el[1]) featuresQuery.push(el[0])
         })
-        // console.log(featuresQuery)
-        // console.log(featuresQuery.join(','))
         let newContext = {
             ...searchParams,
 			query: {
@@ -90,12 +82,10 @@ export default function FilterSearch(){
 			}
 		}
         newContext.filters = isFiltered(newContext)
-        // console.log(newContext)
         setSearchParams(()=>newContext)
     },[featuresObj])
 
     useEffect(()=>{
-        // console.log(citiesObj)
         let citiesQuery = []
         Object.entries(citiesObj).forEach(el=>{
             if(el[1]) citiesQuery.push(el[0])
@@ -109,23 +99,19 @@ export default function FilterSearch(){
 			}
 		}
         newContext.filters = isFiltered(newContext)
-        // console.log(newContext)
         setSearchParams(()=>newContext)
 
     },[citiesObj])
 
     const handlePriceChange = (e) =>{
-        // console.log(e.target.value)
         let newPriceObj = {
             ...priceFilter,
             [e.target.value]: !priceFilter[e.target.value]
         }
-        // console.log(newPriceObj)
         setPriceFilter(newPriceObj)
     }
 
     const handleFeatureChange = (e) =>{
-        // console.log(e.target.value)
         let newfeatObj = {
             ...featuresObj,
             [e.target.value]: !featuresObj[e.target.value]
@@ -134,7 +120,6 @@ export default function FilterSearch(){
     }
 
     const handleCityChange = e =>{
-        // console.log(e.target.value)
         let newCityObj = {
             ...citiesObj,
             [e.target.value]: !citiesObj[e.target.value]
@@ -144,32 +129,118 @@ export default function FilterSearch(){
 
     const handleCategoryChange = e =>{
         console.log(e.target.value)
+        if(e.target.value===searchParams.query.categories){
+
+            let newContext = {
+                ...searchParams,
+                query: {
+                    ...searchParams.query,
+                    categories: ''
+                }
+            }
+            newContext.filters = isFiltered(newContext)
+            setSearchParams(()=>newContext)
+
+            setCatObj({
+                ...catObj,
+                [e.target.value]:false
+            })
+        }
+        let newCatObj = {
+            ...catObj,
+            [searchParams.query.categories]:false,
+            [e.target.value]:true
+        }
+        setCatObj(()=>newCatObj)
+
+        let newContext = {
+            ...searchParams,
+			query: {
+                ...searchParams.query,
+				categories: e.target.value
+			}
+		}
+        newContext.filters = isFiltered(newContext)
+        setSearchParams(()=>newContext)
     }
 
-    // useEffect(()=>{
-    //     console.log("tester------>", tester)
-    // },[tester,searchParams])
+    useEffect(()=>{
+        console.log("tester------>", searchParams.query)
+        let newCatObj = {}
+        categories.forEach(el=>{
+            newCatObj[el] = el === searchParams.query.categories
+        })
+        setCatObj(()=>newCatObj)
+    },[searchParams.query.categories])
+
+    useEffect(()=>{
+        if(searchParams.filters){
+            let newActive = {}
+            if(searchParams.search.length) newActive.search = searchParams.search
+            if(searchParams.query.city.length) newActive.cities = searchParams.query.city.split(',')
+            if(searchParams.query.price.length) newActive.price = searchParams.query.price.split(',').map(el=> '$'.repeat(Number(el)))
+            if(searchParams.query.categories.length) newActive.categories = searchParams.query.categories.split(',')
+            if(searchParams.query.features.length) newActive.features = searchParams.query.features.split(',')
+            setActiveFilters(()=>newActive)
+            // console.log(newActive)
+        }else{
+            setActiveFilters({})
+        }
+    },[searchParams])
+
+    const clearFilters = e => {
+        setPriceFilter(()=>({1:false,2:false,3:false,4:false}))
+        // setFeatures(()=>[])
+        setFeaturesObj(()=>({}))
+        // setCities(()=>[])
+        setCitiesObj(()=>({}))
+        // setCategories(()=>[])
+        setCatObj(()=>({}))
+        setActiveFilters(()=>({}))
+        setSearchParams(()=>({
+            filters:false,
+            search: '',
+            query: {
+              city: '',
+              state: '',
+              price: '',
+              categories: '',
+              features: ''
+            }
+          }))
+    }
+
 
     return (
         <div className='filters-menu'>
             <h3>Filter Results</h3>
+            {searchParams.filters && Object.keys(activeFilters).map(el=>(
+                <>
+                    <span className='filter-type'>{el} - </span>
+                    {activeFilters[el].map(fi=>(
+                        <span className='filter-single'>{fi} · </span>
+                        ))}<br></br>
+                </>
+
+            ))}
+            <p className='clear-filters' onClick={clearFilters}>{searchParams.filters? 'clear all filters': ''}</p>
             <div>
                 <h5>Price</h5>
                 <div class="price-button-group margin5-top-bottom">
                     <label class="checkbox-label">
-                      <input type="checkbox" value="1" onChange={handlePriceChange} />
+                      <input type="checkbox" value="1" checked={priceFilter[1]} onChange={handlePriceChange} />
                       <span class="label-text">$</span>
                     </label>
                     <label class="checkbox-label">
-                      <input type="checkbox" value="2" onChange={handlePriceChange} />
+                      <input type="checkbox" value="2" checked={priceFilter[2]} onChange={handlePriceChange} />
                       <span class="label-text">$$</span>
                     </label>
                     <label class="checkbox-label">
-                      <input type="checkbox" value="3" onChange={handlePriceChange} />
+                      <input type="checkbox" value="3" checked={priceFilter[3]} onChange={handlePriceChange} />
                       <span class="label-text">$$$</span>
                     </label>
                     <label class="checkbox-label">
-                      <input type="checkbox" value="4" onChange={handlePriceChange} />
+                      <input type="checkbox" value="4" checked={priceFilter[4]} onChange={handlePriceChange} />
                       <span class="label-text">$$$$</span>
                     </label>
                 </div>
@@ -178,7 +249,7 @@ export default function FilterSearch(){
                 <h5>Business Features</h5>
                 {features && features.map(el=>(
                     <label>
-                        <input type="checkbox" value={el} onChange={handleFeatureChange} />
+                        <input type="checkbox" value={el} checked={featuresObj[el]} onChange={handleFeatureChange} />
                         <span class="">{el}</span>
                     </label>
                 ))}
@@ -187,10 +258,18 @@ export default function FilterSearch(){
                 <h5>Cities</h5>
                 {cities && cities.map(el=>(
                     <label>
-                        <input type="checkbox" value={el} onChange={handleCityChange} />
+                        <input type="checkbox" value={el} checked={citiesObj[el]} onChange={handleCityChange} />
                         <span class="">{el}</span>
                     </label>
                 ))}
+            </div>
+            <div class='flex-col margin5-top-bottom push-text'>
+            <h5>Categories</h5>
+            {categories && categories.map(el=>(
+                <label>
+                  <input type="radio" name={el} onClick={handleCategoryChange} value={el} checked={catObj[el]}/>{el}
+                </label>
+            ))}
             </div>
         </div>
     )

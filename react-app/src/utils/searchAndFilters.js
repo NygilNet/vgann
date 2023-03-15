@@ -5,7 +5,6 @@ export default function filterResults(list,search,query){
     if(search.length){
         filteredList = broadSearch(filteredList,search)
     }
-    console.log("filteredList between-->",filteredList)
     if(query.city.length){
         filteredList = queryCity(filteredList,query.city)
     }
