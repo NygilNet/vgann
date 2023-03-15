@@ -33,13 +33,13 @@ export default function FilterSearch(){
             citiesArr.forEach(el=> newCityObj[el] = false)
             setCitiesObj(()=>newCityObj)
 
-            let categoriesArr = Object.values(businesses)
-            .map(el=> el.categories)
-            categoriesArr = [].concat(...categoriesArr).map(el=>el.categoryName)
-            categoriesArr = [...new Set(categoriesArr)]
-            console.log("categoriesArr-------------->", categoriesArr)
-            setCategories(()=>categoriesArr)
-            let newCatObj = {}
+            // let categoriesArr = Object.values(businesses)
+            // .map(el=> el.categories)
+            // categoriesArr = [].concat(...categoriesArr).map(el=>el.categoryName)
+            // categoriesArr = [...new Set(categoriesArr)]
+            // console.log("categoriesArr-------------->", categoriesArr)
+            // setCategories(()=>categoriesArr)
+            // let newCatObj = {}
             // for(let cat of categoriesArr){
             //     console.log(cat)
             //     console.log("searchParams", searchParams.query.categories)
@@ -146,9 +146,9 @@ export default function FilterSearch(){
         console.log(e.target.value)
     }
 
-    useEffect(()=>{
-        console.log("tester------>", tester)
-    },[tester,searchParams])
+    // useEffect(()=>{
+    //     console.log("tester------>", tester)
+    // },[tester,searchParams])
 
     return (
         <div className='filters-menu'>

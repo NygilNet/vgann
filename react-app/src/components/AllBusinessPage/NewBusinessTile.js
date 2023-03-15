@@ -8,17 +8,17 @@ const NewBusinessTile = ({ business }) => {
     const price = Number.parseFloat(business.price).toFixed(2)
     let avgRating = Number.parseFloat(business.avgRating).toFixed(1)
     if(avgRating === 0) avgRating = 'New'
-    console.log("BusinessTile preview image:",business.previewImage[0])
-
+    // console.log("BusinessTile preview image:",business.previewImage[0])
+    if(!business) return null
     return (
         <Link className='bussiness-tile2' key={business.id} to={`businesses/${business.id}`}>
             <div className='business-tile2'>
-            <img className='bussiness-tile-image2' src={business.previewImage[0].url} alt={business.name}></img>
+            <img className='bussiness-tile-image2' src={business.previewImage? business.previewImage[0].url : ''} alt={business.name}></img>
             <div className='business_tile_info'>
                     <h3>{business.name}</h3>
                     <PreviewStars avg={business.avgRating} num={business.numReviews}/>
                     <div class="catagories_display">
-                        {business.categories.map(el=>(<span>{el.categoryName} </span>))}
+                        {business.categories && business.categories.map(el=>(<span>{el.categoryName} </span>))}
                         <span style={{backgroundColor: 'white'}}>{'$'.repeat(price)}</span>
                     </div>
                     <div class="features_display">

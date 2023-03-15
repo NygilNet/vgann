@@ -38,18 +38,18 @@ function queryState(list,query){
     return list.filter(el => new RegExp(query, 'gi').test(el.state))
 }
 function queryCategories(list,query){
-    let filteredList = []
-    let queries = query.split(',')
-    for(let cat of queries){
-        filteredList = [...filteredList,list.filter(el=> scanCategories(cat,el.categories))]
-    }
-    return filteredList
-    // let filteredList = list
+    // let filteredList = []
     // let queries = query.split(',')
     // for(let cat of queries){
-    //     filteredList = filteredList.filter(el=> scanCategories(cat,el.categories))
+    //     filteredList = [...filteredList,list.filter(el=> scanCategories(cat,el.categories))]
     // }
     // return filteredList
+    let filteredList = list
+    let queries = query.split(',')
+    for(let cat of queries){
+        filteredList = filteredList.filter(el=> scanCategories(cat,el.categories))
+    }
+    return filteredList
 }
 function queryPrice(list,query){
     let filteredList = []
