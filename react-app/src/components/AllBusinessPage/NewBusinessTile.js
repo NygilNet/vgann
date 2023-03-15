@@ -8,6 +8,7 @@ const NewBusinessTile = ({ business }) => {
     const price = Number.parseFloat(business.price).toFixed(2)
     let avgRating = Number.parseFloat(business.avgRating).toFixed(1)
     if(avgRating === 0) avgRating = 'New'
+    console.log("BusinessTile preview image:",business.previewImage[0])
 
     return (
         <Link className='bussiness-tile2' key={business.id} to={`businesses/${business.id}`}>
