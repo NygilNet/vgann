@@ -12,9 +12,13 @@ export default function FilterSearch(){
     const [featuresObj,setFeaturesObj] = useState({})
     const [cities,setCities] = useState([])
     const [citiesObj,setCitiesObj] = useState({})
+    const [categories,setCategories] = useState([])
+    const [catObj,setCatObj] = useState({})
+    const [tester,setTester] = useState([])
 
+
+    //Setup arrays for filters
     useEffect(()=>{
-        // console.log("^^^^^^^----",searchParams)
         if(businesses){
             setFeatures(()=>[...new Set(Object.values(businesses).map(el=>el.features).filter(el=>el).join(',').split(','))])
             let newFeaturesObj = {}
@@ -27,6 +31,28 @@ export default function FilterSearch(){
             setCities(()=>citiesArr)
             let newCityObj = {}
             citiesArr.forEach(el=> newCityObj[el] = false)
+            setCitiesObj(()=>newCityObj)
+
+            // let categoriesArr = Object.values(businesses)
+            // .map(el=> el.categories)
+            // categoriesArr = [].concat(...categoriesArr).map(el=>el.categoryName)
+            // categoriesArr = [...new Set(categoriesArr)]
+            // console.log("categoriesArr-------------->", categoriesArr)
+            // setCategories(()=>categoriesArr)
+            // let newCatObj = {}
+            // for(let cat of categoriesArr){
+            //     console.log(cat)
+            //     console.log("searchParams", searchParams.query.categories)
+            // }
+            // categoriesArr.forEach(el=>{
+            //     if(el===searchParams.query.categories){
+            //         newCatObj[el] = true
+            //     }else{
+            //         newCatObj[el] = false
+            //     }
+            // })
+            // setCatObj(()=>newCatObj)
+            // console.log("cat object ----->", newCatObj)
         }
     },[businesses])
 
@@ -48,13 +74,14 @@ export default function FilterSearch(){
 
 
     useEffect(()=>{
-        console.log("features=====>",featuresObj)
+        // console.log("features111111=====>",featuresObj)
+        // console.log("features555555=====>",tester)
         let featuresQuery = []
         Object.entries(featuresObj).forEach(el=>{
             if(el[1]) featuresQuery.push(el[0])
         })
-        console.log(featuresQuery)
-        console.log(featuresQuery.join(','))
+        // console.log(featuresQuery)
+        // console.log(featuresQuery.join(','))
         let newContext = {
             ...searchParams,
 			query: {
@@ -63,12 +90,12 @@ export default function FilterSearch(){
 			}
 		}
         newContext.filters = isFiltered(newContext)
-        console.log(newContext)
+        // console.log(newContext)
         setSearchParams(()=>newContext)
     },[featuresObj])
 
     useEffect(()=>{
-        console.log(citiesObj)
+        // console.log(citiesObj)
         let citiesQuery = []
         Object.entries(citiesObj).forEach(el=>{
             if(el[1]) citiesQuery.push(el[0])
@@ -82,23 +109,23 @@ export default function FilterSearch(){
 			}
 		}
         newContext.filters = isFiltered(newContext)
-        console.log(newContext)
+        // console.log(newContext)
         setSearchParams(()=>newContext)
 
     },[citiesObj])
 
     const handlePriceChange = (e) =>{
-        console.log(e.target.value)
+        // console.log(e.target.value)
         let newPriceObj = {
             ...priceFilter,
             [e.target.value]: !priceFilter[e.target.value]
         }
-        console.log(newPriceObj)
+        // console.log(newPriceObj)
         setPriceFilter(newPriceObj)
     }
 
     const handleFeatureChange = (e) =>{
-        console.log(e.target.value)
+        // console.log(e.target.value)
         let newfeatObj = {
             ...featuresObj,
             [e.target.value]: !featuresObj[e.target.value]
@@ -107,13 +134,21 @@ export default function FilterSearch(){
     }
 
     const handleCityChange = e =>{
-        console.log(e.target.value)
+        // console.log(e.target.value)
         let newCityObj = {
             ...citiesObj,
             [e.target.value]: !citiesObj[e.target.value]
         }
         setCitiesObj(newCityObj)
     }
+
+    const handleCategoryChange = e =>{
+        console.log(e.target.value)
+    }
+
+    // useEffect(()=>{
+    //     console.log("tester------>", tester)
+    // },[tester,searchParams])
 
     return (
         <div className='filters-menu'>
