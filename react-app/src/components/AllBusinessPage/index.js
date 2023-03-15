@@ -16,9 +16,9 @@ const AllBusinessPage = () => {
   const filteredBusinesses = useSelector(state => state.business.filtered_businesses);
   const [businessList,setBusinessList] = useState([])
 
-  // useEffect(() => {
-  //   dispatch(getBusinesses());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(getBusinesses());
+  }, [dispatch]);
 
   useEffect(()=>{
     // console.log("from useEffect", searchParams)
