@@ -40,14 +40,17 @@ export default function CreateBusinessForm () {
         }
 
         setSelectedCategory(categoryObj)
-        let togo=''
+        let togo=[]
         for (let i = 1; i <11; i++) {
             if (selectedCategory[i]) {
-                togo += `${i},`
+                // togo += `${i},`
+                togo.push(i)
+
                 console.log(togo)
             } 
-        setCategories(togo)
         
+            setCategories(togo.join())
+        console.log('dcdicndicndcndicndicndicndckin',categories)
       }
     }
 
@@ -66,7 +69,7 @@ export default function CreateBusinessForm () {
             state,
             lng,
             lat,
-            price,
+            price:+price,
             categories,
             image
 
@@ -167,15 +170,16 @@ export default function CreateBusinessForm () {
                 <div>
                     <label>
                         What price range is your business?
-                        <select
+                        {/* <select
                         onChange={(e) => setPrice(e.target.value)}
                         value={price}
                         >
-                            <option key={1}>$</option>
-                            <option key={2}>$$</option>
-                            <option key={3}>$$$</option>
-                            <option key={4}>$$$$</option>
-                        </select>
+                            <option value={1}>$</option>
+                            <option value={2}>$$</option>
+                            <option value={3}>$$$</option>
+                            <option value={4}>$$$$</option>
+                        </select> */}
+                        <input type={'number'}></input>
                     </label>
                 </div>
                 <div>

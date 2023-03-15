@@ -102,13 +102,16 @@ def create_new_business():
             state=form.state.data,
             lng=form.lng.data,
             lat=form.lat.data,
-            owner_id=current_user.id
+            owner_id=current_user.id,
+            price=form.price.data
         )
         categories=form.categories.data.split(",")
         for cat in categories:
             business.categories.append(Category.query.get(cat))
         img=BusinessImage(url=request.json.get('image'))
+        
         business.images.append(img)
+        db.session.add(img)
         db.session.add(business)
         db.session.commit()
         return jsonify(business.to_dict())
