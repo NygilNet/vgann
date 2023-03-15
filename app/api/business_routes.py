@@ -92,7 +92,10 @@ def businesses():
 def create_new_business():
     form = BusinessForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
+    print(f'\n\n\n {request.json} \n\n\n')
+    print(f'\n\n\n {form.data} \n\n\n')
     if form.validate_on_submit():
+        print('to cjeck form validatevvvvvvvvvvvvvv', form.name.data,)
         business = Business(
             name=form.name.data,
             description=form.description.data,
@@ -103,19 +106,20 @@ def create_new_business():
             lng=form.lng.data,
             lat=form.lat.data,
             owner_id=current_user.id,
+
             price=form.price.data
         )
-        categories=form.categories.data.split(",")
+        categories = form.categories.data.split(",")
         for cat in categories:
             business.categories.append(Category.query.get(cat))
-        img=BusinessImage(url=request.json.get('image'))
-        
+        img = BusinessImage(url=request.json.get('image'))
+
         business.images.append(img)
         db.session.add(img)
         db.session.add(business)
         db.session.commit()
         return jsonify(business.to_dict())
-
+    return jsonify({'errrors':form.errors})
 
 
 @business_routes.route('/<int:id>')

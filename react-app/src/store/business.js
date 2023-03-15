@@ -46,21 +46,12 @@ export const getBusinesses = () => async dispatch => {
 
 
 export const createBusiness = (business) => async dispatch => {
-  const { name, description, features, address, city, state, lng, lat, price, categories } = business
+  console.log('froooooooooom reducerrrrrrrrrr', business)
+  // const { name, description, features, address, city, state, lng, lat, price, categories,owner_id, image } = business
   const response = await fetch('/api/businesses', {
+    headers: { 'Content-Type': 'application/json' },
     method: 'POST',
-    body: JSON.stringify({
-      name,
-      description,
-      features,
-      address,
-      city,
-      state,
-      lng,
-      lat,
-      price,
-      categories
-    })
+    body: JSON.stringify(business)
   })
 
   if (response.ok) {

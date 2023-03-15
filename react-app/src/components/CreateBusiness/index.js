@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { createBusiness } from '../../store/business';
 
 export default function CreateBusinessForm () {
+    const ownerId= useSelector((state) => state.session.user.id)
     let catList = [
         {id:1, category:'Breakfast'},
          {id:2, category:'Burger'},
@@ -24,9 +25,9 @@ export default function CreateBusinessForm () {
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
-    const [lng, setLng] = useState('');
-    const [lat, setLat] = useState('');
-    const [price, setPrice] = useState('');
+    const [lng, setLng] = useState(0);
+    const [lat, setLat] = useState(0);
+    const [price, setPrice] = useState(1);
     const [categories, setCategories] = useState('');
     const [image, setImage] = useState('')
     // seperate state for each category
@@ -57,7 +58,7 @@ export default function CreateBusinessForm () {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const onSubmit = e => {
+    const onSubmit = async (e) => {
         e.preventDefault();
 
         const newBusiness = {
@@ -69,13 +70,13 @@ export default function CreateBusinessForm () {
             state,
             lng,
             lat,
-            price:+price,
+            price,
             categories,
-            image
+            image,
 
 
         }
-
+        console.log("comin from create businesssssss", newBusiness)
         // dispatch(createBusiness(newBusiness)).then(newBiz => history.push(`/businesses/${newBiz.id}`))
         dispatch(createBusiness(newBusiness)).then(console.log('succesfully cretaed'))
 
@@ -152,7 +153,7 @@ export default function CreateBusinessForm () {
                         Longitude?
                         <input
                         type='number'
-                        onChange={(e) => setLng(e.target.value)}
+                        onChange={(e) => setLng(+e.target.value)}
                         value={lng}
                         />
                     </label>
@@ -162,7 +163,7 @@ export default function CreateBusinessForm () {
                         Latitude?
                         <input
                         type='number'
-                        onChange={(e) => setLat(e.target.value)}
+                        onChange={(e) => setLat(+e.target.value)}
                         value={lat}
                         />
                     </label>
@@ -170,16 +171,16 @@ export default function CreateBusinessForm () {
                 <div>
                     <label>
                         What price range is your business?
-                        {/* <select
-                        onChange={(e) => setPrice(e.target.value)}
+                        <select
+                        onChange={(e) => setPrice(+e.target.value)}
                         value={price}
                         >
                             <option value={1}>$</option>
                             <option value={2}>$$</option>
                             <option value={3}>$$$</option>
                             <option value={4}>$$$$</option>
-                        </select> */}
-                        <input type={'number'}></input>
+                        </select>
+                        
                     </label>
                 </div>
                 <div>
