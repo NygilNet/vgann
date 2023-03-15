@@ -57,6 +57,12 @@ function Navigation({ isLoaded }) {
   	  }
   	};
 
+	//  for MANAGAE AND CREATE BUS*INESS
+	const handleCreateAndMAnag = (e) => {
+		if (e.target.value === 'new') history.push(`/businesses/${e.target.value}`)
+		if (e.target.value === 'manage') history.push(`/users/${sessionUser.id}/businesses`)
+	}
+
 
 	useEffect(() => {
 	  setIsHomePage(location.pathname === '/');
@@ -110,14 +116,13 @@ function Navigation({ isLoaded }) {
 				<div className='navStyle'>
 					<div>
 						{sessionUser && (
-							<NavLink
-								to={'/businesses/new'}
-								style={{ textDecoration: 'none', }}
-							>
-								<h4 className={isHomePage ? 'navbar-business-homepage' : 'navbar-business-otherpage'}>
-									For Businesses
-								</h4>
-							</NavLink>
+							<>
+								<select value={selectedCategory} onChange={handleCreateAndMAnag}>
+									<option value=''>Yelp For Business</option>
+									<option value='new'>Create Business</option>
+									<option value='manage'>Manage Your Business</option>
+								</select>
+							</>
 						)}
 					</div>
 
