@@ -5,7 +5,10 @@ import { clearBusiness, getSingleBusiness } from '../../store/business';
 import { clearReviews, getReviews } from '../../store/review';
 import BusinessImages from './BusinessImages';
 import DisplayReviews from './DisplayReviews';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 import './index.css'
+import PreviewStars from './PreviewStars';
 
 const SingleBusinessShow = () => {
   const dispatch = useDispatch();
@@ -38,8 +41,10 @@ const SingleBusinessShow = () => {
     <section id='single-business-top'>
         <BusinessImages images={business.images} />
     </section>
-    <section id='single-business'>
-      <div>{business.name}</div>
+    <section id='single-business-middle'>
+        <div id='single-business-top-header'>
+            <FontAwesomeIcon icon={faUser} id="profile-icon" /><span ><div>{business.name}</div><div><PreviewStars avg={2} /> </div></span>
+        </div>
       <div>{business.city}, {business.state}, {business.country}</div>
       <div id='description-container'>
         <div id="name-description-container">
