@@ -34,7 +34,7 @@ export default function CreateBusinessForm () {
 
     const [selectedCategory, setSelectedCategory] = useState({ 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9:false
     , 10:false });
-    function handleCategoryChange(e) {  
+    function handleCategoryChange(e) {
         let categoryObj = {
             ...selectedCategory,
             [e.target.value]: !selectedCategory[e.target.value]
@@ -48,10 +48,10 @@ export default function CreateBusinessForm () {
                 togo.push(i)
 
                 console.log(togo)
-            } 
-        
+            }
+
             setCategories(togo.join())
-        console.log('dcdicndicndcndicndicndicndckin',categories)
+        // console.log('dcdicndicndcndicndicndicndckin',categories)
       }
     }
 
@@ -76,10 +76,12 @@ export default function CreateBusinessForm () {
 
 
         }
-        console.log("comin from create businesssssss", newBusiness)
-        // dispatch(createBusiness(newBusiness)).then(newBiz => history.push(`/businesses/${newBiz.id}`))
-        dispatch(createBusiness(newBusiness)).then(console.log('succesfully cretaed'))
+        // console.log("comin from create businesssssss", newBusiness)
+        // await dispatch(createBusiness(newBusiness)).then(console.log('succesfully cretaed'))
 
+        // dispatch(createBusiness(newBusiness)).then(newBiz => history.push(`/businesses/${newBiz.id}`))
+        const newBiz = await dispatch(createBusiness(newBusiness))
+        history.push(`/businesses/${newBiz.id}`)
     }
 
     return (
@@ -180,7 +182,7 @@ export default function CreateBusinessForm () {
                             <option value={3}>$$$</option>
                             <option value={4}>$$$$</option>
                         </select>
-                        
+
                     </label>
                 </div>
                 <div>
@@ -190,7 +192,7 @@ export default function CreateBusinessForm () {
                             {catList.map(({id,category}) => (
                                 <>
                                 <label key={category}>
-                                    
+
                                     <input
                                         type="checkbox"
                                         name="category"
@@ -199,7 +201,7 @@ export default function CreateBusinessForm () {
                                     />
                                     {category}
                                 </label>
-                                   
+
                                 </>
                             ))}
                         </div>
@@ -228,21 +230,5 @@ export default function CreateBusinessForm () {
             </form>
         </>
     );
-    
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
