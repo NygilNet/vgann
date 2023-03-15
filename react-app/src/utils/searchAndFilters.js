@@ -19,7 +19,7 @@ export default function filterResults(list,search,query){
         filteredList = queryPrice(filteredList,query.price)
     }
     if(query.features.length){
-        filteredList = queryFeatures(filteredList,query.featues)
+        filteredList = queryFeatures(filteredList,query.features)
     }
     return filteredList
 }
@@ -41,9 +41,9 @@ function queryCategories(list,query){
 }
 function queryPrice(list,query){
     let filteredList = []
-    console.log("incoming list", list)
+    // console.log("incoming list", list)
     let prices = query.split(',')
-    console.log("prices", prices)
+    // console.log("prices", prices)
     for(let price of prices){
         filteredList = [...filteredList,...list.filter(el=>el.price == Number(price))]
     }
@@ -51,7 +51,10 @@ function queryPrice(list,query){
 }
 
 function queryFeatures(list,query){
+    // console.log("Im here!", query)
+    if(!query) return list
     let features = query.split(',')
+    // console.log("Im here!2")
     let filteredList = list
     for(let feat of features){
         filteredList = filteredList.filter(el=> new RegExp(feat, 'gi').test(el.features))

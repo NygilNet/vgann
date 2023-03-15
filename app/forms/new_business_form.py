@@ -4,14 +4,20 @@ from wtforms.validators import DataRequired, NumberRange,Length
 
 
 class BusinessForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired(), Length(max=150)])
-    description = TextAreaField('Description', validators=[DataRequired()])
+    name = StringField('Name', validators=[DataRequired(), Length(
+        max=150, message='from name data required')])
+    description = TextAreaField('Description', validators=[
+                                DataRequired(message='from description data required')])
     features = TextAreaField('Features')
     address = StringField('Address', validators=[
-                          DataRequired(), Length(max=150)])
-    city = StringField('City', validators=[DataRequired(), Length(max=150)])
-    state = StringField('State', validators=[DataRequired(), Length(max=2)])
-    lng = FloatField('Longitude', validators=[DataRequired()])
-    lat = FloatField('Latitude', validators=[DataRequired()])
-    price = IntegerField('Price', validators=(DataRequired(), NumberRange(min=1, max=4)))
+                          DataRequired(message='from addrees data required'), Length(max=150, message='from length address data required')])
+    city = StringField('City', validators=[DataRequired(
+        message='from city data required'), Length(max=150, message='from length city data required')])
+    state = StringField('State', validators=[DataRequired(
+        message='from state data required'), Length(max=2, message='from state length data required')])
+    lng = FloatField('Longitude', validators=[
+                     DataRequired(message='from lng data required')])
+    lat = FloatField('Latitude', validators=[
+                     DataRequired(message='from lat data required')])
+    price = IntegerField('Price')
     categories=StringField("Categories")
