@@ -97,7 +97,7 @@ def create_new_business():
         categories = form.categories.data.split(",")
         for cat in categories:
             business.categories.append(Category.query.get(cat))
-        img = BusinessImage(url=request.json.get('image'))
+        img = BusinessImage(url=request.json.get('image'), preview=True)
 
         business.images.append(img)
         db.session.add(img)
