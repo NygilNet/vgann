@@ -34,10 +34,13 @@ const SingleBusinessShow = () => {
   const userHasPosted = user && reviewsArray.some(r => r.userId === user.id);
 
   return (
+    <>
+    <section id='single-business-top'>
+        <BusinessImages images={business.images} />
+    </section>
     <section id='single-business'>
       <div>{business.name}</div>
       <div>{business.city}, {business.state}, {business.country}</div>
-      <BusinessImages images={business.images} />
       <div id='description-container'>
         <div id="name-description-container">
           <div id="hosted-by">Hosted by -insert owner name-</div>
@@ -69,6 +72,7 @@ const SingleBusinessShow = () => {
         </ul>
       </div>
     </section>
+    </>
   );
 };
 

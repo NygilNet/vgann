@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { signUp } from "../../store/session";
-import "./SignupForm.css";
+import "./index.css";
 
 function SignupFormModal() {
 	const dispatch = useDispatch();
@@ -12,6 +12,15 @@ function SignupFormModal() {
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [errors, setErrors] = useState([]);
 	const { closeModal } = useModal();
+	const [disablButton, setDisableButton] = useState(true)
+
+	useEffect(() => {
+		if (email.length && username.length && password.length && confirmPassword.length)  setDisableButton(false)
+	  }, [email, username, password, confirmPassword])
+
+	  useEffect(() => {
+		if (!email.length || !username.length || !password.length || !confirmPassword.length)  setDisableButton(true)
+	  }, [email, username, password, confirmPassword])
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -30,53 +39,51 @@ function SignupFormModal() {
 	};
 
 	return (
-		<>
+		<div id='sign-up'>
 			<h1>Sign Up</h1>
-			<form onSubmit={handleSubmit}>
-				<ul>
-					{errors.map((error, idx) => (
-						<li key={idx}>{error}</li>
-					))}
-				</ul>
+			<form onSubmit={handleSubmit} id='sign-up-form'>
+				<p>
+					{errors.length ? 'Invalid Credentials' : ''}
+				</p>
 				<label>
-					Email
 					<input
 						type="text"
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
+						placeholder='Email'
 						required
 					/>
 				</label>
 				<label>
-					Username
 					<input
 						type="text"
 						value={username}
 						onChange={(e) => setUsername(e.target.value)}
+						placeholder='Username'
 						required
 					/>
 				</label>
 				<label>
-					Password
 					<input
 						type="password"
+						placeholder="Password"
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
 						required
 					/>
 				</label>
 				<label>
-					Confirm Password
 					<input
 						type="password"
+						placeholder="Confirm Password"
 						value={confirmPassword}
 						onChange={(e) => setConfirmPassword(e.target.value)}
 						required
 					/>
 				</label>
-				<button type="submit">Sign Up</button>
+				<button type="submit" id='sign-in-button' disabled={disablButton}>Sign Up</button>
 			</form>
-		</>
+		</div>
 	);
 }
 
