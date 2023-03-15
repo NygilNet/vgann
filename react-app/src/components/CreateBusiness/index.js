@@ -112,7 +112,7 @@ export default function CreateBusinessForm () {
                 </div>
                 <div>
                     <label>
-                        Give us a few tags for your business.
+                        Give us a few tags for your business. (i.e. Open All Day,Delivery,...)
                         <textarea
                         type='text'
                         onChange={(e) => setFeatures(e.target.value)}

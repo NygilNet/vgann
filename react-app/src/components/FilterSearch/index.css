@@ -1,4 +1,5 @@
 .price-button-group {
+    /* border: 1px solid red; */
     display: inline-block;
     font-size: 16px;
   }
@@ -41,4 +42,14 @@
 
   .label-text {
     margin: 0;
+  }
+
+  .filters-menu{
+    font-size: 18px;
+    margin: 5px;
+    padding: 15px;
+  }
+
+  .push-text span{
+    margin-left: 5px;
   }
