@@ -32,7 +32,8 @@ class Business(db.Model):
     owner = db.relationship("User", back_populates="businesses")
     categories = db.relationship("Category",secondary=business_categories, back_populates='businesses')
     images = db.relationship("BusinessImage", back_populates="business", cascade="all,delete")
-    reviews = db.relationship("Review", back_populates='business')
+    reviews = db.relationship(
+        "Review", back_populates='business', cascade="all,delete")
 
     def to_dict(self):
         return {

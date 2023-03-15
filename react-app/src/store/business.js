@@ -7,6 +7,9 @@ const Load_Single_Businness_Details = 'businesses/Load_Single_Businness_Details'
 const LOAD_FILTERED = 'businesses/LOAD_FILTERED'
 const REMOVE_BUSINESS = 'businesses/REMOVE_BUSINESS'
 
+// Deletening one business from alll businesses
+const DELETE_BUSINESS_FROM_ALL ='businesses/DELETE_BUSINESS_FROM_ALL'
+
 // action creators
 const loadBusinesses = payload => ({
   type: LOAD_BUSINESSES,
@@ -31,6 +34,14 @@ const loadSingleBusiness = payload =>({
 })
 
 
+const deleteonebusiness = (idpayload) =>{
+  return{
+    type:DELETE_BUSINESS_FROM_ALL,
+    idpayload
+  }
+}
+
+
 export const loadFiltered = payload =>({
   type: LOAD_FILTERED,
   payload
@@ -51,7 +62,6 @@ export const getBusinesses = () => async dispatch => {
 
 
 export const createBusiness = (business) => async dispatch => {
-  console.log('froooooooooom reducerrrrrrrrrr', business)
   // const { name, description, features, address, city, state, lng, lat, price, categories,owner_id, image } = business
   const response = await fetch('/api/businesses', {
     headers: { 'Content-Type': 'application/json' },
@@ -68,6 +78,20 @@ export const createBusiness = (business) => async dispatch => {
 
 
 };
+
+export const updateBusiness = (id, business) => async dispatch => {
+  const response = await fetch(`/api/businesses/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(business)
+  });
+
+  if (response.ok) {
+    const data = response.json();
+    dispatch(addBusiness(data));
+    return data;
+  }
+}
 
 
 export const getUserBusinesses = (id) => async dispatch => {
@@ -94,6 +118,18 @@ export const clearBusiness = () => async dispatch => {
   dispatch(removeBusiness())
 }
 
+export const removebuinessfunc = (id) => async dispatch =>{
+  const response = await fetch (`/api/businesses/${id}`,{
+    method:"DELETE",
+    headers: { 'Content-Type': 'application/json' },
+  })
+  if (response.ok){
+    dispatch(deleteonebusiness(id))
+  }
+}
+
+
+
 const initialState = {
   all_businesses: {},
   business: {},
@@ -105,6 +141,9 @@ const businessesReducer = (state = initialState, action) => {
   let newState = {...state}
   const all_businesses = {};
   switch (action.type) {
+    case DELETE_BUSINESS_FROM_ALL:
+      delete newState.all_businesses[action.idpayload]
+      return newState
     case Load_Single_Businness_Details:
       newState.business=action.payload
       return newState

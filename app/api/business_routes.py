@@ -80,7 +80,6 @@ def create_new_business():
     print(f'\n\n\n {request.json} \n\n\n')
     print(f'\n\n\n {form.data} \n\n\n')
     if form.validate_on_submit():
-        print('to cjeck form validatevvvvvvvvvvvvvv', form.name.data,)
         business = Business(
             name=form.name.data,
             description=form.description.data,
@@ -258,6 +257,8 @@ def post_business_image(id):
 @login_required
 def delete_business(id):
     business = Business.query.get(id)
+    print('owner idddddd',business.owner_id)
+    print('userrrrr idddddd',current_user.id)
     if business.owner_id==current_user.id:
         db.session.delete(business)
         db.session.commit()
