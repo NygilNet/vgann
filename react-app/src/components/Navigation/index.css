@@ -1,27 +1,27 @@
-.hidden {
-  display: none;
-}
-
 .homePageNav {
   background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 80%, rgba(0, 0, 0, 0) 100%);
-  opacity: 60%;
-  /* background-color: transparent; */
   position: absolute;
   display: flex;
   font-family: Helvetica, sans-serif;
   justify-content: space-between;
+  justify-items: center;
   padding: 10px;
   width: 100%;
   height: 100px;
+  z-index: 0;
 }
 
 .otherPage {
   display: flex;
   font-family: Helvetica, sans-serif;
   justify-content: space-between;
-  border-bottom: solid;
-  border-color: lightgray;
+  justify-items: center;
   padding: 10px;
+  width: 100%;
+  height: 100px;
+  z-index: 0;
+  background-color: #fff;
+  border-bottom: 1px solid #ebebeb;
 }
 
 #logo-container {
@@ -54,21 +54,6 @@
   display: flex;
   align-items: center;
   padding-top: 33%;
-
-
-
-}
-
-.logOut {
-  width: 60px;
-  border-radius: 50%;
-  border: 5px solid black;
-  color: white;
-}
-
-#box {
-  position: relative;
-  height: 1vh;
 }
 
 .navbar-profile {
@@ -78,59 +63,33 @@
   margin-right: 20px;
 }
 
-.sonMenu {
-  position: absolute;
-  background-color: white;
-  /* border: solid black; */
-  margin: 5px 0px 0px -80px;
-  padding: 20px;
-  width: 150px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+.searchBar {
+  display: flex;
+  position: relative;
+  z-index: 1;
   justify-content: center;
-}
-
-.profileBut {
-  background-color: white;
-  height: 40px;
-  width: 80px;
-  border-radius: 20px;
-  margin-top: 1px;
-  margin-right: 20px;
-}
-
-.forManage {
-  border-bottom: 1px solid;
-  border-top: 1px solid;
-}
-
-.logOutBut {
-  display: block;
-  margin-left: 55px;
-  border-radius: 20px;
-  height: 40px;
-  width: 80px;
-  margin-top: 1px;
-  color: white;
-  background-color: rgb(186, 184, 184);
+  align-items: center;
 }
 
 .searchBar input {
   height: 45px;
   padding: 0 10px;
-  border-radius: 5px;
+  margin: 0 0 20px 0;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
   border: none;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-  width: 700px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  width: 500px;
+  background-color: white
 }
 
 .searchBar select {
-  margin-left: 10px;
-  height: 30px;
+  height: 45px;
+  width: 200px;
   padding: 0 10px;
-  border-radius: 5px;
+  margin: 0 0 20px 0;
   border: none;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-  opacity: 1;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-business-homepage {
@@ -145,4 +104,23 @@
   margin-top: '5px';
   margin-right: '10px';
   color: black;
+}
+
+#search-icon {
+  color: white;
+  height: 20px;
+}
+
+#search-icon-container {
+  height: 45px;
+  width: 50px;
+  background-color: rgba(224,7,7,1);
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  margin: 0 0 20px 0;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
