@@ -29,16 +29,13 @@ export const getReviews = () => async dispatch => {
     }
 }
 
-export const postReview = (post) => async dispatch => {
-    const { user_id, business_id, stars, review } = post;
-    const response = await fetch(`api/businesses/${business_id}/reviews`, {
+export const postReview = (id, post) => async dispatch => {
+    console.log("ID ", id)
+    console.log("BODY ", post)
+    const response = await fetch(`/api/businesses/${id}/reviews`, {
         method: 'POST',
-        body: JSON.stringify({
-            user_id,
-            business_id,
-            stars,
-            review
-        })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(post)
     })
 
     if (response.ok) {

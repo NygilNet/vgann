@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { postReview } from "../../store/review";
+import { getSingleBusiness } from "../../store/business";
 
 
 function WriteReviewForm() {
@@ -12,26 +13,31 @@ function WriteReviewForm() {
     const history = useHistory();
     const dispatch = useDispatch();
     const userId = useSelector(state => state.session.user?.id);
+    const business = useSelector(state => state.business.business);
     const { id } = useParams();
 
-    const onSubmit = e => {
+    useEffect(() => {
+        dispatch(getSingleBusiness(id))
+    }, [dispatch, id])
+
+    const onSubmit = async e => {
         e.preventDefault();
 
         const newReview = {
-            user_id: userId,
-            business_id: id,
             stars,
             review
         }
 
-        dispatch(postReview(newReview));
+        await dispatch(postReview(id, newReview));
 
         return history.push(`/businesses/${id}`)
     };
 
+    if (!Object.values(business)[0]) return null;
+
     return (
         <>
-            <h1>hello from write review page</h1>
+            <h1>Write a review for {business.name}</h1>
             <form
             className="write-review-form"
             onSubmit={onSubmit}

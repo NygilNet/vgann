@@ -77,8 +77,6 @@ def businesses():
 def create_new_business():
     form = BusinessForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
-    print(f'\n\n\n {request.json} \n\n\n')
-    print(f'\n\n\n {form.data} \n\n\n')
     if form.validate_on_submit():
         business = Business(
             name=form.name.data,
@@ -180,26 +178,8 @@ def update_business(id):
 def create_review(id):
     # Get the review data from the form fields
     form=ReviewForm()
-    # Get the user id from the session
-    user_id = current_user.id
-    # Get review and stars data from form
-    review=form.review.data
-    stars=form.stars.data
-
-    # Error handler 1: Either Review or stars data is missing
-    if stars is None or review is None:
-        errors = {}
-        if stars is None:
-            errors['stars'] = "Stars must be an integer from 1 to 5"
-        if review is None:
-            errors['review'] = "Review text is required"
-        return jsonify({
-            "errors": errors,
-            "statusCode": 400
-        }), 400
-
     # Error handler 2: Review from the current user already exists for the business
-    reviews = Review.query.filter_by(user_id=user_id,business_id=id).all()
+    reviews = Review.query.filter_by(user_id=current_user.id,business_id=id).all()
     if reviews:
         return jsonify({
             "message": "User already has a review for this business",
@@ -208,21 +188,19 @@ def create_review(id):
 
     form["csrf_token"].data = request.cookies["csrf_token"]
     if form.validate_on_submit():
-        review = Review(
-            review=review,
-            stars=stars,
-            user_id=user_id,
+        created_review = Review(
+            review=form.review.data,
+            stars=form.stars.data,
+            user_id=current_user.id,
             business_id=id
         )
-        db.session.add(review)
+        db.session.add(created_review)
         db.session.commit()
 
         # Return a successful response
-        return jsonify({
-            'success': True,
-            'message': 'Review created successfully',
-            'review': review.to_dict()
-        }), 201
+        return jsonify({'message': 'success'})
+        # return jsonify(created_review.to_dict()), 201
+    return jsonify({'message': 'validation failed'})
 
 
 @business_routes.route('/<int:id>/reviews')
@@ -257,8 +235,6 @@ def post_business_image(id):
 @login_required
 def delete_business(id):
     business = Business.query.get(id)
-    print('owner idddddd',business.owner_id)
-    print('userrrrr idddddd',current_user.id)
     if business.owner_id==current_user.id:
         db.session.delete(business)
         db.session.commit()
