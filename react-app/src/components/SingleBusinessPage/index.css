@@ -1,9 +1,13 @@
+#single-business-top {
+    z-index: 0;
+}
 #single-business {
     display: flex;
     justify-content: center;
     flex-direction: column;
     width: 80%;
     margin: 0 10%;
+    z-index: 1;
 }
 
 #description-container {
@@ -13,12 +17,14 @@
     justify-content: space-between;
     border-bottom: 2px solid black;
     margin-top: 10px;
+    z-index: 1;
 }
 
 #name-description-container {
     display: flex;
     flex-direction: column;
     width: 66%;
+    z-index: 1;
 }
 
 #reserve-container {
@@ -72,10 +78,12 @@ margin-top: 15px
 #hosted-by {
     font-size: 20px;
     padding: 4px 0;
+    color: white;
 }
 
 .single-business-display-reviews-list {
     list-style: none;
     display: flex;
     flex-direction: column-reverse;
+    z-index: 1;
 }

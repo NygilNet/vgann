@@ -20,4 +20,3 @@ const BusinessImages = ({ images }) => {
 };
 
 export default BusinessImages;
-
