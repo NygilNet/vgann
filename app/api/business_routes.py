@@ -80,7 +80,6 @@ def create_new_business():
     print(f'\n\n\n {request.json} \n\n\n')
     print(f'\n\n\n {form.data} \n\n\n')
     if form.validate_on_submit():
-        print('to cjeck form validatevvvvvvvvvvvvvv', form.name.data,)
         business = Business(
             name=form.name.data,
             description=form.description.data,

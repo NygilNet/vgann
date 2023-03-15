@@ -51,7 +51,6 @@ export const getBusinesses = () => async dispatch => {
 
 
 export const createBusiness = (business) => async dispatch => {
-  console.log('froooooooooom reducerrrrrrrrrr', business)
   // const { name, description, features, address, city, state, lng, lat, price, categories,owner_id, image } = business
   const response = await fetch('/api/businesses', {
     headers: { 'Content-Type': 'application/json' },
@@ -68,6 +67,20 @@ export const createBusiness = (business) => async dispatch => {
 
 
 };
+
+export const updateBusiness = (id, business) => async dispatch => {
+  const response = await fetch(`/api/businesses/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(business)
+  });
+
+  if (response.ok) {
+    const data = response.json();
+    dispatch(addBusiness(data));
+    return data;
+  }
+}
 
 
 export const getUserBusinesses = (id) => async dispatch => {

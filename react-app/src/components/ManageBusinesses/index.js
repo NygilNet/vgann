@@ -11,12 +11,12 @@ export default function ManageBusinesses(){
     useEffect(() => {
         dispatch(getUserBusinesses(userId))
     },[dispatch, userId])
-    if (!businesses){
-        return 
-    }
+
+    if (!businesses[0]) return null
+
     return(
         <>
-        {!businesses ? (<h1>No Businesses to Display </h1>) : (
+        {!businesses[0] ? (null) : (
                 <div className='forfirst'>
                     {businesses.map((business) => {
                         return (
@@ -24,9 +24,8 @@ export default function ManageBusinesses(){
                                 <div className='forNav' >
                                     <div >
                                         <div className='spotClass' >
-                                            {console.log(business.previewimage.url)}
-                                            <img src={business.previewimage.url} className='forImage'></img>
-                                            
+                                            {business.previewimage ? (<img src={business.previewimage.url} className='forImage'></img>) : (<p>No image provided</p>)}
+
                                         </div>
                                         <div className='forInside'>
                                             <div>{business.city}, {business.state}</div>
@@ -43,9 +42,9 @@ export default function ManageBusinesses(){
                             </nav>
                         )
                     })}
-                </div> 
+                </div>
         )}
         </>
-        
+
     )
 }
