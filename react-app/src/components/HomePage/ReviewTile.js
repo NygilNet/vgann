@@ -8,7 +8,7 @@ import { faLightbulb } from '@fortawesome/free-regular-svg-icons';
 import { faFaceSmile } from '@fortawesome/free-regular-svg-icons';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
-
+import PreviewStars from '../AllBusinessPage/PreviewStars';
 
 const ReviewTile = ({ review: { id, username, revImgUrl, name, businessId, businessName, stars, review } }) => {
 
@@ -26,12 +26,13 @@ const ReviewTile = ({ review: { id, username, revImgUrl, name, businessId, busin
           )}
           <Link className="business-name" to={`/businesses/${businessId}`}>{businessName}</Link>
           <div className="review-stars">
-            {Array.from({ length: 5 }, (_, index) => (
+            <PreviewStars avg={stars} num={''}/>
+            {/* {Array.from({ length: 5 }, (_, index) => (
               <FontAwesomeIcon
                 key={index}
                 icon={index < stars ? fullStar : emptyStar}
               />
-            ))}
+            ))} */}
           </div>
           <div className="review-content">{review}</div>
           <div><Link to={`/businesses/${businessId}`} className="review-keep-reading">Conitinue reading...</Link></div>
