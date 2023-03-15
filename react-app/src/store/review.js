@@ -1,6 +1,7 @@
 
 const LOAD_REVIEWS = 'reviews/LOAD_REVIEWS'
 const ADD_REVIEW = 'reviews/ADD_REVIEW'
+const REMOVE_REVIEWS = 'reviews/REMOVE_REVIEWS'
 
 // action creators
 const loadReviews = payload => ({
@@ -13,6 +14,10 @@ const addReview = payload => ({
     type: ADD_REVIEW,
     payload
 });
+
+const removeReviews = () => ({
+    type: REMOVE_REVIEWS
+  })
 
 
 // thunk functions
@@ -44,6 +49,10 @@ export const postReview = (post) => async dispatch => {
     }
 };
 
+export const clearReviews = () => async dispatch => {
+    dispatch(removeReviews())
+}
+
 const initialState = {}
 
 
@@ -56,6 +65,8 @@ const reviewReducer = (state = initialState, action) => {
         case ADD_REVIEW:
             newState[action.payload.id] = action.payload;
             return newState;
+        case REMOVE_REVIEWS:
+            return {}
         default:
             return state;
     }

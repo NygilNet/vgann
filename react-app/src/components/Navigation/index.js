@@ -68,22 +68,28 @@ function Navigation({ isLoaded }) {
 	  setIsHomePage(location.pathname === '/');
 	}, [location]);
 	return (
-
-		<div className={`${isHomePage ? 'homePageNav' : 'otherPage'}`}>
-			<div id='logo-container'>
-				<NavLink style={{ marginLeft: '50px', }} exact to="/"><img src={isHomePage ? "https://i.imgur.com/bL6SK8e.png" : 'https://i.imgur.com/9YEsE9Z.png'} alt='logo' id='logo-image'
-					onClick={()=>{setSearchParams({
-						filters:false,
+		<div class={`${isHomePage ? 'homePageNav' : 'otherPage'}`}>
+			<div id="logo-container">
+				<NavLink style={{ marginLeft: '50px' }} exact to="/">
+				<img
+					src={isHomePage ? "https://i.imgur.com/bL6SK8e.png" : 'https://i.imgur.com/9YEsE9Z.png'}
+					alt="logo"
+					id="logo-image"
+					onClick={() => {
+					setSearchParams({
+						filters: false,
 						search: '',
 						query: {
-						  city: '',
-						  state: '',
-						  price: '',
-						  categories: '',
-						  features: ''
+						city: '',
+						state: '',
+						price: '',
+						categories: '',
+						features: ''
 						}
-					  })}}
-				/></NavLink>
+					})
+					}}
+				/>
+				</NavLink>
 			</div>
 			<div className='searchBar'>
 				<input
@@ -104,7 +110,7 @@ function Navigation({ isLoaded }) {
 					<option value='Vietnamese'>Vietnamese</option>
 					<option value='Cafe'>Cafe</option>
 				</select>
-				<FontAwesomeIcon icon={faSearch} onClick={searchClicked}/>
+				<button id='search-icon-container' onClick={searchClicked}><FontAwesomeIcon icon={faSearch} id='search-icon'/></button>
 			</div>
 			{isLoaded && (
 				<div className='navStyle'>

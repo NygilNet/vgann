@@ -71,22 +71,7 @@ def businesses():
         'categories':[category.to_dict() for category in business.categories],
     } for business in query.all()]
 
-    #Create pins for Mapbox map
-    pins = []
-    for business in businesses_dict:
-        pin = {
-            'type': 'Feature',
-            'geometry': {
-                'type': 'Point',
-                'coordinates': [business['lng'], business['lat']]
-            },
-            'properties': {
-                'title': business['name'],
-                'description': business['description']
-            }
-        }
-        pins.append(pin)
-    return jsonify({'businesses': businesses_dict, 'pins': pins})
+    return jsonify({'businesses': businesses_dict})
 
 @business_routes.route('', methods=["POST"])
 def create_new_business():

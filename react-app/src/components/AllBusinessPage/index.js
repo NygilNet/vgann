@@ -8,6 +8,7 @@ import BusinessesMap from './BusinessesMap'
 import './index.css'
 import filterResults from '../../utils/searchAndFilters';
 import FilterSearch from '../FilterSearch';
+import NewBusinessTile from './NewBusinessTile';
 
 const AllBusinessPage = () => {
   const {searchParams, setSearchParams} = useSearchParams();
@@ -16,9 +17,9 @@ const AllBusinessPage = () => {
   const filteredBusinesses = useSelector(state => state.business.filtered_businesses);
   const [businessList,setBusinessList] = useState([])
 
-  // useEffect(() => {
-  //   dispatch(getBusinesses());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(getBusinesses());
+  }, [dispatch]);
 
   useEffect(()=>{
     // console.log("from useEffect", searchParams)
@@ -44,7 +45,7 @@ const AllBusinessPage = () => {
       </section>
       <section id='business-gallery'>
           <div id='business-tiles'>
-          {searchParams.filters && filteredBusinesses? Object.values(filteredBusinesses).map(business => <BusinessTile business={business} key={business.id}/>):Object.values(businesses).map(business => <BusinessTile business={business} key={business.id}/>)}
+          {searchParams.filters && filteredBusinesses? Object.values(filteredBusinesses).map(business => <NewBusinessTile business={business} key={business.id}/>):Object.values(businesses).map(business => <NewBusinessTile business={business} key={business.id}/>)}
           </div>
       </section>
       <section id='business-map'>

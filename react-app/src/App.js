@@ -13,6 +13,7 @@ import CreateBusinessForm from "./components/CreateBusiness";
 import WriteReviewForm from "./components/WriteReview";
 import ManageBusinesses from "./components/ManageBusinesses";
 import UpdateBusiness from "./components/UpdateBusiness/updatebusiness";
+import SingleBusiness from "./components/SingleBusinessPage";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -52,7 +53,9 @@ const categories=['Chiness','THai', 'salam', 'mellim']
           <Route path="/users/:userId/businesses" >
             <ManageBusinesses />
           </Route>
-         
+          <Route path="/businesses/:id" >
+            <SingleBusiness />
+          </Route>
         </Switch>
       )}
       <Footer />
