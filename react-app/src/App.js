@@ -35,26 +35,26 @@ const categories=['Chiness','THai', 'salam', 'mellim']
           <Route path="/signup">
             <SignupFormPage />
           </Route>
-          <Route exact path="/businesses">
-            <AllBusinessPage />
-          </Route>
           <Route path="/testing">
             <FilterSearch/>
+          </Route>
+          <Route exact path="/businesses">
+            <AllBusinessPage />
           </Route>
           <Route path="/businesses/new">
             <CreateBusinessForm />
           </Route>
-          <Route exact path="/businesses/:id/reviews/new">
-            <WriteReviewForm />
+          <Route exact path="/businesses/:id" >
+            <SingleBusiness />
           </Route>
           <Route path="/businesses/:id/edit" >
             <UpdateBusiness />
           </Route>
+          <Route exact path="/businesses/:id/reviews/new">
+            <WriteReviewForm />
+          </Route>
           <Route path="/users/:userId/businesses" >
             <ManageBusinesses />
-          </Route>
-          <Route path="/businesses/:id" >
-            <SingleBusiness />
           </Route>
         </Switch>
       )}

@@ -2,6 +2,7 @@
 const LOAD_REVIEWS = 'reviews/LOAD_REVIEWS'
 const ADD_REVIEW = 'reviews/ADD_REVIEW'
 const REMOVE_REVIEWS = 'reviews/REMOVE_REVIEWS'
+const GET_SINGLE_REVIEW = 'reviews/GET_SINGLE_REVIEW'
 
 // action creators
 const loadReviews = payload => ({
@@ -19,26 +20,27 @@ const removeReviews = () => ({
     type: REMOVE_REVIEWS
   })
 
+  const getSingleReview = payload => ({
+    type: GET_SINGLE_REVIEW,
+    payload
+  }
+  )
 
 // thunk functions
 export const getReviews = () => async dispatch => {
     const response = await fetch('/api/reviews');
     if (response.ok) {
         const payload = await response.json();
+
         dispatch(loadReviews(payload))
     }
 }
 
-export const postReview = (post) => async dispatch => {
-    const { user_id, business_id, stars, review } = post;
-    const response = await fetch(`api/businesses/${business_id}/reviews`, {
+export const postReview = (id, post) => async dispatch => {
+    const response = await fetch(`/api/businesses/${id}/reviews`, {
         method: 'POST',
-        body: JSON.stringify({
-            user_id,
-            business_id,
-            stars,
-            review
-        })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(post)
     })
 
     if (response.ok) {
@@ -53,12 +55,25 @@ export const clearReviews = () => async dispatch => {
     dispatch(removeReviews())
 }
 
+export const readASingleReview = (id) => async dispatch => {
+    const response = await fetch(`/api/reviews/${id}`)
+
+    if (response.ok) {
+        const data = await response.json();
+
+        dispatch(getSingleReview(id));
+        return data;
+    }
+}
+
 const initialState = {}
 
 
 const reviewReducer = (state = initialState, action) => {
     let newState = {...state}
     switch (action.type) {
+        case GET_SINGLE_REVIEW:
+            return action.payload
         case LOAD_REVIEWS:
             const reviews = action.payload
             return {...state, reviews }
