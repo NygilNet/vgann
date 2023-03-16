@@ -6,7 +6,6 @@ import './index.css'
 import ReviewTile from './ReviewTile';
 import BusinessTile from './BusinessTile'
 import CategoriesGrid from '../CategoriesGrid';
-import DynamicStars from '../WriteReview/DynamicStars';
 
 function shuffleArray(array) {
   const shuffledArray = [...array];
@@ -57,7 +56,6 @@ const HomePage = () => {
           })}
         </div>
       </section>
-      <DynamicStars/>
       <section className='categories-tiles'>
         <h2>Catergories</h2>
         <CategoriesGrid />

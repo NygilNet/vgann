@@ -28,7 +28,6 @@ const AllBusinessPage = () => {
       setBusinessList( filterResults(Object.values(businesses),searchParams.search,searchParams.query))
     }else{
       dispatch(loadFiltered(Object.values(businesses)))
-      console.log("clearing filters")
     }
   },[searchParams])
 

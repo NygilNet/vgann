@@ -7,6 +7,7 @@
     align-items: center;
     height: 100%;
     padding: 5px;
+    transition: all 200ms ease-in-out;
     /* border: 3px solid red; */
 }
 .business-tile2:hover{

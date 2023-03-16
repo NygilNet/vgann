@@ -2,9 +2,11 @@
     /* border: 1px solid gray; */
     padding: 3px;
     border-radius: 2px;
+    font-size: 2em;
     margin: 0 1px;
     color: rgb(255, 255, 255);
     background-color: rgb(211, 211, 211);
+    transition: all 220ms ease;
     /* background-color: burlywood; */
 }
 #stars-container{

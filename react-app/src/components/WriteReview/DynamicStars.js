@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
 import './DynamicStars.css'
 
-export default function DynamicStars(){
-
-
+export default function DynamicStars(stars){
 
     const [starsPicked,setStarsPicked] = useState(0)
     const [starsObj,setStarsObj] = useState({
@@ -14,6 +12,9 @@ export default function DynamicStars(){
         [5]:'fa-solid fa-star single_star1',
     })
 
+    useEffect(()=>{
+        stars.setStars(()=>starsPicked)
+    },[starsPicked])
 
 
     const resetStars = () =>{
@@ -26,11 +27,9 @@ export default function DynamicStars(){
             }
         }
         setStarsObj(newStars)
-            console.log("gg")
     }
 
     const handleHover = e => {
-        console.log("gg")
         const newStars = {}
         for(let i = 1;i<6;i++){
             if(i<=e.target.id){
@@ -80,7 +79,6 @@ export default function DynamicStars(){
         onMouseOut={resetStars}
         onClick={e=>setStarsPicked(e.target.id)}
         ></i>
-        <p>Stars</p>
         </div>
     )
 }

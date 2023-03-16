@@ -60,3 +60,18 @@
   .filter-type{
     font-weight: bold;
   }
+
+  .clear-filters{
+    color: rgb(35, 35, 255);
+  }
+  .clear-filters:hover{
+    color: rgb(2, 2, 251);
+    cursor: pointer;
+  }
+  /* .filter-button{
+    border: 1px solid red;
+  } */
+  .filter-button:hover{
+    color: rgb(53, 69, 116);
+    cursor: pointer;
+  }
