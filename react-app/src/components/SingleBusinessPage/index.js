@@ -64,28 +64,6 @@ const SingleBusinessShow = () => {
       <div>
         {business.city}, {business.state}, {business.country}
       </div>
-      <div id='description-container'>
-        <div id="name-description-container">
-          <div id="business-description">{business.description}</div>
-        </div>
-        <div id="reserve-container">
-          <div id="reserve-container-child1">
-            <div>
-              <span id="reserve-container-price">${price}</span>
-              <span id="reserve-container-child1-night"> night</span>
-            </div>
-            <div>
-              <i className="fa-regular fa-star"></i>
-              <span>{avgRating} · {reviewsArray.length} reviews</span>
-            </div>
-          </div>
-          <div className='reserve-button-container'>
-            <button className="reserve-button" type="button" onClick={() => alert('Feature Coming Soon...')}>
-              Reserve
-            </button>
-          </div>
-        </div>
-      </div>
       <div>
         <div>
           <i className="fa-regular fa-star"></i>{avgRating}
