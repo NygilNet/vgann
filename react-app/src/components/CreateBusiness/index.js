@@ -7,15 +7,14 @@ export default function CreateBusinessForm () {
     const ownerId= useSelector((state) => state.session.user.id)
     let catList = [
         {id:1, category:'Breakfast'},
-         {id:2, category:'Burger'},
-         { id: 3, category: 'Italian' },
-        { id: 4, category: 'Breakfast' },
-        { id: 5, category: 'Thai' },
-        { id: 6, category: 'Chinese' },
-        { id: 7, category: 'Pizza' },
-        { id: 8, category: 'French' },
-        { id: 9, category: 'Vietnamese' },
-        { id: 10, category: 'Cafe' },
+        {id:2, category:'Burger'},
+        { id: 3, category: 'Italian' },
+        { id: 4, category: 'Thai' },
+        { id: 5, category: 'Chinese' },
+        { id: 6, category: 'Pizza' },
+        { id: 7, category: 'French' },
+        { id: 8, category: 'Vietnamese' },
+        { id: 9, category: 'Cafe' },
         ]
 
 
@@ -32,8 +31,7 @@ export default function CreateBusinessForm () {
     const [image, setImage] = useState('')
     // seperate state for each category
 
-    const [selectedCategory, setSelectedCategory] = useState({ 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9:false
-    , 10:false });
+    const [selectedCategory, setSelectedCategory] = useState({ 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9:false});
     function handleCategoryChange(e) {
         let categoryObj = {
             ...selectedCategory,

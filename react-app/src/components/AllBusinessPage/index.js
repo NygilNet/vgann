@@ -23,7 +23,7 @@ const AllBusinessPage = () => {
 
   useEffect(()=>{
     // console.log("from useEffect", searchParams)
-    console.log("Context change noticed in allBusinesses")
+    // console.log("Context change noticed in allBusinesses")
     if(searchParams.filters && businesses){
       setBusinessList( filterResults(Object.values(businesses),searchParams.search,searchParams.query))
     }else{

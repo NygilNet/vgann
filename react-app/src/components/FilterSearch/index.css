@@ -53,3 +53,10 @@
   .push-text span{
     margin-left: 5px;
   }
+  .push-text input{
+    margin-right: 10px;
+  }
+
+  .filter-type{
+    font-weight: bold;
+  }
