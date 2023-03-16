@@ -12,7 +12,7 @@ export default function ProfileIcon({business, src}) {
                 </div>
                 </div>
                 <div class="business-info-container">
-                <div class="business-name">{business.name}</div>
+                <div class="business-name-profile">{business.name}</div>
                 <div class="business-stars-container">
                     <div class="business-stars">
                         <PreviewStars avg={business.avgRating} />
