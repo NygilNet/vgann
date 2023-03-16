@@ -43,7 +43,7 @@ const SingleBusinessShow = () => {
     </section>
     <section id='single-business-middle'>
         <div id='single-business-top-header'>
-            <FontAwesomeIcon icon={faUser} id="profile-icon" /><span ><div>{business.name}</div><div><PreviewStars avg={2} /> </div></span>
+            <FontAwesomeIcon icon={faUser} id="profile-icon" /><span ><div>{business.name}</div><div><PreviewStars avg={.5} /> </div></span>
         </div>
       <div>{business.city}, {business.state}, {business.country}</div>
       <div id='description-container'>
