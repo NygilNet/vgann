@@ -2,7 +2,13 @@
     /* border: 1px solid red; */
     /* border-top: 1px solid gray; */
     border-bottom: 1px solid gray;
-    padding: 10px;
+    padding: 10px 50px;
+    display: flex;
+    justify-content: space-between;
+}
+.main-info{
+    display: flex;
+    flex-direction: column;
 }
 .avatar-color1{
     background-color: aquamarine;
