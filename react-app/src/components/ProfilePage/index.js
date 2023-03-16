@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserBusinesses } from '../../store/business';
 import { getuserthunk } from '../../store/userinfo';
 import ManageBusinesses from '../ManageBusinesses';
+import getReviews from '../../store/review'
 import './ProfilePage.css';
 
 
@@ -11,13 +12,15 @@ function UserProfilePage() {
 
     const dispatch = useDispatch();
     const {userId} = useParams();
-
+   
+   // console.log('locationnnnnnnnnnnn',location)
     useEffect (() => {
         dispatch(
             getUserBusinesses(userId)
             );
 
             dispatch(getuserthunk(userId))
+             dispatch(getReviews())
         }, [dispatch, userId]);
 
     const currentUser = useSelector(state => state.session.user)
@@ -28,7 +31,8 @@ function UserProfilePage() {
 
 
     return (
-        <>
+        <div className='maindiv'>
+
             <div>
                <h1>Welcome to {userInfo.username}'s Page</h1>
                <div class="profile-page-user-banner">
@@ -47,7 +51,7 @@ function UserProfilePage() {
                     <ManageBusinesses businesses={businesses} isOwner={isOwner} />
             </div>
 
-        </>
+        </div>
     )
 
 }

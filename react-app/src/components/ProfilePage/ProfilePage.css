@@ -1,5 +1,9 @@
 .profile-page-user-banner {
     display: flex;
+    /* background-color: rgb(216, 212, 212); */
+    width: 100vw;
+    /* justify-content: center; */
+    
 }
 
 .profile-page-user-icon-background{
@@ -11,6 +15,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    
 
 }
 
@@ -18,4 +23,11 @@
     display: flex;
 
     flex-direction: column;
+    padding: 10px;
+}
+.maindiv{
+    display: flex;
+    flex-direction: column;
+    padding-left: 100px;
+    padding-right: 100px;
 }
