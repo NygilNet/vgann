@@ -9,7 +9,7 @@ export default function UpdateReviewForm({ businessId }) {
     const dispatch = useDispatch();
     const history = useHistory();
     const currentreview=useSelector(state => state.reviews)
-    console.log(currentreview)
+    // console.log(currentreview)
 
     const [review, setReview] = useState('');
     const [stars, setStars] = useState(0);
@@ -17,10 +17,10 @@ export default function UpdateReviewForm({ businessId }) {
     useEffect(() => {
         let tofill = async() =>{
           let reviewinfo= await dispatch(readASingleReview(id))
-          console.log("chgecking review infoooooooooo", reviewinfo)
+        //   console.log("chgecking review infoooooooooo", reviewinfo)
           setReview(reviewinfo.review)
           setStars(reviewinfo.stars)
-            
+
         }
         tofill()
     }, [dispatch, id])

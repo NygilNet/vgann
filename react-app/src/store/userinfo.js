@@ -8,7 +8,7 @@ const getuseraction = (payload) => {
 }
 
 export const getuserthunk = (id) => async dispatch =>{
-    console.log('conlooiiinngggg responseeeee', id)
+    // console.log('conlooiiinngggg responseeeee', id)
     const response = await fetch(`/api/users/${id}`)
     if (response.ok){
         const data = await response.json()
@@ -29,7 +29,7 @@ export  const userInfo = (state = initialstate, action) =>{
         default:
             return state
 
-        
+
     }
 }
 export default userInfo
