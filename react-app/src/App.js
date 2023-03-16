@@ -14,6 +14,8 @@ import WriteReviewForm from "./components/WriteReview";
 import ManageBusinesses from "./components/ManageBusinesses";
 import UpdateBusiness from "./components/UpdateBusiness/updatebusiness";
 import SingleBusiness from "./components/SingleBusinessPage";
+import UpdateReviewForm from "./components/UpdateReview";
+import UserProfilePage from "./components/ProfilePage";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -53,8 +55,14 @@ const categories=['Chiness','THai', 'salam', 'mellim']
           <Route exact path="/businesses/:id/reviews/new">
             <WriteReviewForm />
           </Route>
+          <Route exact path="/users/:userId/" >
+            <UserProfilePage />
+          </Route>
           <Route path="/users/:userId/businesses" >
             <ManageBusinesses />
+          </Route>
+          <Route path="/reviews/:id/edit" >
+            <UpdateReviewForm />
           </Route>
         </Switch>
       )}

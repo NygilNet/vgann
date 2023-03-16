@@ -3,7 +3,7 @@ const LOAD_REVIEWS = 'reviews/LOAD_REVIEWS'
 const ADD_REVIEW = 'reviews/ADD_REVIEW'
 const REMOVE_REVIEWS = 'reviews/REMOVE_REVIEWS'
 const GET_SINGLE_REVIEW = 'reviews/GET_SINGLE_REVIEW'
-
+const DELETE_SINGLE_REVIEW = 'reviews/DELETE_SINGLE_REVIEW'
 // action creators
 const loadReviews = payload => ({
     type: LOAD_REVIEWS,
@@ -25,6 +25,13 @@ const removeReviews = () => ({
     payload
   }
   )
+const deletereviewaction = (payload) =>{
+    return{
+        type:DELETE_SINGLE_REVIEW,
+        payload
+    }
+}
+
 
 // thunk functions
 export const getReviews = () => async dispatch => {
@@ -61,8 +68,33 @@ export const readASingleReview = (id) => async dispatch => {
     if (response.ok) {
         const data = await response.json();
 
-        dispatch(getSingleReview(id));
+        dispatch(getSingleReview(data));
         return data;
+    }
+}
+
+export const editReview = (id, review) => async dispatch =>{
+    const response = await fetch (`/api/reviews/${id}`,{
+        method:"PUT",
+        headers:{"Content-Type":"application/json"},
+        body: JSON.stringify(review)
+    })
+    if (response.ok){
+        const data = await response.json()
+        dispatch(addReview(data))
+        return data
+    }
+}
+
+export const deletereviewthunk = (id) => async dispatch =>{
+    const response = await fetch(`/api/reviews/${id}`,{
+        method:"DELETE",
+        headers: { "Content-Type": "application/json" },
+    })
+    if (response.ok){
+        const data = response.json()
+        dispatch(deletereviewaction(id))
+        return data
     }
 }
 
@@ -72,8 +104,12 @@ const initialState = {}
 const reviewReducer = (state = initialState, action) => {
     let newState = {...state}
     switch (action.type) {
+        case DELETE_SINGLE_REVIEW:
+            delete newState[action.payload]
+            return newState
         case GET_SINGLE_REVIEW:
-            return action.payload
+            const review= action.payload
+            return review
         case LOAD_REVIEWS:
             const reviews = action.payload
             return {...state, reviews }
