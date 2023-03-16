@@ -115,7 +115,13 @@ def single_business(id):
     business['avgRating'] = db.session.query(
         func.avg(Review.id)).filter(Review.business_id == id).scalar()
     business['categories'] = [category.to_dict() for category in res.categories]
-    business['reviews'] = [rev.to_dict() for rev in res.reviews]
+    reviews = [rev.to_dict() for rev in res.reviews]
+    for rev in reviews:
+        user = User.query.get(rev['user_id']).to_dict()
+        user['numReviews'] = db.session.query(func.count(Review.id)).filter(Review.user_id == user['id']).scalar()
+        rev["user"] = user
+
+    business['reviews'] = reviews
 
     return jsonify(business)
 

@@ -10,6 +10,7 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 import './index.css'
 import PreviewStars from './PreviewStars';
 import { NavLink } from 'react-router-dom';
+import BusinessReview from './BusinessReview';
 
 const SingleBusinessShow = () => {
   const dispatch = useDispatch();
@@ -92,6 +93,11 @@ const SingleBusinessShow = () => {
           <DisplayReviews businessId={id} />
         </ul>
       </div>
+    </section>
+    <section className='all-biz-reviews'>
+      {business && business.reviews.map(el=>(
+        <BusinessReview review={el}/>
+      ))}
     </section>
     </>
   );
