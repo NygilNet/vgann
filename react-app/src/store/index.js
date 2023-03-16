@@ -4,12 +4,13 @@ import session from './session'
 import businessesReducer from './business';
 import recentActivity from './recentActivity';
 import reviewReducer from './review';
-
+import userInfo from './userinfo';
 const rootReducer = combineReducers({
   session,
   business: businessesReducer,
   recentActivity,
-  reviews: reviewReducer
+  reviews: reviewReducer,
+  userInfo
 });
 
 

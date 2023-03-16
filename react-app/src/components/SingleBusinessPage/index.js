@@ -85,7 +85,7 @@ const SingleBusinessShow = () => {
       <div>
         <div><i className="fa-regular fa-star"></i>{avgRating}</div>
         <div className='review-button-container'>
-            {user ? userHasPosted ? <NavLink to={`/businesses/${business.id}/reviews/new`} > "Edit Your Review"</NavLink> :<NavLink to={`/businesses/${business.id}/reviews/new`} > "POST Your Review"</NavLink>  : ''}
+            {user ? userHasPosted ? <NavLink to={`/reviews/${forcheck}/edit`} > "Edit Your Review"</NavLink> :<NavLink to={`/businesses/${business.id}/reviews/new`} > "POST Your Review"</NavLink>  : ''}
 
         </div>
         <ul className='single-business-display-reviews-list'>
