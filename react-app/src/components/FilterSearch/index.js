@@ -25,6 +25,7 @@ export default function FilterSearch(){
             Object.values(businesses).map(el=>el.features).filter(el=>el).join(',').split(',').forEach(el=>{
                 newFeaturesObj[el] = false;
             })
+            //[delivery,takeput,open24]
             setFeaturesObj(newFeaturesObj)
 
             let citiesArr = [...new Set(Object.values(businesses).map(el=>el.city))]
