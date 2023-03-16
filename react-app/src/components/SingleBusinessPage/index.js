@@ -6,6 +6,7 @@ import { clearReviews, getReviews } from '../../store/review';
 import BusinessImages from './BusinessImages';
 import DisplayReviews from './DisplayReviews';
 import './index.css'
+import { NavLink } from 'react-router-dom';
 
 const SingleBusinessShow = () => {
   const dispatch = useDispatch();
@@ -21,17 +22,31 @@ const SingleBusinessShow = () => {
   }, [dispatch, id]);
 
   const business = useSelector(state => state.business.business);
-  const reviews = useSelector(state => state.reviews);
+  //const reviews = useSelector(state => state.reviews);
   const user = useSelector(state => state.session.user);
-
-  if (!business) {
+  
+  if (!business ) {
     return null;
   }
+  const reviewsArray = business.reviews
+  if (!reviewsArray) {
+    return null;
+  }
+ 
+  //const reviewsArray = Object.values(reviews);
+  //const avgRating = (reviewsArray.reduce((acc, b) => acc + b.stars, 0) / reviewsArray.length).toFixed(1) || 'New';
 
-  const reviewsArray = Object.values(reviews);
-  const avgRating = (reviewsArray.reduce((acc, b) => acc + b.stars, 0) / reviewsArray.length).toFixed(1) || 'New';
+ 
+  const avgRating = business.avgRating
   const price = Number.parseFloat(business.price).toFixed(2);
-  const userHasPosted = user && reviewsArray.some(r => r.userId === user.id);
+  let forcheck
+  if(user){
+    forcheck=user.id
+  }
+  const userHasPosted =  reviewsArray.find(r => r.user_id == forcheck);
+
+  console.log('dsbcjdbcjdbcjdcbdjcb',userHasPosted)
+
 
   return (
     <>
@@ -65,7 +80,8 @@ const SingleBusinessShow = () => {
       <div>
         <div><i className="fa-regular fa-star"></i>{avgRating}</div>
         <div className='review-button-container'>
-        {userHasPosted && user && <button>"Post Your Review"</button>}
+            {user ? userHasPosted ? <NavLink to={`/businesses/${business.id}/reviews/new`} > "Edit Your Review"</NavLink> :<NavLink to={`/businesses/${business.id}/reviews/new`} > "POST Your Review"</NavLink>  : ''}
+        
         </div>
         <ul className='single-business-display-reviews-list'>
           <DisplayReviews businessId={id} />
