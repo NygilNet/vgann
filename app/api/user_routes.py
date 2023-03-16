@@ -53,7 +53,7 @@ def edit_user(userId):
             "message": "forbidden"
         }), 403
 
-    form = SignUpForm()
+
 
     if form.validate_on_submit():
         user = User.query.get(userId)

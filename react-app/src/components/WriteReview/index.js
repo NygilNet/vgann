@@ -3,6 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { postReview } from "../../store/review";
 import { getSingleBusiness } from "../../store/business";
+import DynamicStars from "./DynamicStars";
 
 
 function WriteReviewForm() {
@@ -42,12 +43,15 @@ function WriteReviewForm() {
             className="write-review-form"
             onSubmit={onSubmit}
             >
-                <div>
+                {/* <div>
                     <div onClick={e => setStars(1)}>{stars >= 1 ? (<i class="fa-solid fa-star"/>) : (<i class="fa-regular fa-star" />)}</div>
                     <div onClick={e => setStars(2)}>{stars >= 2 ? (<i class="fa-solid fa-star"/>) : (<i class="fa-regular fa-star" />)}</div>
                     <div onClick={e => setStars(3)}>{stars >= 3 ? (<i class="fa-solid fa-star"/>) : (<i class="fa-regular fa-star" />)}</div>
                     <div onClick={e => setStars(4)}>{stars >= 4 ? (<i class="fa-solid fa-star"/>) : (<i class="fa-regular fa-star" />)}</div>
                     <div onClick={e => setStars(5)}>{stars >= 5 ? (<i class="fa-solid fa-star"/>) : (<i class="fa-regular fa-star" />)}</div>
+                </div> */}
+                <div>
+                    <DynamicStars stars={stars} />
                 </div>
                 <div>
                     <textarea
