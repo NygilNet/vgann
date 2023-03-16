@@ -7,14 +7,14 @@ function UserProfilePage() {
 
     const dispatch = useDispatch();
     const {id} = useParams();
-    
+
     const currentUser = useSelector(state => state.session.user)
 
     useEffect (() => {
         dispatch(
             getUserBusinesses(currentUser.id)
             );
-        console.log('from componeneneneentttt',id)
+        // console.log('from componeneneneentttt',id)
             dispatch(getuserthunk(currentUser.id))
     }, [dispatch, id]);
 
