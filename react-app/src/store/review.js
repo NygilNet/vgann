@@ -22,16 +22,16 @@ const removeReviews = () => ({
 
 // thunk functions
 export const getReviews = () => async dispatch => {
+    console.log('MADE IT INTO THE THUNK FUNCTION')
     const response = await fetch('/api/reviews');
     if (response.ok) {
         const payload = await response.json();
+        console.log('THIS SHOULD BE AN OBJECT OF REVIEWS', payload)
         dispatch(loadReviews(payload))
     }
 }
 
 export const postReview = (id, post) => async dispatch => {
-    console.log("ID ", id)
-    console.log("BODY ", post)
     const response = await fetch(`/api/businesses/${id}/reviews`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },

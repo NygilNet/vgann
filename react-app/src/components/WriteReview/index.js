@@ -12,7 +12,7 @@ function WriteReviewForm() {
 
     const history = useHistory();
     const dispatch = useDispatch();
-    const userId = useSelector(state => state.session.user?.id);
+    // const userId = useSelector(state => state.session.user?.id);
     const business = useSelector(state => state.business.business);
     const { id } = useParams();
 

@@ -198,7 +198,7 @@ def create_review(id):
         db.session.commit()
 
         # Return a successful response
-        return jsonify({'message': 'success'})
+        return created_review.to_dict()
         # return jsonify(created_review.to_dict()), 201
     return jsonify({'message': 'validation failed'})
 

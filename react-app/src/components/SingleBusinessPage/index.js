@@ -24,7 +24,7 @@ const SingleBusinessShow = () => {
   const reviews = useSelector(state => state.reviews);
   const user = useSelector(state => state.session.user);
 
-  if (!business) {
+  if (!Object.values(business)[0] || !Object.values(reviews)[0]) {
     return null;
   }
 
