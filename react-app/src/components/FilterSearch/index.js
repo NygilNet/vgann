@@ -25,6 +25,7 @@ export default function FilterSearch(){
             Object.values(businesses).map(el=>el.features).filter(el=>el).join(',').split(',').forEach(el=>{
                 newFeaturesObj[el] = false;
             })
+            //[delivery,takeput,open24]
             setFeaturesObj(newFeaturesObj)
 
             let citiesArr = [...new Set(Object.values(businesses).map(el=>el.city))]
@@ -37,7 +38,6 @@ export default function FilterSearch(){
             .map(el=> el.categories)
             categoriesArr = [].concat(...categoriesArr).map(el=>el.categoryName)
             categoriesArr = [...new Set(categoriesArr)]
-            console.log("categoriesArr-------------->", categoriesArr)
             setCategories(()=>categoriesArr)
             let newCatObj = {}
             categoriesArr.forEach(el=>{
@@ -165,7 +165,6 @@ export default function FilterSearch(){
     }
 
     useEffect(()=>{
-        console.log("tester------>", searchParams.query)
         let newCatObj = {}
         categories.forEach(el=>{
             newCatObj[el] = el === searchParams.query.categories
@@ -214,6 +213,7 @@ export default function FilterSearch(){
     return (
         <div className='filters-menu'>
             <h3>Filter Results</h3>
+            <p className='' >{searchParams.filters? 'Active filters': ''}</p>
             {searchParams.filters && Object.keys(activeFilters).map(el=>(
                 <>
                     <span className='filter-type'>{el} - </span>
@@ -248,25 +248,25 @@ export default function FilterSearch(){
             <div class='features-button-group flex-col margin5-top-bottom push-text'>
                 <h5>Business Features</h5>
                 {features && features.map(el=>(
-                    <label>
-                        <input type="checkbox" value={el} checked={featuresObj[el]} onChange={handleFeatureChange} />
-                        <span class="">{el}</span>
+                    <label className="filter-button">
+                        <input  type="checkbox" value={el} checked={featuresObj[el]} onChange={handleFeatureChange} />
+                        <span  class="">{el}</span>
                     </label>
                 ))}
             </div>
             <div class='city-button-group flex-col margin5-top-bottom push-text'>
                 <h5>Cities</h5>
                 {cities && cities.map(el=>(
-                    <label>
-                        <input type="checkbox" value={el} checked={citiesObj[el]} onChange={handleCityChange} />
-                        <span class="">{el}</span>
+                    <label className="filter-button">
+                        <input  type="checkbox" value={el} checked={citiesObj[el]} onChange={handleCityChange} />
+                        <span>{el}</span>
                     </label>
                 ))}
             </div>
             <div class='flex-col margin5-top-bottom push-text'>
             <h5>Categories</h5>
             {categories && categories.map(el=>(
-                <label>
+                <label className="filter-button" >
                   <input type="radio" name={el} onClick={handleCategoryChange} value={el} checked={catObj[el]}/>{el}
                 </label>
             ))}
