@@ -5,13 +5,15 @@ import { getUserBusinesses } from '../../store/business';
 import { NavLink, Route, useParams } from 'react-router-dom';
 import OpenModalButton from '../OpenModalButton';
 import DeleteBusines from '../DeleteBusiness';
-export default function ManageBusinesses(){
-    const dispatch = useDispatch()
-    const {userId} = useParams()
-    const businesses = useSelector((state) => Object.values(state.business.all_businesses))
-    useEffect(() => {
-        dispatch(getUserBusinesses(userId))
-    },[dispatch, userId])
+
+
+export default function ManageBusinesses({ businesses, isOwner }){
+    // const dispatch = useDispatch()
+    // const {userId} = useParams()
+    // const businesses = useSelector((state) => Object.values(state.business.all_businesses))
+    // useEffect(() => {
+    //     dispatch(getUserBusinesses(userId))
+    // },[dispatch, userId])
 
     if (!businesses[0]) return null
 
@@ -34,9 +36,9 @@ export default function ManageBusinesses(){
                                         </div>
                                         <div className='forInside'>
                                             <div>{business.price}</div>
-                                            <NavLink to={`/businesses/${business.id}/edit`}><button >Update</button></NavLink>
+                                            {isOwner && <NavLink to={`/businesses/${business.id}/edit`}><button >Update</button></NavLink>}
                                             {/* <div><OpenModalButton buttonText="Delete" modalComponent={<DeleteSpot spotId={spot.id} />} /></div> */}
-                                            <div><OpenModalButton buttonText="Delete" modalComponent={<DeleteBusines businessId={business.id} />} /></div>
+                                            {isOwner && <div><OpenModalButton buttonText="Delete" modalComponent={<DeleteBusines businessId={business.id} />} /></div>}
                                         </div>
                                     </div>
                                 </div>

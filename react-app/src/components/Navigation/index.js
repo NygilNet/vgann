@@ -57,11 +57,11 @@ function Navigation({ isLoaded }) {
   	  }
   	};
 
-	//  for MANAGAE AND CREATE BUS*INESS
-	const handleCreateAndMAnag = (e) => {
-		if (e.target.value === 'new') history.push(`/businesses/${e.target.value}`)
-		if (e.target.value === 'manage') history.push(`/users/${sessionUser.id}/businesses`)
-	}
+	// //  for MANAGAE AND CREATE BUS*INESS
+	// const handleCreateAndMAnag = (e) => {
+	// 	if (e.target.value === 'new') history.push(`/businesses/${e.target.value}`)
+	// 	if (e.target.value === 'manage') history.push(`/users/${sessionUser.id}/businesses`)
+	// }
 
 
 	useEffect(() => {
@@ -117,11 +117,7 @@ function Navigation({ isLoaded }) {
 					<div>
 						{sessionUser && (
 							<>
-								<select value={selectedCategory} onChange={handleCreateAndMAnag}>
-									<option value=''>Yelp For Business</option>
-									<option value='new'>Create Business</option>
-									<option value='manage'>Manage Your Business</option>
-								</select>
+							<NavLink to="/businesses/new">Create Business</NavLink>
 							</>
 						)}
 					</div>
