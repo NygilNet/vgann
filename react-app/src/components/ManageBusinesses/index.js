@@ -5,7 +5,7 @@ import { getUserBusinesses } from '../../store/business';
 import { NavLink, Route, useParams } from 'react-router-dom';
 import OpenModalButton from '../OpenModalButton';
 import DeleteBusines from '../DeleteBusiness';
-
+import './index.css'
 
 export default function ManageBusinesses({ businesses, isOwner }){
     // const dispatch = useDispatch()
@@ -35,7 +35,7 @@ export default function ManageBusinesses({ businesses, isOwner }){
                                             <div>{business.avgRating ? `⭐️ ${parseFloat(business.avgRating).toFixed(1)}` : '⭐️ New'}</div>
                                         </div>
                                         <div className='forInside'>
-                                            <div>{business.price}</div>
+                                            {/* <div>{business.price}</div> */}
                                             {isOwner && <NavLink to={`/businesses/${business.id}/edit`}><button >Update</button></NavLink>}
                                             {/* <div><OpenModalButton buttonText="Delete" modalComponent={<DeleteSpot spotId={spot.id} />} /></div> */}
                                             {isOwner && <div><OpenModalButton buttonText="Delete" modalComponent={<DeleteBusines businessId={business.id} />} /></div>}

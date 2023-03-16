@@ -20,6 +20,13 @@ function Navigation({ isLoaded }) {
 	const location = useLocation();
 	const [isHomePage, setIsHomePage] = useState(false);
 
+
+	// let location = useLocation()
+	let onprofilepage = location.pathname.startsWith('/users')
+	// useEffect(() =>{
+	// 	 onprofilepage = 
+	// },[location])
+
 	useEffect(()=>{
 		setSelectedCategory(searchParams.query.categories)
 
@@ -91,27 +98,30 @@ function Navigation({ isLoaded }) {
 				/>
 				</NavLink>
 			</div>
-			<div className='searchBar'>
-				<input
-					type='text'
-					placeholder='Search'
-					value={searchValue}
-					onChange={handleSearchChange}
-				/>
-				<select value={selectedCategory} onChange={handleCategoryChange}>
-					<option value=''>All Categories</option>
-					<option value='Breakfast'>Breakfast</option>
-					<option value='Burger'>Burger</option>
-					<option value='Italian'>Italian</option>
-					<option value='Thai'>Thai</option>
-					<option value='Chinese'>Chinese</option>
-					<option value='Pizza'>Pizza</option>
-					<option value='French'>French</option>
-					<option value='Vietnamese'>Vietnamese</option>
-					<option value='Cafe'>Cafe</option>
-				</select>
-				<button id='search-icon-container' onClick={searchClicked}><FontAwesomeIcon icon={faSearch} id='search-icon'/></button>
-			</div>
+			{onprofilepage ? (null) : (
+				<div className='searchBar'>
+					<input
+						type='text'
+						placeholder='Search'
+						value={searchValue}
+						onChange={handleSearchChange}
+					/>
+					<select value={selectedCategory} onChange={handleCategoryChange}>
+						<option value=''>All Categories</option>
+						<option value='Breakfast'>Breakfast</option>
+						<option value='Burger'>Burger</option>
+						<option value='Italian'>Italian</option>
+						<option value='Thai'>Thai</option>
+						<option value='Chinese'>Chinese</option>
+						<option value='Pizza'>Pizza</option>
+						<option value='French'>French</option>
+						<option value='Vietnamese'>Vietnamese</option>
+						<option value='Cafe'>Cafe</option>
+					</select>
+					<button id='search-icon-container' onClick={searchClicked}><FontAwesomeIcon icon={faSearch} id='search-icon' /></button>
+				</div>
+			 ) }
+		
 			{isLoaded && (
 				<div className='navStyle'>
 					<div>
