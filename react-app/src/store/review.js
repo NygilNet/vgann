@@ -20,7 +20,7 @@ const removeReviews = () => ({
     type: REMOVE_REVIEWS
   })
 
-  const getSingleReview = () => ({
+  const getSingleReview = payload => ({
     type: GET_SINGLE_REVIEW,
     payload
   }
