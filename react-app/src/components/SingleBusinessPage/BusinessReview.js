@@ -1,14 +1,20 @@
 import { useEffect, useState } from 'react';
 import PreviewStars from './PreviewStars';
 import './BusinessReview.css'
+import ReviewOptionsMenu from './ReviewOptionsMenu';
+import { useSelector } from 'react-redux';
 export default function BusinessReview(prop){
     console.log("review------>",prop)
+    const currUser = useSelector(state=>state.session.user)
     const review = prop.review
     const user = review.user
+    console.log("current user---->",currUser)
 
     return (
         <div className='single-review'>
+            <div className="main-info">
             <div className='user-info-container'>
+
                 <i className={`fa-solid fa-user user-avatar avatar-color${Math.floor(Math.random() * 5) + 1}`}></i>
                 <div className="user-info-tags">
                     <h3>{user.username}</h3>
@@ -23,6 +29,8 @@ export default function BusinessReview(prop){
                 <p>{review.updated_at.split(" ").slice(0,3).join(" ")}</p>
             </div>
             <p className='review-content'>{review.review}</p>
+            </div>
+            {currUser && currUser.id === user.id?<ReviewOptionsMenu />:null}
         </div>
     )
 }
