@@ -103,6 +103,7 @@ const initialState = {}
 
 const reviewReducer = (state = initialState, action) => {
     let newState = {...state}
+    console.log('from actionnnnnn', action)
     switch (action.type) {
         case DELETE_SINGLE_REVIEW:
             delete newState[action.payload]

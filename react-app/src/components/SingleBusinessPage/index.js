@@ -72,8 +72,7 @@ const SingleBusinessShow = () => {
           {user ?
             userHasPosted ?
               <NavLink to={`/businesses/${business.id}/reviews/new`} > "Edit Your Review"</NavLink>
-              :<NavLink to={`/busin
-              esses/${business.id}/reviews/new`} > "POST Your Review"</NavLink>
+              :<NavLink to={`/businesses/${business.id}/reviews/new`} > "POST Your Review"</NavLink>
             : ''}
         </div>
         <ul className='single-business-display-reviews-list'>

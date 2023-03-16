@@ -124,10 +124,10 @@ function Navigation({ isLoaded }) {
 		
 			{isLoaded && (
 				<div className='navStyle'>
-					<div>
+					<div style={{ paddingBottom: '25px', paddingRight: '25px' }}>
 						{sessionUser && (
 							<>
-							<NavLink to="/businesses/new">Create Business</NavLink>
+							<NavLink to="/businesses/new" style={{color:'red', paddingTop:'1px'}} >Create Business</NavLink>
 							</>
 						)}
 					</div>

@@ -15,13 +15,11 @@ function UserProfilePage() {
    
    // console.log('locationnnnnnnnnnnn',location)
     useEffect (() => {
-        dispatch(
-            getUserBusinesses(userId)
-            );
+            dispatch(getUserBusinesses(userId));
 
             dispatch(getuserthunk(userId))
-             dispatch(getReviews())
-        }, [dispatch, userId]);
+            // dispatch(getReviews())
+        }, [dispatch]);
 
     const currentUser = useSelector(state => state.session.user)
     const userInfo = useSelector(state => state.userInfo)
