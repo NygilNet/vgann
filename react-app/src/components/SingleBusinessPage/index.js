@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { clearBusiness, getSingleBusiness } from '../../store/business';
-import { clearReviews, getReviews } from '../../store/review';
+import { clearReviews, getReviews, loadReviews } from '../../store/review';
 import BusinessImages from './BusinessImages';
 import DisplayReviews from './DisplayReviews';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -21,14 +21,20 @@ const SingleBusinessShow = () => {
     return () => dispatch(clearBusiness());
   }, [dispatch, id]);
 
-  useEffect(() => {
-    dispatch(getReviews(id));
-  }, [dispatch, id]);
+  // useEffect(() => {
+  //   dispatch(getReviews(id));
+  // }, [dispatch, id]);
 
   const business = useSelector(state => state.business.business);
-  //const reviews = useSelector(state => state.reviews);
   const user = useSelector(state => state.session.user);
 
+  useEffect(()=>{
+    if(business){
+      dispatch(loadReviews(business.reviews))
+    }
+  },[business])
+
+  const reviews = useSelector(state=> state.reviews)
   if (!business ) {
     return null;
   }
@@ -36,10 +42,6 @@ const SingleBusinessShow = () => {
   if (!reviewsArray) {
     return null;
   }
-
-  //const reviewsArray = Object.values(reviews);
-  //const avgRating = (reviewsArray.reduce((acc, b) => acc + b.stars, 0) / reviewsArray.length).toFixed(1) || 'New';
-
 
   const avgRating = business.avgRating
   const price = Number.parseFloat(business.price).toFixed(2);
@@ -72,8 +74,7 @@ const SingleBusinessShow = () => {
           {user ?
             userHasPosted ?
               <NavLink to={`/businesses/${business.id}/reviews/new`} > "Edit Your Review"</NavLink>
-              :<NavLink to={`/busin
-              esses/${business.id}/reviews/new`} > "POST Your Review"</NavLink>
+              :<NavLink to={`/businesses/${business.id}/reviews/new`} > "POST Your Review"</NavLink>
             : ''}
         </div>
         <ul className='single-business-display-reviews-list'>
@@ -81,7 +82,10 @@ const SingleBusinessShow = () => {
         </ul>
       </div>
     <section className='all-biz-reviews'>
+
+      {/* {reviews && Object.values(reviews).map(el=>( */}
       {business && business.reviews.map(el=>(
+
         <BusinessReview review={el}/>
       ))}
     </section>

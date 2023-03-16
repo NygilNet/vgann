@@ -11,7 +11,7 @@ export default function CategoriesGrid(){
 
     const handleClick = e =>{
         e.stopPropagation();
-        console.log(e.target.getAttribute('value'));
+        // console.log(e.target.getAttribute('value'));
         let newContext = {
 			...searchParams,
 			query: {

@@ -1,42 +1,47 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import DeleteReviewModal from '../DeleteReviewModal';
+import OpenModalButton from '../OpenModalButton';
+import SignupFormModal from '../SignupFormModal';
 import './ReviewOptionsMenu.css'
 export default function ReviewOptionsMenu(prop){
-    const [clickedTarget, setClickedTarget] = useState('');
-    const [hidden,setHidden] = useState(true)
+    // console.log("options button prop---->", prop)
+    const [showMenu, setShowMenu] = useState(false);
+    const ulRef = useRef();
+
+    const ulClassName = "drop-menu" + (showMenu ? "" : " hidden");
 
     useEffect(() => {
-        document.addEventListener('mousedown', handleClick);
+        if (!showMenu) return;
+        // console.log(ulRef)
+        const closeMenu = (e) => {
+          if (!ulRef.current.contains(e.target)) {
+            setShowMenu(false);
+          }
+        };
 
-        return () => {
-        document.removeEventListener('mousedown', handleClick);
-        }
-    }, [])
+        document.addEventListener('click', closeMenu);
 
-    const handleClick = (e) => {
-        e.stopPropagation()
-        // console.log("menuClick",e.target.getAttribute('name'))
-        let clicked = e.target.getAttribute('name')
-        if(clicked==='mb'){
-            if(!hidden) setHidden(true)
-            else setHidden(false)
-        }else if (clicked==='rrb'){
-            console.log("Edit review clicked")
-        }
-        else setHidden(()=>true)
-        setClickedTarget(e.target.textContent);
+        return () => document.removeEventListener("click", closeMenu);
+    }, [showMenu]);
+
+    const openMenu = e =>{
+        if (showMenu) return;
+        setShowMenu(true);
     }
+    const closeMenu = () => setShowMenu(false);
 
-    useEffect(()=>{
-    },[clickedTarget])
     return(
         <div className="button-container">
-            <div name="mb" className="options-button">
-            {/* <i class="fa-sharp fa-solid fa-bars"></i> */}
-                <i name="mb" class="fa-sharp fa-solid fa-bars"></i>
+            <div className="options-button" onClick={openMenu}>
+                <i class="fa-sharp fa-solid fa-bars"></i>
             </div>
-            <div name="mb" className={`drop-menu ${hidden?'hidden':''}`} >
-                <p class="drop-menu-item" onClick={()=>console.log("Edit review clicked")} name="rrb">Edit Review</p>
-                <p class="drop-menu-item" onClick={()=>console.log("Edit review clicked")} name="rrb">Delete Review</p>
+            <div ref={ulRef} className={ulClassName} >
+                <OpenModalButton
+                buttonText="Delete Review"
+                onItemClick={closeMenu}
+                modalComponent={<DeleteReviewModal review={prop.review}/>}
+                />
+                <button>Edit Review</button>
             </div>
         </div>
     )

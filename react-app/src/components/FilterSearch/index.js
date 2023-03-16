@@ -128,7 +128,7 @@ export default function FilterSearch(){
     }
 
     const handleCategoryChange = e =>{
-        console.log(e.target.value)
+        // console.log(e.target.value)
         if(e.target.value===searchParams.query.categories){
 
             let newContext = {
