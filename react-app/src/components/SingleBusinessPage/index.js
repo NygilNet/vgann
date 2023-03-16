@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import './index.css'
 import { NavLink } from 'react-router-dom';
+import BusinessReview from './BusinessReview';
 import ProfileIcon from './ProfileIcon';
 
 const SingleBusinessShow = () => {
@@ -101,6 +102,11 @@ const SingleBusinessShow = () => {
           <DisplayReviews businessId={id} />
         </ul>
       </div>
+    <section className='all-biz-reviews'>
+      {business && business.reviews.map(el=>(
+        <BusinessReview review={el}/>
+      ))}
+    </section>
     </>
   );
 };
