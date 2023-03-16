@@ -2,6 +2,7 @@
 const LOAD_REVIEWS = 'reviews/LOAD_REVIEWS'
 const ADD_REVIEW = 'reviews/ADD_REVIEW'
 const REMOVE_REVIEWS = 'reviews/REMOVE_REVIEWS'
+const GET_SINGLE_REVIEW = 'reviews/GET_SINGLE_REVIEW'
 
 // action creators
 const loadReviews = payload => ({
@@ -19,14 +20,18 @@ const removeReviews = () => ({
     type: REMOVE_REVIEWS
   })
 
+  const getSingleReview = () => ({
+    type: GET_SINGLE_REVIEW,
+    payload
+  }
+  )
 
 // thunk functions
 export const getReviews = () => async dispatch => {
-    console.log('MADE IT INTO THE THUNK FUNCTION')
     const response = await fetch('/api/reviews');
     if (response.ok) {
         const payload = await response.json();
-        console.log('THIS SHOULD BE AN OBJECT OF REVIEWS', payload)
+
         dispatch(loadReviews(payload))
     }
 }
@@ -50,12 +55,25 @@ export const clearReviews = () => async dispatch => {
     dispatch(removeReviews())
 }
 
+export const readASingleReview = (id) => async dispatch => {
+    const response = await fetch(`/api/reviews/${id}`)
+
+    if (response.ok) {
+        const data = await response.json();
+
+        dispatch(getSingleReview(id));
+        return data;
+    }
+}
+
 const initialState = {}
 
 
 const reviewReducer = (state = initialState, action) => {
     let newState = {...state}
     switch (action.type) {
+        case GET_SINGLE_REVIEW:
+            return action.payload
         case LOAD_REVIEWS:
             const reviews = action.payload
             return {...state, reviews }

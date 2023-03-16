@@ -65,7 +65,10 @@ const SingleBusinessShow = () => {
       <div>
         <div><i className="fa-regular fa-star"></i>{avgRating}</div>
         <div className='review-button-container'>
-        {userHasPosted && user && <button>"Post Your Review"</button>}
+        {userHasPosted && user && ( <>
+        <button>"Post Your Review"</button>
+        <button>"Edit Your Review"</button>
+        </> )}
         </div>
         <ul className='single-business-display-reviews-list'>
           <DisplayReviews businessId={id} />
