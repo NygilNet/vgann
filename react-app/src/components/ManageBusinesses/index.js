@@ -32,7 +32,7 @@ export default function ManageBusinesses({ businesses, isOwner }){
                                         </div>
                                         <div className='forInside'>
                                             <div>{business.city}, {business.state}</div>
-                                            <div>{business.avgRating ? `⭐️ ${parseFloat(business.avgRating).toFixed(1)}` : '⭐️ New'}</div>
+                                            <div>{business.name}</div>
                                         </div>
                                         <div className='forInside'>
                                             {/* <div>{business.price}</div> */}
