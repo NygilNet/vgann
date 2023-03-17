@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import { createBusiness } from '../../store/business';
+import './index.css'
 
 export default function CreateBusinessForm () {
     const ownerId= useSelector((state) => state.session.user.id)
     let catList = [
-        {id:1, category:'Breakfast'},
-        {id:2, category:'Burger'},
+        { id: 1, category:'Breakfast'},
+        { id: 2, category:'Burger'},
         { id: 3, category: 'Italian' },
         { id: 4, category: 'Thai' },
         { id: 5, category: 'Chinese' },
@@ -28,8 +29,35 @@ export default function CreateBusinessForm () {
     const [lat, setLat] = useState(0);
     const [price, setPrice] = useState(1);
     const [categories, setCategories] = useState('');
-    const [image, setImage] = useState('')
+    const [image1, setImage1] = useState('')
+    const [image2, setImage2] = useState('')
+    const [image3, setImage3] = useState('')
+    const [image4, setImage4] = useState('')
+    const [image5, setImage5] = useState('')
+    const [image6, setImage6] = useState('')
     // seperate state for each category
+
+
+    //Validation Errors set state
+    const [validationErrors, setValidationErrors] = useState({
+        name: '',
+        description: '',
+        features: '',
+        address: '',
+        city: '',
+        state: '',
+        lng: '',
+        lat: '',
+        price: '',
+        categories: '',
+        imageType: '',
+        image1: '',
+        image2: '',
+        image3: '',
+        image4: '',
+        image5: '',
+        image6: '',
+    })
 
     const [selectedCategory, setSelectedCategory] = useState({ 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9:false});
     function handleCategoryChange(e) {
@@ -42,19 +70,16 @@ export default function CreateBusinessForm () {
         let togo=[]
         for (let i = 1; i <11; i++) {
             if (selectedCategory[i]) {
-                // togo += `${i},`
                 togo.push(i)
-
-                console.log(togo)
             }
 
             setCategories(togo.join())
-        // console.log('dcdicndicndcndicndicndicndckin',categories)
       }
     }
 
     const history = useHistory();
     const dispatch = useDispatch();
+
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -70,28 +95,60 @@ export default function CreateBusinessForm () {
             lat,
             price,
             categories,
-            image,
-
-
+            image1,
+            image2,
+            image3,
+            image4,
+            image5,
+            image6
         }
-        // console.log("comin from create businesssssss", newBusiness)
-        // await dispatch(createBusiness(newBusiness)).then(console.log('succesfully cretaed'))
 
-        // dispatch(createBusiness(newBusiness)).then(newBiz => history.push(`/businesses/${newBiz.id}`))
-        const newBiz = await dispatch(createBusiness(newBusiness))
-        history.push(`/businesses/${newBiz.id}`)
+
+        //Validates the form fields
+        const errors = {}
+        if (!newBusiness.name.length) errors.name = 'Name is required';
+        if (newBusiness.description.length < 30) errors.description = 'Description needs a minimum of 30 characters';
+        if (!newBusiness.features.length) errors.features = 'Tag(s) is required';
+        if (!newBusiness.address.length) errors.address = 'Address is required';
+        if (!newBusiness.city.toString().length) errors.city = 'City is required';
+        if (!newBusiness.state.toString().length) errors.state = 'State is required';
+        if (!newBusiness.lng) errors.lng = 'Longitude is required';
+        if (!newBusiness.lat) errors.lat = 'Latitude is required';
+        if (!newBusiness.categories.length) errors.categories = 'Pick at least one category';
+        if (!newBusiness.price) errors.price = 'Price is required';
+
+        //Validates the images
+        if (!newBusiness.image1.length) errors.image1 = 'Preview image is required';
+        for (let i = 2; i <= 6; i++) {
+            const imageField = newBusiness[`image${i}`];
+            if (imageField.length && !/\.(png|jpe?g)$/.test(imageField)) {
+              errors[`image${i}`] = 'Image URL must end in .png, .jpg, or .jpeg';
+            }
+        }
+
+        if (!Object.values(errors).length) {
+            let newBiz = await dispatch(createBusiness(newBusiness));
+
+            if (newBiz) {
+                history.push(`/businesses/${newBiz.id}`)
+            }
+
+        } else {
+            setValidationErrors(errors)
+        }
+
     }
 
     return (
         <>
-            <h1>Create a New Business on VGAN</h1>
             <form
                 className='create-business-form'
                 onSubmit={onSubmit}
-            >
+                >
+                <div id="create-business-h1-container"><h1>Create a New Business on VGAN</h1></div>
                 <div>
                     <label>
-                        What is the name of your business?
+                        What is the name of your business? <span className='validationErrors'>{validationErrors.name}</span>
                         <input
                         type='text'
                         onChange={(e) => setName(e.target.value)}
@@ -101,7 +158,7 @@ export default function CreateBusinessForm () {
                 </div>
                 <div>
                     <label>
-                        Describe your business in a few lines.
+                        Describe your business in a few lines. <span className='validationErrors'>{validationErrors.description}</span>
                         <textarea
                         onChange={(e) => setDescription(e.target.value)}
                         value={description}
@@ -110,7 +167,7 @@ export default function CreateBusinessForm () {
                 </div>
                 <div>
                     <label>
-                        Give us a few tags for your business. (i.e. Open All Day,Delivery,...)
+                        Give us a few tags for your business. (i.e. Open All Day,Delivery,...) <span className='validationErrors'>{validationErrors.features}</span>
                         <textarea
                         type='text'
                         onChange={(e) => setFeatures(e.target.value)}
@@ -120,7 +177,7 @@ export default function CreateBusinessForm () {
                 </div>
                 <div>
                     <label>
-                        What street address is your business located at?
+                        What street address is your business located at? <span className='validationErrors'>{validationErrors.address}</span>
                         <input
                         type='text'
                         onChange={(e) => setAddress(e.target.value)}
@@ -130,7 +187,7 @@ export default function CreateBusinessForm () {
                 </div>
                 <div>
                     <label>
-                        What city?
+                        What city? <span className='validationErrors'>{validationErrors.city}</span>
                         <input
                         type='text'
                         onChange={(e) => setCity(e.target.value)}
@@ -140,7 +197,7 @@ export default function CreateBusinessForm () {
                 </div>
                 <div>
                     <label>
-                        What state? (i.e. 'XX')
+                        What state? <span className='validationErrors'>{validationErrors.state}</span>
                         <input
                         type='text'
                         onChange={(e) => setState(e.target.value)}
@@ -150,7 +207,7 @@ export default function CreateBusinessForm () {
                 </div>
                 <div>
                     <label>
-                        Longitude?
+                        Longitude? <span className='validationErrors'>{validationErrors.lng}</span>
                         <input
                         type='number'
                         onChange={(e) => setLng(+e.target.value)}
@@ -160,7 +217,7 @@ export default function CreateBusinessForm () {
                 </div>
                 <div>
                     <label>
-                        Latitude?
+                        Latitude? <span className='validationErrors'>{validationErrors.lat}</span>
                         <input
                         type='number'
                         onChange={(e) => setLat(+e.target.value)}
@@ -170,7 +227,7 @@ export default function CreateBusinessForm () {
                 </div>
                 <div>
                     <label>
-                        What price range is your business?
+                        What price category does your business belong to? <span className='validationErrors'>{validationErrors.price}</span>
                         <select
                         onChange={(e) => setPrice(+e.target.value)}
                         value={price}
@@ -185,8 +242,8 @@ export default function CreateBusinessForm () {
                 </div>
                 <div>
                     <label>
-                        What are some miscellaneous categories you want to add to your business?
-                        <div>
+                        What are some miscellaneous categories you want to add to your business? <div className='validationErrors'>{validationErrors.categories}</div>
+                        <div id='create-business-categories'>
                             {catList.map(({id,category}) => (
                                 <>
                                 <label key={category}>
@@ -207,23 +264,74 @@ export default function CreateBusinessForm () {
                 </div>
                 <div>
                     <label>
-                        <h3>Liven up your spot with photos</h3>
+                        <h3>Liven up your business with photos</h3>
                         <p>
                             Competitive pricing can help your listing stand out and rank
                             higher in search results.
                         </p>
+                        <div className='validationErrors'>{validationErrors.image1}</div>
+                        <div className='validationErrors'>{validationErrors.imageType}</div>
                         <input
                             type="text"
-                            name="previewPhoto"
-                            required
-                            value={image}
+                            name="image1"
+                            value={image1}
                             placeholder="Preview Image URL"
-                            onChange={(e) =>setImage(e.target.value)}
+                            onChange={(e) =>setImage1(e.target.value)}
+                        />
+                    </label>
+                    <label>
+                        <div className='validationErrors'>{validationErrors.image2}</div>
+                        <input
+                            type="text"
+                            name="image2"
+                            value={image2}
+                            placeholder="Image 1"
+                            onChange={(e) =>setImage2(e.target.value)}
+                        />
+                    </label>
+                    <label>
+                        <div className='validationErrors'>{validationErrors.image3}</div>
+                        <input
+                            type="text"
+                            name="image3"
+                            value={image3}
+                            placeholder="Image 2"
+                            onChange={(e) =>setImage3(e.target.value)}
+                        />
+                    </label>
+                    <label>
+                        <div className='validationErrors'>{validationErrors.image4}</div>
+                        <input
+                            type="text"
+                            name="image4"
+                            value={image4}
+                            placeholder="Image 3"
+                            onChange={(e) =>setImage4(e.target.value)}
+                        />
+                    </label>
+                    <label>
+                        <div className='validationErrors'>{validationErrors.image5}</div>
+                        <input
+                            type="text"
+                            name="image5"
+                            value={image5}
+                            placeholder="Image 4"
+                            onChange={(e) =>setImage5(e.target.value)}
+                        />
+                    </label>
+                    <label>
+                        <div className='validationErrors'>{validationErrors.image6}</div>
+                        <input
+                            type="text"
+                            name="image6"
+                            value={image6}
+                            placeholder="Image 5"
+                            onChange={(e) =>setImage6(e.target.value)}
                         />
                     </label>
                 </div>
-                <div>
-                    <input type="submit" />
+                <div id="create-business-submit">
+                    <button type="submit">Submit</button>
                 </div>
             </form>
         </>

@@ -98,30 +98,27 @@ function Navigation({ isLoaded }) {
 				/>
 				</NavLink>
 			</div>
-			{onprofilepage ? (null) : (
-				<div className='searchBar'>
-					<input
-						type='text'
-						placeholder='Search'
-						value={searchValue}
-						onChange={handleSearchChange}
-					/>
-					<select value={selectedCategory} onChange={handleCategoryChange}>
-						<option value=''>All Categories</option>
-						<option value='Breakfast'>Breakfast</option>
-						<option value='Burger'>Burger</option>
-						<option value='Italian'>Italian</option>
-						<option value='Thai'>Thai</option>
-						<option value='Chinese'>Chinese</option>
-						<option value='Pizza'>Pizza</option>
-						<option value='French'>French</option>
-						<option value='Vietnamese'>Vietnamese</option>
-						<option value='Cafe'>Cafe</option>
-					</select>
-					<button id='search-icon-container' onClick={searchClicked}><FontAwesomeIcon icon={faSearch} id='search-icon' /></button>
-				</div>
-			 ) }
-
+			<div className='searchBar'>
+				<input
+					type='text'
+					placeholder='Search'
+					value={searchValue}
+					onChange={handleSearchChange}
+				/>
+				<select className='curs' value={selectedCategory} onChange={handleCategoryChange}>
+					<option value=''>All Categories</option>
+					<option value='Breakfast'>Breakfast</option>
+					<option value='Burger'>Burger</option>
+					<option value='Italian'>Italian</option>
+					<option value='Thai'>Thai</option>
+					<option value='Chinese'>Chinese</option>
+					<option value='Pizza'>Pizza</option>
+					<option value='French'>French</option>
+					<option value='Vietnamese'>Vietnamese</option>
+					<option value='Cafe'>Cafe</option>
+				</select>
+				<button id='search-icon-container' className="curs" onClick={searchClicked}><FontAwesomeIcon icon={faSearch} id='search-icon'/></button>
+			</div>
 			{isLoaded && (
 				<div className='navStyle'>
 					<div style={{ paddingBottom: '25px', paddingRight: '25px' }}>
@@ -133,7 +130,7 @@ function Navigation({ isLoaded }) {
 					</div>
 
 					<div className='navbar-profile'>
-						<ProfileButton user={sessionUser} />
+						<ProfileButton className='navbar-profile' user={sessionUser} />
 					</div>
 				</div>
 			)}
