@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useHistory, useParams, useLocation } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserBusinesses } from '../../store/business';
 import { getuserthunk } from '../../store/userinfo';
@@ -12,14 +12,16 @@ function UserProfilePage() {
 
     const dispatch = useDispatch();
     const {userId} = useParams();
-   
-   // console.log('locationnnnnnnnnnnn',location)
-    useEffect (() => {
-            dispatch(getUserBusinesses(userId));
 
-            dispatch(getuserthunk(userId))
-            // dispatch(getReviews())
-        }, [dispatch]);
+    useEffect (() => {
+        dispatch(getUserBusinesses(userId));
+            dispatch(getuserthunk(userId));
+        }, [dispatch, userId]);
+
+    // useEffect(() => {
+    //         // dispatch(getReviews());
+    // }, [dispatch])
+
 
     const currentUser = useSelector(state => state.session.user)
     const userInfo = useSelector(state => state.userInfo)

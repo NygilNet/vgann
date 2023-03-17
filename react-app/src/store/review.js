@@ -23,14 +23,11 @@ const removeReviews = () => ({
   const getSingleReview = payload => ({
     type: GET_SINGLE_REVIEW,
     payload
-  }
-  )
-const deletereviewaction = (payload) =>{
-    return{
+  })
+const deletereviewaction = (payload) => ({
         type:DELETE_SINGLE_REVIEW,
         payload
-    }
-}
+    })
 
 
 // thunk functions
@@ -113,7 +110,7 @@ const reviewReducer = (state = initialState, action) => {
             return review
         case LOAD_REVIEWS:
             const reviews = action.payload
-            return {...state, reviews }
+            return reviews
         case ADD_REVIEW:
             newState[action.payload.id] = action.payload;
             return newState;

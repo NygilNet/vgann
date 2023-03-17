@@ -24,7 +24,7 @@ function Navigation({ isLoaded }) {
 	// let location = useLocation()
 	let onprofilepage = location.pathname.startsWith('/users')
 	// useEffect(() =>{
-	// 	 onprofilepage = 
+	// 	 onprofilepage =
 	// },[location])
 
 	useEffect(()=>{
@@ -121,7 +121,7 @@ function Navigation({ isLoaded }) {
 					<button id='search-icon-container' onClick={searchClicked}><FontAwesomeIcon icon={faSearch} id='search-icon' /></button>
 				</div>
 			 ) }
-		
+
 			{isLoaded && (
 				<div className='navStyle'>
 					<div style={{ paddingBottom: '25px', paddingRight: '25px' }}>

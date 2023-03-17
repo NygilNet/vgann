@@ -4,11 +4,11 @@ import './BusinessReview.css'
 import ReviewOptionsMenu from './ReviewOptionsMenu';
 import { useSelector } from 'react-redux';
 export default function BusinessReview(prop){
-    console.log("review------>",prop)
+    // console.log("review------>",prop)
     const currUser = useSelector(state=>state.session.user)
     const review = prop.review
     const user = review.user
-    console.log("current user---->",currUser)
+    // console.log("current user---->",currUser)
 
     return (
         <div className='single-review'>
@@ -30,7 +30,8 @@ export default function BusinessReview(prop){
             </div>
             <p className='review-content'>{review.review}</p>
             </div>
-            {currUser && currUser.id === user.id?<ReviewOptionsMenu />:null}
+            {currUser && currUser.id === user.id?<ReviewOptionsMenu review={review}/>:null}
+            {/* {currUser && currUser.id === user.id?<ReviewOptionsMenu id={review.id}/>:null} */}
         </div>
     )
 }
