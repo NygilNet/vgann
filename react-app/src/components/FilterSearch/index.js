@@ -175,7 +175,7 @@ export default function FilterSearch(){
     useEffect(()=>{
         if(searchParams.filters){
             let newActive = {}
-            if(searchParams.search.length) newActive.search = searchParams.search
+            if(searchParams.search.length) newActive.search = [searchParams.search]
             if(searchParams.query.city.length) newActive.cities = searchParams.query.city.split(',')
             if(searchParams.query.price.length) newActive.price = searchParams.query.price.split(',').map(el=> '$'.repeat(Number(el)))
             if(searchParams.query.categories.length) newActive.categories = searchParams.query.categories.split(',')
