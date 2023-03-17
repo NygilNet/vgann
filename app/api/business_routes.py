@@ -43,36 +43,34 @@ def businesses():
         query = query.filter(Business.categories.any(
         Category.id.in_([c.id for c in category_queries])))
 
-    #working with one category
-    # category = request.args.get('category')
-    # if category:
-    #     # Use a subquery to filter restaurants by category
-    #     category_query = Category.query.filter_by(category_name=category).first()
-    #     query = query.filter(Business.categories.contains(category_query))
-        # print('dduhisdhdichdichdichdich',query)
+    businesses = query.all()
+    business_dicts = [biz.to_dict() for biz in businesses]
+    # for biz in business_dicts:
+    #     biz
 
-    businesses_dict = [{
-        'id': business.id,
-        'ownerId': business.owner_id,
-        'name': business.name,
-        'description': business.description,
-        'features': business.features,
-        'address': business.address,
-        'city': business.city,
-        'state': business.state,
-        'lng': business.lng,
-        'lat': business.lat,
-        'price': business.price,
-        'createdAt': business.created_at,
-        'updatedAt': business.updated_at,
-        'avgRating': business.avgRating,
-        'numReviews': db.session.query(func.count(Review.id)).filter(Review.business_id == business.id).scalar(),
-        # 'avgRating': db.session.query(func.avg(Review.id)).filter(Review.business_id == business.id).scalar(),
-        'previewImage': [img.to_dict() for img in business.images if img.preview == True],
-        'categories':[category.to_dict() for category in business.categories],
-    } for business in query.all()]
+    # business_dict = business.to_dict()
+    # businesses_dict = [{
+    #     'id': business.id,
+    #     'ownerId': business.owner_id,
+    #     'name': business.name,
+    #     'description': business.description,
+    #     'features': business.features,
+    #     'address': business.address,
+    #     'city': business.city,
+    #     'state': business.state,
+    #     'lng': business.lng,
+    #     'lat': business.lat,
+    #     'price': business.price,
+    #     'createdAt': business.created_at,
+    #     'updatedAt': business.updated_at,
+    #     'avgRating': business.to_dict().avgRating,
+    #     'numReviews': db.session.query(func.count(Review.id)).filter(Review.business_id == business.id).scalar(),
+    #     # 'avgRating': db.session.query(func.avg(Review.id)).filter(Review.business_id == business.id).scalar(),
+    #     'previewImage': [img.to_dict() for img in business.images if img.preview == True],
+    #     'categories':[category.to_dict() for category in business.categories],
+    # } for business in query.all()]
 
-    return jsonify({'businesses': businesses_dict})
+    return jsonify({'businesses': business_dicts})
 
 @business_routes.route('', methods=["POST"])
 def create_new_business():
