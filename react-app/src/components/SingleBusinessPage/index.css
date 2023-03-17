@@ -52,3 +52,27 @@
   #business-info .description {
     white-space: pre-line;
   }
+
+  .single-business-review-button {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    background-color: red;
+    color: white;
+    border: solid black 1px;
+    padding: 5px;
+    margin: 2px;
+
+    width: 180px;
+    height: 40px;
+
+    cursor: pointer;
+  }
+
+  .single-business-review-button-link {
+    display: flex;
+    width: 185px;
+    height: 40px;
+  }

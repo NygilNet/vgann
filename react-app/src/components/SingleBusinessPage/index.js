@@ -5,6 +5,8 @@ import { clearBusiness, getSingleBusiness } from '../../store/business';
 import { clearReviews, getReviews, loadReviews } from '../../store/review';
 import BusinessImages from './BusinessImages';
 import DisplayReviews from './DisplayReviews';
+import OpenModalItem from '../OpenModalDiv';
+import UpdateReviewForm from '../UpdateReview';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import './index.css'
@@ -89,8 +91,13 @@ const SingleBusinessShow = () => {
         <div className='review-button-container'>
           {user ?
             userHasPosted ?
-              <NavLink to={`/businesses/${usersReview.id}/reviews/edit`} > "Edit Your Review"</NavLink>
-              :<NavLink to={`/businesses/${business.id}/reviews/new`} > "POST Your Review"</NavLink>
+            <OpenModalItem
+            className="single-business-review-button"
+            itemText="EDIT Your Review"
+            modalComponent={<UpdateReviewForm oldReview={usersReview} />}
+            />
+              // <NavLink className="single-business-review-button" to={`/businesses/${usersReview.id}/reviews/edit`} > EDIT Your Review</NavLink>
+              :<NavLink className="single-business-review-button-link" to={`/businesses/${business.id}/reviews/new`} ><p className='single-business-review-button'>POST Your Review</p></NavLink>
             : ''}
         </div>
         <ul className='single-business-display-reviews-list'>
