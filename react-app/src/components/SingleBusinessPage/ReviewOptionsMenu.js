@@ -1,12 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import DeleteReviewModal from '../DeleteReviewModal';
+import UpdateReviewForm from '../UpdateReview'
 import OpenModalButton from '../OpenModalButton';
 import SignupFormModal from '../SignupFormModal';
 import './ReviewOptionsMenu.css'
-export default function ReviewOptionsMenu(prop){
+export default function ReviewOptionsMenu(review){
     // console.log("options button prop---->", prop)
+    console.log(review.review)
+
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
+    const history = useHistory();
 
     const ulClassName = "drop-menu" + (showMenu ? "" : " hidden");
 
@@ -30,6 +35,8 @@ export default function ReviewOptionsMenu(prop){
     }
     const closeMenu = () => setShowMenu(false);
 
+    // const handleClick = () => history.push(`/businesses/${review.review.id}/reviews/edit`)
+
     return(
         <div className="button-container">
             <div className="options-button" onClick={openMenu}>
@@ -39,9 +46,14 @@ export default function ReviewOptionsMenu(prop){
                 <OpenModalButton
                 buttonText="Delete Review"
                 onItemClick={closeMenu}
-                modalComponent={<DeleteReviewModal review={prop.review}/>}
+                modalComponent={<DeleteReviewModal review={review.review}/>}
                 />
-                <button>Edit Review</button>
+                <OpenModalButton
+                buttonText="Edit Review"
+                onItemClick={closeMenu}
+                modalComponent={<UpdateReviewForm oldReview={review.review} />}
+                />
+                {/* <button onClick={handleClick}>Edit Review</button> */}
             </div>
         </div>
     )

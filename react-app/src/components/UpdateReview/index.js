@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { readASingleReview } from '../../store/review';
 import { editReview } from '../../store/review';
 
-export default function UpdateReviewForm({ businessId }) {
+export default function UpdateReviewForm({ oldReview }) {
     const { id } = useParams();
     const dispatch = useDispatch();
     const history = useHistory();
-    const currentreview=useSelector(state => state.reviews)
+    // const currentreview=useSelector(state => state.reviews)
     // console.log(currentreview)
 
     const [review, setReview] = useState('');
@@ -16,10 +16,10 @@ export default function UpdateReviewForm({ businessId }) {
 
     useEffect(() => {
         let tofill = async() =>{
-          let reviewinfo= await dispatch(readASingleReview(id))
+        //   let reviewinfo= await dispatch(readASingleReview(id))
         //   console.log("chgecking review infoooooooooo", reviewinfo)
-          setReview(reviewinfo.review)
-          setStars(reviewinfo.stars)
+          setReview(oldReview.review)
+          setStars(oldReview.stars)
 
         }
         tofill()

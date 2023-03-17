@@ -36,7 +36,8 @@ const SingleBusinessShow = () => {
 
   const reviews = useSelector(state=> state.reviews)
 
-  console.log(Object.values(reviews).find(review => review.user_id === user.id && review.business_id === business.id))
+  const usersReview = Object.values(reviews).find(review => review.user_id === user.id && review.business_id === business.id);
+  console.log(usersReview)
 
 
   if (!business ) {
@@ -77,7 +78,7 @@ const SingleBusinessShow = () => {
         <div className='review-button-container'>
           {user ?
             userHasPosted ?
-              <NavLink to={`/businesses/${business.id}/reviews/new`} > "Edit Your Review"</NavLink>
+              <NavLink to={`/businesses/${usersReview.id}/reviews/edit`} > "Edit Your Review"</NavLink>
               :<NavLink to={`/businesses/${business.id}/reviews/new`} > "POST Your Review"</NavLink>
             : ''}
         </div>
