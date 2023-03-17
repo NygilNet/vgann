@@ -26,7 +26,7 @@ const AllBusinessPage = () => {
     // console.log("Context change noticed in allBusinesses")
     if(searchParams.filters && businesses){
       setBusinessList( filterResults(Object.values(businesses),searchParams.search,searchParams.query))
-    }else{
+    } else{
       dispatch(loadFiltered(Object.values(businesses)))
     }
   },[searchParams])

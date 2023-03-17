@@ -5,6 +5,7 @@ import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import { NavLink } from "react-router-dom";
+import './index.css'
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -40,10 +41,10 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu}>
+      <button className="profile-button-style" onClick={openMenu}>
         <i className="fas fa-user-circle" />
       </button>
-      <ul className={ulClassName} ref={ulRef}>
+      <ul className={`${ulClassName} profile-drop-menu`} ref={ulRef}>
         {user ? (
           <>
             <li><NavLink to={`/users/${user.id}`} >About me</NavLink> </li>

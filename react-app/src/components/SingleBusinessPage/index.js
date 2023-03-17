@@ -68,9 +68,20 @@ const SingleBusinessShow = () => {
       <section id='single-business-top-content'>
         <ProfileIcon business={business} src={src} />
       </section>
-      <div>
-        {business.city}, {business.state}, {business.country}
-      </div>
+      <section id="business-info">
+        <article>
+          <header>
+            <h2>Address</h2>
+          </header>
+          <p class="address">{business.address}, {business.city}, {business.state}</p>
+        </article>
+        <article>
+          <header>
+            <h2>Description</h2>
+          </header>
+          <p class="description">{business.description}</p>
+        </article>
+      </section>
       <div>
         <div>
           <i className="fa-regular fa-star"></i>{avgRating}
