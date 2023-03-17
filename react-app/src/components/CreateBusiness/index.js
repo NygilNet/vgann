@@ -17,7 +17,13 @@ export default function CreateBusinessForm () {
         { id: 8, category: 'Vietnamese' },
         { id: 9, category: 'Cafe' },
         ]
-
+    let feautureList = [
+        { id: 1, feature: 'Outdoor seating' },
+        { id: 2, feature: 'Delivery' },
+        { id: 3, feature: 'Open All Day' },
+        { id: 4, feature: 'Takeout' },
+        { id: 5, feature: 'Deliver' },
+    ]    
 
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
@@ -60,6 +66,8 @@ export default function CreateBusinessForm () {
     })
 
     const [selectedCategory, setSelectedCategory] = useState({ 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9:false});
+    const [selectedFeature, setSelectedFeature] = useState({ 1: false, 2: false, 3: false, 4: false, 5: false });
+    
     function handleCategoryChange(e) {
         let categoryObj = {
             ...selectedCategory,
@@ -68,13 +76,31 @@ export default function CreateBusinessForm () {
 
         setSelectedCategory(categoryObj)
         let togo=[]
-        for (let i = 1; i <11; i++) {
+        for (let i = 1; i <10; i++) {
             if (selectedCategory[i]) {
                 togo.push(i)
             }
 
             setCategories(togo.join())
       }
+    }
+
+    function handleFeatureChange(e) {
+        let featureObj = {
+            ...selectedFeature,
+            [e.target.value]: !selectedFeature[e.target.value]
+        }
+
+        setSelectedCategory(featureObj)
+        let togofeature = []
+        for (let i = 1; i < 6; i++) {
+            if (selectedCategory[i]) {
+               let some= feautureList.find(obj =>obj.id==i)
+               togofeature.push(some.feature)
+            }
+
+            setCategories(togofeature.join())
+        }
     }
 
     const history = useHistory();
@@ -108,7 +134,7 @@ export default function CreateBusinessForm () {
         const errors = {}
         if (!newBusiness.name.length) errors.name = 'Name is required';
         if (newBusiness.description.length < 30) errors.description = 'Description needs a minimum of 30 characters';
-        if (!newBusiness.features.length) errors.features = 'Tag(s) is required';
+        //if (!newBusiness.features.length) errors.features = 'Tag(s) is required';
         if (!newBusiness.address.length) errors.address = 'Address is required';
         if (!newBusiness.city.toString().length) errors.city = 'City is required';
         if (!newBusiness.state.toString().length) errors.state = 'State is required';
@@ -166,14 +192,24 @@ export default function CreateBusinessForm () {
                     </label>
                 </div>
                 <div>
-                    <label>
-                        Give us a few tags for your business. (i.e. Open All Day,Delivery,...) <span className='validationErrors'>{validationErrors.features}</span>
-                        <textarea
-                        type='text'
-                        onChange={(e) => setFeatures(e.target.value)}
-                        value={features}
-                        ></textarea>
-                    </label>
+                    
+                        Give us a few tags for your business. <span className='validationErrors'>{validationErrors.features}</span>
+                        {feautureList.map(({ id, feature }) => (
+                            <>
+                                <label key={feature}>
+
+                                    <input
+                                        type="checkbox"
+                                        name="feature"
+                                        value={id}
+                                        onChange={handleFeatureChange}
+                                    />
+                                    {feature}
+                                </label>
+
+                            </>
+                        ))}
+                    
                 </div>
                 <div>
                     <label>
