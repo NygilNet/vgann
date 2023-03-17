@@ -41,9 +41,9 @@ function WriteReviewForm() {
 
 
         if (!Object.values(errors).length) {
-           let newReview = await dispatch(postReview(id, newReview));
+           let sendReview = await dispatch(postReview(id, newReview));
 
-           if (newReview) {
+           if (sendReview) {
             return history.push(`/businesses/${id}`)
            }
 

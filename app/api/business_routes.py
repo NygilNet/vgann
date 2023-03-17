@@ -65,8 +65,9 @@ def businesses():
         'price': business.price,
         'createdAt': business.created_at,
         'updatedAt': business.updated_at,
+        'avgRating': business.avgRating,
         'numReviews': db.session.query(func.count(Review.id)).filter(Review.business_id == business.id).scalar(),
-        'avgRating': db.session.query(func.avg(Review.id)).filter(Review.business_id == business.id).scalar(),
+        # 'avgRating': db.session.query(func.avg(Review.id)).filter(Review.business_id == business.id).scalar(),
         'previewImage': [img.to_dict() for img in business.images if img.preview == True],
         'categories':[category.to_dict() for category in business.categories],
     } for business in query.all()]
@@ -120,8 +121,8 @@ def single_business(id):
         BusinessImage).filter_by(business_id=id).all()]
     business['numReviews'] = db.session.query(func.count(
         Review.id)).filter(Review.business_id == id).scalar()
-    business['avgRating'] = db.session.query(
-        func.avg(Review.id)).filter(Review.business_id == id).scalar()
+    # business['avgRating'] = db.session.query(
+    #     func.avg(Review.id)).filter(Review.business_id == id).scalar()
     business['categories'] = [category.to_dict() for category in res.categories]
     reviews = [rev.to_dict() for rev in res.reviews]
     for rev in reviews:

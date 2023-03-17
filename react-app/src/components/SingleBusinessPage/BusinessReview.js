@@ -25,7 +25,7 @@ export default function BusinessReview(prop){
                 </div>
             </div>
             <div className='starts-container'>
-                <PreviewStars avg={review.stars}/>
+                <PreviewStars props={review} />
                 <p>{review.updated_at.split(" ").slice(0,3).join(" ")}</p>
             </div>
             <p className='review-content'>{review.review}</p>

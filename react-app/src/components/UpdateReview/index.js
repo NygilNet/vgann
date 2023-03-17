@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { readASingleReview } from '../../store/review';
+import { getSingleBusiness } from '../../store/business';
 import { editReview } from '../../store/review';
 import DynamicStars from '../WriteReview/DynamicStars';
 import './index.css';
@@ -48,7 +49,7 @@ export default function UpdateReviewForm({ oldReview }) {
         if (!Object.values(errors).length) {
             const editedreview = await dispatch(editReview(oldReview.id, toedit))
 
-
+            await dispatch(getSingleBusiness(oldReview.business_id))
         } else {
             setValidationErrors(errors);
         }
