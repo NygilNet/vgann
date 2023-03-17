@@ -85,19 +85,19 @@ const SingleBusinessShow = () => {
         </article>
       </section>
       <div>
-        <div>
+        {/* <div>
           <i className="fa-regular fa-star"></i>{avgRating}
-        </div>
+        </div> */}
           <div className='review-button-container'>
             {user ?
               userHasPosted ?
               <OpenModalItem
               className="single-business-review-button"
-            itemText="EDIT Your Review"
+            itemText="Edit Your Review"
               modalComponent={<UpdateReviewForm oldReview={usersReview} />}
               />
                 // <NavLink className="single-business-review-button" to={`/businesses/${usersReview.id}/reviews/edit`} > EDIT Your Review</NavLink>
-              :<NavLink className="single-business-review-button-link" to={`/businesses/${business.id}/reviews/new`} ><p className='single-business-review-button'>POST Your Review</p></NavLink>
+              :<NavLink className="single-business-review-button-link" to={`/businesses/${business.id}/reviews/new`} ><p className='single-business-review-button'>Post Your Review</p></NavLink>
               : ''}
           </div>
         <ul className='single-business-display-reviews-list'>
