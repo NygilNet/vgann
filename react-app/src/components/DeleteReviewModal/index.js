@@ -6,10 +6,8 @@ import './index.css'
 
 export default function DeleteReviewModal(id){
     const {closeModal} = useModal()
-    // console.log("the id -----> ", id.review.id)
     const dispatch = useDispatch()
     const deleteReview = async e =>{
-        // console.log("You chose delete!")
         await dispatch(deletereviewthunk(id.review.id))
         await dispatch(getSingleBusiness(id.review.business_id))
         closeModal()

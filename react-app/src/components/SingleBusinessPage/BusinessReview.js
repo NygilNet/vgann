@@ -4,11 +4,9 @@ import './BusinessReview.css'
 import ReviewOptionsMenu from './ReviewOptionsMenu';
 import { useSelector } from 'react-redux';
 export default function BusinessReview(prop){
-    // console.log("review------>",prop)
     const currUser = useSelector(state=>state.session.user)
     const review = prop.review
     const user = review.user
-    // console.log("current user---->",currUser)
 
     return (
         <div className='single-review'>

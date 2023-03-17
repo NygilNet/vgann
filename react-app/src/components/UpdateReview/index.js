@@ -12,8 +12,6 @@ export default function UpdateReviewForm({ oldReview }) {
     const { id } = useParams();
     const dispatch = useDispatch();
     const { closeModal } = useModal();
-    // const currentreview=useSelector(state => state.reviews)
-    // console.log(currentreview)
 
     const [review, setReview] = useState('');
     const [stars, setStars] = useState(0);
@@ -25,8 +23,6 @@ export default function UpdateReviewForm({ oldReview }) {
 
     useEffect(() => {
         let tofill = async() =>{
-        //   let reviewinfo= await dispatch(readASingleReview(id))
-        //   console.log("chgecking review infoooooooooo", reviewinfo)
           setReview(oldReview.review)
           setStars(oldReview.stars)
 

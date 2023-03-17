@@ -91,8 +91,8 @@ export default function CreateBusinessForm () {
             address,
             city,
             state,
-            lng,
-            lat,
+            lng: +lng,
+            lat: +lat,
             price,
             categories,
             image1,
@@ -210,7 +210,7 @@ export default function CreateBusinessForm () {
                         Longitude? <span className='validationErrors'>{validationErrors.lng}</span>
                         <input
                         type='number'
-                        onChange={(e) => setLng(+e.target.value)}
+                        onChange={(e) => setLng(e.target.value)}
                         value={lng}
                         />
                     </label>
@@ -220,7 +220,7 @@ export default function CreateBusinessForm () {
                         Latitude? <span className='validationErrors'>{validationErrors.lat}</span>
                         <input
                         type='number'
-                        onChange={(e) => setLat(+e.target.value)}
+                        onChange={(e) => setLat(e.target.value)}
                         value={lat}
                         />
                     </label>
