@@ -10,7 +10,7 @@ class BusinessForm(FlaskForm):
                                 DataRequired(message='from description data required')])
     features = TextAreaField('Features')
     address = StringField('Address', validators=[
-                          DataRequired(message='from addrees data required'), Length(max=150, message='from length address data required')])
+                          DataRequired(message='from address data required'), Length(max=150, message='from length address data required')])
     city = StringField('City', validators=[DataRequired(
         message='from city data required'), Length(max=150, message='from length city data required')])
     state = StringField('State', validators=[DataRequired(

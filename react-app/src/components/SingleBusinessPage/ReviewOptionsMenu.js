@@ -6,8 +6,6 @@ import OpenModalButton from '../OpenModalButton';
 import SignupFormModal from '../SignupFormModal';
 import './ReviewOptionsMenu.css'
 export default function ReviewOptionsMenu(review){
-    // console.log("options button prop---->", prop)
-    console.log(review.review)
 
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
@@ -17,7 +15,6 @@ export default function ReviewOptionsMenu(review){
 
     useEffect(() => {
         if (!showMenu) return;
-        // console.log(ulRef)
         const closeMenu = (e) => {
           if (!ulRef.current.contains(e.target)) {
             setShowMenu(false);

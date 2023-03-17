@@ -12,9 +12,6 @@ export default function UpdateReviewForm({ oldReview }) {
     const { id } = useParams();
     const dispatch = useDispatch();
     const { closeModal } = useModal();
-    // const currentreview=useSelector(state => state.reviews)
-    // console.log(currentreview)
-    console.log("old review ----> ", oldReview)
 
     const [review, setReview] = useState('');
     const [stars, setStars] = useState(oldReview.stars);

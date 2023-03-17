@@ -48,7 +48,6 @@ export default function FilterSearch(){
                 }
             })
             setCatObj(()=>newCatObj)
-            // console.log("cat object ----->", newCatObj)
         }
     },[businesses])
 
@@ -128,7 +127,6 @@ export default function FilterSearch(){
     }
 
     const handleCategoryChange = e =>{
-        // console.log(e.target.value)
         if(e.target.value===searchParams.query.categories){
 
             let newContext = {
@@ -181,7 +179,6 @@ export default function FilterSearch(){
             if(searchParams.query.categories.length) newActive.categories = searchParams.query.categories.split(',')
             if(searchParams.query.features.length) newActive.features = searchParams.query.features.split(',')
             setActiveFilters(()=>newActive)
-            // console.log(newActive)
         }else{
             setActiveFilters({})
         }

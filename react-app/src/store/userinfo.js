@@ -8,7 +8,6 @@ const getuseraction = (payload) => {
 }
 
 export const getuserthunk = (id) => async dispatch =>{
-    // console.log('conlooiiinngggg responseeeee', id)
     const response = await fetch(`/api/users/${id}`)
     if (response.ok){
         const data = await response.json()

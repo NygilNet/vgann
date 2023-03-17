@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 
 export default function ProfileIcon({business, src}) {
 
-    console.log('THE BUSINESS', business)
     const business1 = useSelector(state => state.business.business)
 
     return (
