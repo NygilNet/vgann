@@ -12,9 +12,9 @@ const DisplayReviews = ({ businessId }) => {
         dispatch(getReviews(businessId));
     }, [dispatch, businessId]);
 
-    if (!reviews || !user) {
-        return <li>Be the first to post a review!</li>;
-    }
+    // if (!reviews || !user) {
+    //     return <li>Be the first to post a review!</li>;
+    // }
 
     const dateFormat = (date) => {
         const dateArray = date.split('-');
