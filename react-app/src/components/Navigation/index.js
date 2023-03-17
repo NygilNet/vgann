@@ -98,7 +98,7 @@ function Navigation({ isLoaded }) {
 					value={searchValue}
 					onChange={handleSearchChange}
 				/>
-				<select value={selectedCategory} onChange={handleCategoryChange}>
+				<select className='curs' value={selectedCategory} onChange={handleCategoryChange}>
 					<option value=''>All Categories</option>
 					<option value='Breakfast'>Breakfast</option>
 					<option value='Burger'>Burger</option>
@@ -110,14 +110,14 @@ function Navigation({ isLoaded }) {
 					<option value='Vietnamese'>Vietnamese</option>
 					<option value='Cafe'>Cafe</option>
 				</select>
-				<button id='search-icon-container' onClick={searchClicked}><FontAwesomeIcon icon={faSearch} id='search-icon'/></button>
+				<button id='search-icon-container' className="curs" onClick={searchClicked}><FontAwesomeIcon icon={faSearch} id='search-icon'/></button>
 			</div>
 			{isLoaded && (
 				<div className='navStyle'>
 					<div>
 						{sessionUser && (
 							<>
-								<select value={selectedCategory} onChange={handleCreateAndMAnag}>
+								<select className="select-drop-style curs" value={selectedCategory} onChange={handleCreateAndMAnag}>
 									<option value=''>Yelp For Business</option>
 									<option value='new'>Create Business</option>
 									<option value='manage'>Manage Your Business</option>
@@ -127,7 +127,7 @@ function Navigation({ isLoaded }) {
 					</div>
 
 					<div className='navbar-profile'>
-						<ProfileButton user={sessionUser} />
+						<ProfileButton className='navbar-profile' user={sessionUser} />
 					</div>
 				</div>
 			)}
