@@ -58,9 +58,9 @@ const categories=['Chiness','THai', 'salam', 'mellim']
           <Route exact path="/users/:userId/" >
             <UserProfilePage />
           </Route>
-          <Route path="/users/:userId/businesses" >
+          {/* <Route path="/users/:userId/businesses" >
             <ManageBusinesses />
-          </Route>
+          </Route> */}
           <Route path="/reviews/:id/edit" >
             <UpdateReviewForm />
           </Route>

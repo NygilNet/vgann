@@ -20,6 +20,13 @@ function Navigation({ isLoaded }) {
 	const location = useLocation();
 	const [isHomePage, setIsHomePage] = useState(false);
 
+
+	// let location = useLocation()
+	let onprofilepage = location.pathname.startsWith('/users')
+	// useEffect(() =>{
+	// 	 onprofilepage =
+	// },[location])
+
 	useEffect(()=>{
 		setSelectedCategory(searchParams.query.categories)
 
@@ -57,11 +64,11 @@ function Navigation({ isLoaded }) {
   	  }
   	};
 
-	//  for MANAGAE AND CREATE BUS*INESS
-	const handleCreateAndMAnag = (e) => {
-		if (e.target.value === 'new') history.push(`/businesses/${e.target.value}`)
-		if (e.target.value === 'manage') history.push(`/users/${sessionUser.id}/businesses`)
-	}
+	// //  for MANAGAE AND CREATE BUS*INESS
+	// const handleCreateAndMAnag = (e) => {
+	// 	if (e.target.value === 'new') history.push(`/businesses/${e.target.value}`)
+	// 	if (e.target.value === 'manage') history.push(`/users/${sessionUser.id}/businesses`)
+	// }
 
 
 	useEffect(() => {
@@ -114,14 +121,10 @@ function Navigation({ isLoaded }) {
 			</div>
 			{isLoaded && (
 				<div className='navStyle'>
-					<div>
+					<div style={{ paddingBottom: '25px', paddingRight: '25px' }}>
 						{sessionUser && (
 							<>
-								<select className="select-drop-style curs" value={selectedCategory} onChange={handleCreateAndMAnag}>
-									<option value=''>Yelp For Business</option>
-									<option value='new'>Create Business</option>
-									<option value='manage'>Manage Your Business</option>
-								</select>
+							<NavLink to="/businesses/new" style={{color:'red', paddingTop:'1px'}} >Create Business</NavLink>
 							</>
 						)}
 					</div>
