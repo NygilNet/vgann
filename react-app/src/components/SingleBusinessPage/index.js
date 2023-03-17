@@ -38,7 +38,7 @@ const SingleBusinessShow = () => {
 
   const reviews = useSelector(state=> state.reviews)
 
-  const usersReview = Object.values(reviews).find(review => review.user_id === user.id && review.business_id === business.id);
+  const usersReview = Object.values(reviews).find(review => review.user_id === user?.id && review.business_id === business.id);
   console.log(usersReview)
 
 

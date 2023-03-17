@@ -27,7 +27,7 @@ function UserProfilePage() {
     const userInfo = useSelector(state => state.userInfo)
     const businesses = useSelector((state) => Object.values(state.business.all_businesses))
 
-    const isOwner = currentUser.id === userInfo.id
+    const isOwner = currentUser?.id === userInfo.id
 
 
     return (
