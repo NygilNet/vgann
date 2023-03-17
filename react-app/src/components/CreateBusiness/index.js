@@ -81,23 +81,28 @@ export default function CreateBusinessForm () {
         }
 
         setSelectedCategory(categoryObj)
+    }
+
+    useEffect(()=>{
         let togo=[]
         for (let i = 1; i <10; i++) {
             if (selectedCategory[i]) {
                 togo.push(i)
+                console.log(togo)
             }
-
-            setCategories(togo.join())
-      }
-    }
+        }
+        setCategories(togo.join())
+    },[selectedCategory])
 
     function handleFeatureChange(e) {
         let featureObj = {
             ...selectedFeature,
             [e.target.value]: !selectedFeature[e.target.value]
         }
-
         setSelectedFeature(featureObj)
+    }
+
+    useEffect(()=>{
         let togofeature = []
         for (let i = 1; i < 11; i++) {
             if (selectedFeature[i]) {
@@ -108,7 +113,7 @@ export default function CreateBusinessForm () {
             console.log('sxskxsxskxsjxkisjxkisxkisxjsxjsxhsxi',togofeature.join())
             setFeatures(togofeature.join())
         }
-    }
+    },[selectedFeature])
 
     const history = useHistory();
     const dispatch = useDispatch();
