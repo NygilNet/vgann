@@ -50,6 +50,7 @@ class Business(db.Model):
             'price': self.price,
             'createdAt': self.created_at,
             'updatedAt': self.updated_at,
+            'avgRating': sum([review.stars for review in self.reviews])/len(self.reviews)
 
             # 'images': self.images
         }

@@ -1,8 +1,30 @@
 import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 import './PreviewStars.css'
 
-export default function PreviewStars({ avg }) {
+export default function PreviewStars({props}) {
+    console.log('INSIDE TO PREVIEW', props)
     const [starFiller, setStarFiller] = useState({});
+
+    const reviews = useSelector(state => state.business.business.reviews)
+    const [review, setReview] = useState();
+    const [avg, setAvg] = useState(0);
+    // console.log('the average', avg)
+
+
+    useEffect(() => {
+        setAvg(props?.stars)
+    }, [props])
+
+    // useEffect(() => {
+    //     const test = reviews.find(review =>  review.id == id)
+    //     console.log(test)
+    //   setReview(test)
+    // }, [reviews])
+
+    // // useEffect(() => {
+    // //     if (review) setAvg(review.stars)
+    // // }, [review])
 
     useEffect(() => {
       const rounded = Math.round(avg * 2) / 2; // round avg to nearest half decimal
@@ -31,7 +53,7 @@ export default function PreviewStars({ avg }) {
         }
     }
     setStarFiller(filler)
-    },[])
+    },[avg, reviews])
 
     return (
         <div className="previw_stars_container">

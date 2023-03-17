@@ -1,7 +1,11 @@
 import './ProfileIcon.css'
 import PreviewStars from './PreviewStars';
+import { useSelector } from 'react-redux';
 
 export default function ProfileIcon({business, src}) {
+
+    console.log('THE BUSINESS', business)
+    const business1 = useSelector(state => state.business.business)
 
     return (
         <div id='single-business-top-header'>
@@ -15,7 +19,7 @@ export default function ProfileIcon({business, src}) {
                 <div class="business-name-profile">{business.name}</div>
                 <div class="business-stars-container">
                     <div class="business-stars">
-                        <PreviewStars avg={business.avgRating} />
+                        <PreviewStars props={{stars: business1.avgRating}} />
                     </div>
                     <div class="business-reviews">{business.numReviews} reviews</div>
                 </div>
