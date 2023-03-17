@@ -88,7 +88,7 @@ function broadSearch(list,searchTerm){
             filteredList.push(biz)
             continue
         }
-        if(scanCategories(searchTerm,biz.categories)){
+        if(biz.categories && scanCategories(searchTerm,biz.categories)){
             filteredList.push(biz)
         }
     }

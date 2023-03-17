@@ -16,3 +16,13 @@
 .margin5-top-bottom{
     margin: 5px 0px;
 }
+
+.default-button{
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+.rd-bg{
+    background-color: red;
+    color: white
+}
