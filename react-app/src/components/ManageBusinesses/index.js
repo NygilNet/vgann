@@ -36,9 +36,9 @@ export default function ManageBusinesses({ businesses, isOwner }){
                                         </div>
                                         <div className='forInside'>
                                             {/* <div>{business.price}</div> */}
-                                            {isOwner && <NavLink to={`/businesses/${business.id}/edit`}><button >Update</button></NavLink>}
+                                            {isOwner && <NavLink to={`/businesses/${business.id}/edit`}><button className='default-button curs' >Update</button></NavLink>}
                                             {/* <div><OpenModalButton buttonText="Delete" modalComponent={<DeleteSpot spotId={spot.id} />} /></div> */}
-                                            {isOwner && <div><OpenModalButton buttonText="Delete" modalComponent={<DeleteBusines businessId={business.id} />} /></div>}
+                                            {isOwner && <div><OpenModalButton nameClass={'default-button curs rd-bg'} buttonText="Delete" modalComponent={<DeleteBusines businessId={business.id} />} /></div>}
                                         </div>
                                     </div>
                                 </div>

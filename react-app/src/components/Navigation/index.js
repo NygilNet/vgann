@@ -29,6 +29,7 @@ function Navigation({ isLoaded }) {
 
 	useEffect(()=>{
 		setSelectedCategory(searchParams.query.categories)
+		setSearchValue(()=>searchParams.search)
 
 		return setSelectedCategory(searchParams.query.categories)
 	},[searchParams])
@@ -64,11 +65,9 @@ function Navigation({ isLoaded }) {
   	  }
   	};
 
-	// //  for MANAGAE AND CREATE BUS*INESS
-	// const handleCreateAndMAnag = (e) => {
-	// 	if (e.target.value === 'new') history.push(`/businesses/${e.target.value}`)
-	// 	if (e.target.value === 'manage') history.push(`/users/${sessionUser.id}/businesses`)
-	// }
+	// useEffect(()=>{
+
+	// },[searchParams])
 
 
 	useEffect(() => {
