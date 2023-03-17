@@ -5,12 +5,13 @@ import { readASingleReview } from '../../store/review';
 import { getSingleBusiness } from '../../store/business';
 import { editReview } from '../../store/review';
 import DynamicStars from '../WriteReview/DynamicStars';
+import { useModal } from '../../context/Modal';
 import './index.css';
 
 export default function UpdateReviewForm({ oldReview }) {
     const { id } = useParams();
     const dispatch = useDispatch();
-    const history = useHistory();
+    const { closeModal } = useModal();
     // const currentreview=useSelector(state => state.reviews)
     // console.log(currentreview)
 
@@ -50,6 +51,7 @@ export default function UpdateReviewForm({ oldReview }) {
             const editedreview = await dispatch(editReview(oldReview.id, toedit))
 
             await dispatch(getSingleBusiness(oldReview.business_id))
+            closeModal();
         } else {
             setValidationErrors(errors);
         }
