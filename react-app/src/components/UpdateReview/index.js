@@ -3,6 +3,8 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { readASingleReview } from '../../store/review';
 import { editReview } from '../../store/review';
+import DynamicStars from '../WriteReview/DynamicStars';
+import './index.css';
 
 export default function UpdateReviewForm({ oldReview }) {
     const { id } = useParams();
@@ -32,27 +34,29 @@ export default function UpdateReviewForm({ oldReview }) {
             review,
             stars
         }
-       const editedreview = await dispatch(editReview(id, toedit))
-       history.push(`/businesses/${editedreview.business_id}`)
+       const editedreview = await dispatch(editReview(oldReview.id, toedit))
+    //    history.push(`/businesses/${editedreview.business_id}`)
     }
 
     return(
-        <>
-            <h1>Write a review for {business.name}</h1>
+        <div className='update-review-form-container'>
+            <h1>Update your review for {business.name}</h1>
             <form
-                className="write-review-form"
+                className="update-review-form"
                 onSubmit={onSubmit}
             >
-                <div>
+                <DynamicStars class="class-dyn" stars={stars} setStars={setStars} />
+                {/* <div>
                     <div onClick={e => setStars(1)}>{stars >= 1 ? (<i class="fa-solid fa-star" />) : (<i class="fa-regular fa-star" />)}</div>
                     <div onClick={e => setStars(2)}>{stars >= 2 ? (<i class="fa-solid fa-star" />) : (<i class="fa-regular fa-star" />)}</div>
                     <div onClick={e => setStars(3)}>{stars >= 3 ? (<i class="fa-solid fa-star" />) : (<i class="fa-regular fa-star" />)}</div>
                     <div onClick={e => setStars(4)}>{stars >= 4 ? (<i class="fa-solid fa-star" />) : (<i class="fa-regular fa-star" />)}</div>
                     <div onClick={e => setStars(5)}>{stars >= 5 ? (<i class="fa-solid fa-star" />) : (<i class="fa-regular fa-star" />)}</div>
-                </div>
+                </div> */}
                 <div>
                     <textarea
                         type='text'
+                        id='update-review-text'
                         onChange={(e) => setReview(e.target.value)}
                         value={review}
                     ></textarea>
@@ -61,6 +65,6 @@ export default function UpdateReviewForm({ oldReview }) {
                     <input type="submit" />
                 </div>
             </form>
-        </>
+        </div>
     )
 }
