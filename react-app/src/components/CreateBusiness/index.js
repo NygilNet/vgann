@@ -114,7 +114,7 @@ export default function CreateBusinessForm () {
         if (!newBusiness.state.toString().length) errors.state = 'State is required';
         if (!newBusiness.lng) errors.lng = 'Longitude is required';
         if (!newBusiness.lat) errors.lat = 'Latitude is required';
-        if (newBusiness.categories.length) errors.categories = 'Pick at least one category';
+        if (!newBusiness.categories.length) errors.categories = 'Pick at least one category';
         if (!newBusiness.price) errors.price = 'Price is required';
 
         //Validates the images
