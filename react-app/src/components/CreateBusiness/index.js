@@ -77,10 +77,25 @@ export default function CreateBusinessForm () {
       }
     }
 
+    useEffect(()=>{
+        if(features.length>0){
+            let featuresArray = features.split(",")
+            featuresArray = featuresArray.map(el=>el.trim())
+            setFeatures(()=> featuresArray.join())
+        }
+    },[features.length])
+
     const history = useHistory();
     const dispatch = useDispatch();
 
-
+    // const preSub = e =>{
+    //     if(features.length>0){
+    //         let featuresArray = features.split(",")
+    //         featuresArray = featuresArray.map(el=>el.trim())
+    //         setFeatures(()=> featuresArray.join())
+    //     }
+    //     onSubmit()
+    // }
     const onSubmit = async (e) => {
         e.preventDefault();
 
