@@ -144,6 +144,7 @@
 }
 
 .profile-drop-menu{
+  z-index: 2;
   list-style: none;
   position: absolute;
   display: flex;
@@ -153,6 +154,7 @@
   align-items: center;
   top: 80px;
   background-color: white;
+  border-radius: 4px;
 }
 .profile-drop-menu li{
   margin: 5px 0;
