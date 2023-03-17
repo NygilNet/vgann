@@ -37,6 +37,11 @@ footer {
     text-decoration: none;
     font-size: 14px;
   }
+  .footer-column Link {
+    color: #666;
+    text-decoration: none;
+    font-size: 14px;
+  }
 
   .footer-column a:hover {
     color: #333;
