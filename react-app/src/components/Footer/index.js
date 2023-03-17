@@ -13,10 +13,10 @@ export default function Footer() {
             </ul>
             </div>
             <div className="footer-column">
-            <h3>Discover</h3>
+            {/* <h3>Discover</h3>
             <ul>
                 <li><Link href="">Sign up!</Link></li>
-            </ul>
+            </ul> */}
             </div>
         </div>
         <div className='footer-bottom'>Copyright © 2004–2023 VGAN Inc. VGAN, VGAN logo, VGAN burst and related marks are registered trademarks of VGAN.</div>
