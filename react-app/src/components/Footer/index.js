@@ -1,5 +1,6 @@
 import React from 'react';
 import './index.css'
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
 	return (
@@ -8,19 +9,13 @@ export default function Footer() {
             <div className="footer-column">
             <h3>About</h3>
             <ul>
-                <li><a href="">About VGAN</a></li>
+                <li><Link to="/about">About VGAN</Link></li>
             </ul>
             </div>
             <div className="footer-column">
             <h3>Discover</h3>
             <ul>
-                <li><a href="">Sign up!</a></li>
-            </ul>
-            </div>
-            <div className="footer-column">
-            <h3>VGAN for Business</h3>
-            <ul>
-                <li><a href="">Business Owner Login</a></li>
+                <li><Link href="">Sign up!</Link></li>
             </ul>
             </div>
         </div>

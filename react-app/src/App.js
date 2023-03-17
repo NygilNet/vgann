@@ -16,6 +16,7 @@ import UpdateBusiness from "./components/UpdateBusiness/updatebusiness";
 import SingleBusiness from "./components/SingleBusinessPage";
 import UpdateReviewForm from "./components/UpdateReview";
 import UserProfilePage from "./components/ProfilePage";
+import AboutVGANPage from "./components/AboutVGANPage";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -57,6 +58,9 @@ const categories=['Chiness','THai', 'salam', 'mellim']
           </Route>
           <Route exact path="/users/:userId/" >
             <UserProfilePage />
+          </Route>
+          <Route exact path="/about" >
+            <AboutVGANPage />
           </Route>
           {/* <Route path="/users/:userId/businesses" >
             <ManageBusinesses />
