@@ -31,8 +31,8 @@ export default function CreateBusinessForm () {
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
-    const [lng, setLng] = useState(0);
-    const [lat, setLat] = useState(0);
+    const [lng, setLng] = useState(null);
+    const [lat, setLat] = useState(null);
     const [price, setPrice] = useState(1);
     const [categories, setCategories] = useState('');
     const [image1, setImage1] = useState('')
@@ -80,7 +80,7 @@ export default function CreateBusinessForm () {
             if (selectedCategory[i]) {
                 togo.push(i)
             }
-
+            
             setCategories(togo.join())
       }
     }
@@ -90,16 +90,17 @@ export default function CreateBusinessForm () {
             ...selectedFeature,
             [e.target.value]: !selectedFeature[e.target.value]
         }
-
-        setSelectedCategory(featureObj)
+        
+        setSelectedFeature(featureObj)
         let togofeature = []
         for (let i = 1; i < 6; i++) {
-            if (selectedCategory[i]) {
-               let some= feautureList.find(obj =>obj.id==i)
+            if (selectedFeature[i]) {
+                let some= feautureList.find(obj => obj.id==i)
+                
                togofeature.push(some.feature)
             }
-
-            setCategories(togofeature.join())
+            console.log('sxskxsxskxsjxkisjxkisxkisxjsxjsxhsxi',togofeature.join())
+            setFeatures(togofeature.join())
         }
     }
 
@@ -134,12 +135,16 @@ export default function CreateBusinessForm () {
         const errors = {}
         if (!newBusiness.name.length) errors.name = 'Name is required';
         if (newBusiness.description.length < 30) errors.description = 'Description needs a minimum of 30 characters';
-        //if (!newBusiness.features.length) errors.features = 'Tag(s) is required';
+        if (!newBusiness.features.length) errors.features = 'Tag(s) is required';
         if (!newBusiness.address.length) errors.address = 'Address is required';
         if (!newBusiness.city.toString().length) errors.city = 'City is required';
         if (!newBusiness.state.toString().length) errors.state = 'State is required';
         if (!newBusiness.lng) errors.lng = 'Longitude is required';
+        if (newBusiness.lng < -90 ) errors.lng = 'Longitude must be between -90 and 90';
+        if (newBusiness.lng > 90) errors.lng = 'Longitude must be beetween -90 and 90';
         if (!newBusiness.lat) errors.lat = 'Latitude is required';
+        if (newBusiness.lat < -90) errors.lat = 'Lattitude must be between -90 and 90';
+        if (newBusiness.lat > 90) errors.lat = 'Lattitude must be beetween -90 and 90';
         if (!newBusiness.categories.length) errors.categories = 'Pick at least one category';
         if (!newBusiness.price) errors.price = 'Price is required';
 
