@@ -26,8 +26,7 @@ export default function UpdateReviewForm({ oldReview }) {
 
     useEffect(() => {
         let tofill = async() =>{
-        //   let reviewinfo= await dispatch(readASingleReview(id))
-        //   console.log("chgecking review infoooooooooo", reviewinfo)
+
           setReview(oldReview.review)
           setStars(oldReview.stars)
 
@@ -57,7 +56,6 @@ export default function UpdateReviewForm({ oldReview }) {
             setValidationErrors(errors);
         }
 
-    //    history.push(`/businesses/${editedreview.business_id}`)
     }
 
     return(
@@ -69,13 +67,7 @@ export default function UpdateReviewForm({ oldReview }) {
             >
                 <DynamicStars class="class-dyn" stars={stars} setStars={setStars} />
                 <span className='validationErrors'>{validationErrors.stars}</span>
-                {/* <div>
-                    <div onClick={e => setStars(1)}>{stars >= 1 ? (<i class="fa-solid fa-star" />) : (<i class="fa-regular fa-star" />)}</div>
-                    <div onClick={e => setStars(2)}>{stars >= 2 ? (<i class="fa-solid fa-star" />) : (<i class="fa-regular fa-star" />)}</div>
-                    <div onClick={e => setStars(3)}>{stars >= 3 ? (<i class="fa-solid fa-star" />) : (<i class="fa-regular fa-star" />)}</div>
-                    <div onClick={e => setStars(4)}>{stars >= 4 ? (<i class="fa-solid fa-star" />) : (<i class="fa-regular fa-star" />)}</div>
-                    <div onClick={e => setStars(5)}>{stars >= 5 ? (<i class="fa-solid fa-star" />) : (<i class="fa-regular fa-star" />)}</div>
-                </div> */}
+
                 <div>
                     <textarea
                         type='text'

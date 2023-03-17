@@ -77,6 +77,7 @@ def create_new_business():
     form = BusinessForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
     if form.validate_on_submit():
+
         business = Business(
             name=form.name.data,
             description=form.description.data,
