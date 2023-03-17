@@ -104,7 +104,6 @@ export default function CreateBusinessForm () {
 
                togofeature.push(some.feature)
             }
-            console.log('sxskxsxskxsjxkisjxkisxkisxjsxjsxhsxi',togofeature.join())
             setFeatures(togofeature.join())
         }
     }
