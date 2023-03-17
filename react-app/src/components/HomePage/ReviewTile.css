@@ -64,6 +64,8 @@
 
 .review-content {
   margin-bottom: 10px;
+  max-height: 20px;
+  overflow: hidden;
 }
 
 .review-border {
