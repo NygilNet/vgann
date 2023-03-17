@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './DynamicStars.css'
 
 export default function DynamicStars(stars){
-
+    // console.log("starts inside dynamic=--=>", stars)
     const [starsPicked,setStarsPicked] = useState(stars.stars)
     const [starsObj,setStarsObj] = useState({
         [1]:'fa-solid fa-star single_star1',
@@ -14,6 +14,7 @@ export default function DynamicStars(stars){
 
     useEffect(()=>{
         stars.setStars(()=>starsPicked)
+        resetStars()
     },[starsPicked])
 
 

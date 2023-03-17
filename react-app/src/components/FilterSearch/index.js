@@ -36,7 +36,7 @@ export default function FilterSearch(){
 
             let categoriesArr = Object.values(businesses)
             .map(el=> el.categories)
-            categoriesArr = [].concat(...categoriesArr).map(el=>el.categoryName)
+            categoriesArr = [].concat(...categoriesArr).map(el=>el?.categoryName)
             categoriesArr = [...new Set(categoriesArr)]
             setCategories(()=>categoriesArr)
             let newCatObj = {}
@@ -173,7 +173,7 @@ export default function FilterSearch(){
     useEffect(()=>{
         if(searchParams.filters){
             let newActive = {}
-            if(searchParams.search.length) newActive.search = searchParams.search
+            if(searchParams.search.length) newActive.search = [searchParams.search]
             if(searchParams.query.city.length) newActive.cities = searchParams.query.city.split(',')
             if(searchParams.query.price.length) newActive.price = searchParams.query.price.split(',').map(el=> '$'.repeat(Number(el)))
             if(searchParams.query.categories.length) newActive.categories = searchParams.query.categories.split(',')

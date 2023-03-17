@@ -88,3 +88,5 @@ Project Link: https://github.com/NygilNet/group-7-project-3
 * [Font Awesome](https://fontawesome.com/)
 
 * [Unsplash](https://unsplash.com/)
+
+* [Imgur](https://imgur.com)

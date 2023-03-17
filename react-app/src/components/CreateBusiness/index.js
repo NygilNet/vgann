@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { createBusiness } from '../../store/business';
 import './index.css'
 
+
 export default function CreateBusinessForm () {
     const ownerId= useSelector((state) => state.session.user.id)
     let catList = [
@@ -17,7 +18,18 @@ export default function CreateBusinessForm () {
         { id: 8, category: 'Vietnamese' },
         { id: 9, category: 'Cafe' },
         ]
-
+    let feautureList = [
+        { id: 1, feature: 'Outdoor seating' },
+        { id: 2, feature: 'Delivery' },
+        { id: 3, feature: 'Open All Day' },
+        { id: 4, feature: 'Takeout' },
+        { id: 5, feature: '21+' },
+        { id: 6, feature: 'Live Music' },
+        { id: 7, feature: 'Vegan Friendly' },
+        { id: 8, feature: 'Vegeterian Friendly' },
+        { id: 9, feature: 'Pet Friendly' },
+        { id: 10, feature: 'Family Owned' },
+    ]
 
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
@@ -25,8 +37,8 @@ export default function CreateBusinessForm () {
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
-    const [lng, setLng] = useState(0);
-    const [lat, setLat] = useState(0);
+    const [lng, setLng] = useState(null);
+    const [lat, setLat] = useState(null);
     const [price, setPrice] = useState(1);
     const [categories, setCategories] = useState('');
     const [image1, setImage1] = useState('')
@@ -60,6 +72,8 @@ export default function CreateBusinessForm () {
     })
 
     const [selectedCategory, setSelectedCategory] = useState({ 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9:false});
+    const [selectedFeature, setSelectedFeature] = useState({ 1: false, 2: false, 3: false, 4: false, 5: false });
+
     function handleCategoryChange(e) {
         let categoryObj = {
             ...selectedCategory,
@@ -67,20 +81,50 @@ export default function CreateBusinessForm () {
         }
 
         setSelectedCategory(categoryObj)
+    }
+
+    useEffect(()=>{
         let togo=[]
-        for (let i = 1; i <11; i++) {
+        for (let i = 1; i <10; i++) {
             if (selectedCategory[i]) {
                 togo.push(i)
+                console.log(togo)
             }
+        }
+        setCategories(togo.join())
+    },[selectedCategory])
 
-            setCategories(togo.join())
-      }
+    function handleFeatureChange(e) {
+        let featureObj = {
+            ...selectedFeature,
+            [e.target.value]: !selectedFeature[e.target.value]
+        }
+        setSelectedFeature(featureObj)
     }
+
+    useEffect(()=>{
+        let togofeature = []
+        for (let i = 1; i < 11; i++) {
+            if (selectedFeature[i]) {
+                let some= feautureList.find(obj => obj.id==i)
+
+               togofeature.push(some.feature)
+            }
+            setFeatures(togofeature.join())
+        }
+    },[selectedFeature])
 
     const history = useHistory();
     const dispatch = useDispatch();
 
-
+    // const preSub = e =>{
+    //     if(features.length>0){
+    //         let featuresArray = features.split(",")
+    //         featuresArray = featuresArray.map(el=>el.trim())
+    //         setFeatures(()=> featuresArray.join())
+    //     }
+    //     onSubmit()
+    // }
     const onSubmit = async (e) => {
         e.preventDefault();
 
@@ -113,7 +157,11 @@ export default function CreateBusinessForm () {
         if (!newBusiness.city.toString().length) errors.city = 'City is required';
         if (!newBusiness.state.toString().length) errors.state = 'State is required';
         if (!newBusiness.lng) errors.lng = 'Longitude is required';
+        if (newBusiness.lng < -90 ) errors.lng = 'Longitude must be between -90 and 90';
+        if (newBusiness.lng > 90) errors.lng = 'Longitude must be beetween -90 and 90';
         if (!newBusiness.lat) errors.lat = 'Latitude is required';
+        if (newBusiness.lat < -90) errors.lat = 'Lattitude must be between -90 and 90';
+        if (newBusiness.lat > 90) errors.lat = 'Lattitude must be beetween -90 and 90';
         if (!newBusiness.categories.length) errors.categories = 'Pick at least one category';
         if (!newBusiness.price) errors.price = 'Price is required';
 
@@ -166,14 +214,24 @@ export default function CreateBusinessForm () {
                     </label>
                 </div>
                 <div>
-                    <label>
-                        Give us a few tags for your business. (i.e. Open All Day,Delivery,...) <span className='validationErrors'>{validationErrors.features}</span>
-                        <textarea
-                        type='text'
-                        onChange={(e) => setFeatures(e.target.value)}
-                        value={features}
-                        ></textarea>
-                    </label>
+
+                        Give us a few tags for your business. <span className='validationErrors'>{validationErrors.features}</span>
+                        {feautureList.map(({ id, feature }) => (
+                            <>
+                                <label key={feature}>
+
+                                    <input
+                                        type="checkbox"
+                                        name="feature"
+                                        value={id}
+                                        onChange={handleFeatureChange}
+                                    />
+                                    {feature}
+                                </label>
+
+                            </>
+                        ))}
+
                 </div>
                 <div>
                     <label>
@@ -196,13 +254,60 @@ export default function CreateBusinessForm () {
                     </label>
                 </div>
                 <div>
-                    <label>
-                        What state? <span className='validationErrors'>{validationErrors.state}</span>
-                        <input
-                        type='text'
-                        onChange={(e) => setState(e.target.value)}
-                        value={state}
-                        />
+                    <label for="state-dropdown">Select a state:
+                    <select id="state-dropdown" name="state" onChange={(e) => setState(e.target.value)}>
+                            <option value="">-- Select a state --</option>
+                                <option value="AL">Alabama</option>
+                                <option value="AK">Alaska</option>
+                                <option value="AZ">Arizona</option>
+                                <option value="AR">Arkansas</option>
+                                <option value="CA">California</option>
+                                <option value="CO">Colorado</option>
+                                <option value="CT">Connecticut</option>
+                                <option value="DE">Delaware</option>
+                                <option value="FL">Florida</option>
+                                <option value="GA">Georgia</option>
+                                <option value="HI">Hawaii</option>
+                                <option value="ID">Idaho</option>
+                                <option value="IL">Illinois</option>
+                                <option value="IN">Indiana</option>
+                                <option value="IA">Iowa</option>
+                                <option value="KS">Kansas</option>
+                                <option value="KY">Kentucky</option>
+                                <option value="LA">Louisiana</option>
+                                <option value="ME">Maine</option>
+                                <option value="MD">Maryland</option>
+                                <option value="MA">Massachusetts</option>
+                                <option value="MI">Michigan</option>
+                                <option value="MN">Minnesota</option>
+                                <option value="MS">Mississippi</option>
+                                <option value="MO">Missouri</option>
+                                <option value="MT">Montana</option>
+                                <option value="NE">Nebraska</option>
+                                <option value="NV">Nevada</option>
+                                <option value="NH">New Hampshire</option>
+                                <option value="NJ">New Jersey</option>
+                                <option value="NM">New Mexico</option>
+                                <option value="NY">New York</option>
+                                <option value="NC">North Carolina</option>
+                                <option value="ND">North Dakota</option>
+                                <option value="OH">Ohio</option>
+                                <option value="OK">Oklahoma</option>
+                                <option value="OR">Oregon</option>
+                                <option value="PA">Pennsylvania</option>
+                                <option value="RI">Rhode Island</option>
+                                <option value="SC">South Carolina</option>
+                                <option value="SD">South Dakota</option>
+                                <option value="TN">Tennessee</option>
+                                <option value="TX">Texas</option>
+                                <option value="UT">Utah</option>
+                                <option value="VT">Vermont</option>
+                                <option value="VA">Virginia</option>
+                                <option value="WA">Washington</option>
+                                <option value="WV">West Virginia</option>
+                                <option value="WI">Wisconsin</option>
+                                <option value="WY">Wyoming</option>
+                            </select>
                     </label>
                 </div>
                 <div>
