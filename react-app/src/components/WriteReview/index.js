@@ -11,6 +11,11 @@ function WriteReviewForm() {
     const [review, setReview] = useState('');
     const [stars, setStars] = useState(0);
 
+    const [validationErrors, setValidationErrors] = useState({
+        stars: '',
+        review: ''
+    })
+
     const history = useHistory();
     const dispatch = useDispatch();
     // const userId = useSelector(state => state.session.user?.id);
@@ -29,9 +34,23 @@ function WriteReviewForm() {
             review
         }
 
-        await dispatch(postReview(id, newReview));
+        const errors = {};
 
-        return history.push(`/businesses/${id}`)
+        if (stars <= 0 || stars > 5) errors.stars = 'Reviews must have 1 to 5 stars';
+        if (!review.length) errors.review = 'Review is required';
+
+
+        if (!Object.values(errors).length) {
+           let newReview = await dispatch(postReview(id, newReview));
+
+           if (newReview) {
+            return history.push(`/businesses/${id}`)
+           }
+
+        } else {
+            setValidationErrors(errors);
+        }
+
     };
 
     if (!Object.values(business)[0]) return null;
@@ -44,6 +63,7 @@ function WriteReviewForm() {
             onSubmit={onSubmit}
             >
                 <DynamicStars class="class-dyn" stars={stars} setStars={setStars}/>
+                <span className="validationErrors">{validationErrors.stars}</span>
                 <div>
                     <textarea id="review-text"
                     type='text'
@@ -51,6 +71,7 @@ function WriteReviewForm() {
                     value={review}
                     ></textarea>
                 </div>
+                    <span className="validationErrors">{validationErrors.review}</span>
                 <div>
                     <input type="submit" />
                 </div>

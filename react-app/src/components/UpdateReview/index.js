@@ -16,6 +16,11 @@ export default function UpdateReviewForm({ oldReview }) {
     const [review, setReview] = useState('');
     const [stars, setStars] = useState(0);
 
+    const [validationErrors, setValidationErrors] = useState({
+        stars: '',
+        review: ''
+    })
+
     useEffect(() => {
         let tofill = async() =>{
         //   let reviewinfo= await dispatch(readASingleReview(id))
@@ -34,7 +39,20 @@ export default function UpdateReviewForm({ oldReview }) {
             review,
             stars
         }
-       const editedreview = await dispatch(editReview(oldReview.id, toedit))
+
+        const errors = {};
+
+        if (stars <= 0 || stars > 5) errors.stars = 'Reviews must have 1 to 5 stars';
+        if (!review.length) errors.review = 'Review is required';
+
+        if (!Object.values(errors).length) {
+            const editedreview = await dispatch(editReview(oldReview.id, toedit))
+
+
+        } else {
+            setValidationErrors(errors);
+        }
+
     //    history.push(`/businesses/${editedreview.business_id}`)
     }
 
@@ -46,6 +64,7 @@ export default function UpdateReviewForm({ oldReview }) {
                 onSubmit={onSubmit}
             >
                 <DynamicStars class="class-dyn" stars={stars} setStars={setStars} />
+                <span className='validationErrors'>{validationErrors.stars}</span>
                 {/* <div>
                     <div onClick={e => setStars(1)}>{stars >= 1 ? (<i class="fa-solid fa-star" />) : (<i class="fa-regular fa-star" />)}</div>
                     <div onClick={e => setStars(2)}>{stars >= 2 ? (<i class="fa-solid fa-star" />) : (<i class="fa-regular fa-star" />)}</div>
@@ -61,6 +80,7 @@ export default function UpdateReviewForm({ oldReview }) {
                         value={review}
                     ></textarea>
                 </div>
+                    <span className='validationErrors'>{validationErrors.review}</span>
                 <div>
                     <input type="submit" />
                 </div>
