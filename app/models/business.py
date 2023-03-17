@@ -50,7 +50,9 @@ class Business(db.Model):
             'price': self.price,
             'createdAt': self.created_at,
             'updatedAt': self.updated_at,
-            'avgRating': sum([review.stars for review in self.reviews])/len(self.reviews)
-
+            'avgRating': sum([review.stars for review in self.reviews])/len(self.reviews) if len(self.reviews) > 0 else 0,
+            'numReviews': sum([review.stars for review in self.reviews]),
+            'previewImage': [img.to_dict() for img in self.images if img.preview == True],
+            'categories':[category.to_dict() for category in self.categories],
             # 'images': self.images
         }
