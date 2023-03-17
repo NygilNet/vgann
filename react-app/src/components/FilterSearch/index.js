@@ -36,7 +36,7 @@ export default function FilterSearch(){
 
             let categoriesArr = Object.values(businesses)
             .map(el=> el.categories)
-            categoriesArr = [].concat(...categoriesArr).map(el=>el.categoryName)
+            categoriesArr = [].concat(...categoriesArr).map(el=>el?.categoryName)
             categoriesArr = [...new Set(categoriesArr)]
             setCategories(()=>categoriesArr)
             let newCatObj = {}
