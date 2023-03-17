@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { readASingleReview } from '../../store/review';
 import { getSingleBusiness } from '../../store/business';
 import { editReview } from '../../store/review';
-import DynamicStars from '../WriteReview/DynamicStars';
+import DynamicStars from '../UpdateReview/DynamicStars';
 import { useModal } from '../../context/Modal';
 import './index.css';
 
@@ -14,9 +14,10 @@ export default function UpdateReviewForm({ oldReview }) {
     const { closeModal } = useModal();
     // const currentreview=useSelector(state => state.reviews)
     // console.log(currentreview)
+    console.log("old review ----> ", oldReview)
 
     const [review, setReview] = useState('');
-    const [stars, setStars] = useState(0);
+    const [stars, setStars] = useState(oldReview.stars);
 
     const [validationErrors, setValidationErrors] = useState({
         stars: '',
