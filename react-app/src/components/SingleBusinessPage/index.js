@@ -30,11 +30,15 @@ const SingleBusinessShow = () => {
 
   useEffect(()=>{
     if(business){
-      dispatch(loadReviews(business.reviews))
+      dispatch(getReviews(business.reviews))
     }
   },[business])
 
   const reviews = useSelector(state=> state.reviews)
+
+  console.log(Object.values(reviews).find(review => review.user_id === user.id && review.business_id === business.id))
+
+
   if (!business ) {
     return null;
   }
