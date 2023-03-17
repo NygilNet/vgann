@@ -80,15 +80,25 @@ export default function CreateBusinessForm () {
         }
 
         setSelectedCategory(categoryObj)
+        // let togo=[]
+        // for (let i = 1; i <10; i++) {
+        //     if (selectedCategory[i]) {
+        //         togo.push(i)
+        //     }
+
+        //     setCategories(togo.join())
+        // }
+    }
+
+    useEffect(()=>{
         let togo=[]
         for (let i = 1; i <10; i++) {
             if (selectedCategory[i]) {
                 togo.push(i)
             }
-
-            setCategories(togo.join())
-      }
-    }
+        }
+        setCategories(togo.join())
+    },[selectedCategory])
 
     function handleFeatureChange(e) {
         let featureObj = {
