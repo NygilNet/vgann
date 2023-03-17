@@ -88,20 +88,28 @@ def create_new_business():
             lng=form.lng.data,
             lat=form.lat.data,
             owner_id=current_user.id,
-
             price=form.price.data
         )
         categories = form.categories.data.split(",")
         for cat in categories:
-            business.categories.append(Category.query.get(cat))
-        img = BusinessImage(url=request.json.get('image'), preview=True)
+            if cat:
+                business.categories.append(Category.query.get(int(cat)))
 
-        business.images.append(img)
-        db.session.add(img)
         db.session.add(business)
+        db.session.flush()  # Get the id value before committing
+
+        imagesList = []
+        for i in range(1, 6):
+            image_field = getattr(form, f"image{i}").data
+            if image_field:
+                image = BusinessImage(url=image_field, preview=i == 1, business_id = business.id)
+                imagesList.append(image)
+
+        db.session.add_all(imagesList)
+
         db.session.commit()
         return jsonify(business.to_dict())
-    return jsonify({'errrors':form.errors})
+    return jsonify({'errors': form.errors})
 
 
 @business_routes.route('/<int:id>')

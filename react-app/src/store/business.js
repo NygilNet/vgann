@@ -28,7 +28,7 @@ const loadUserBusinesses = payload => ({
   payload
 });
 
-const loadSingleBusiness = payload =>({
+export const loadSingleBusiness = payload =>({
   type:Load_Single_Businness_Details,
   payload
 })

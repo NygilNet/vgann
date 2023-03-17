@@ -5,7 +5,7 @@ const REMOVE_REVIEWS = 'reviews/REMOVE_REVIEWS'
 const GET_SINGLE_REVIEW = 'reviews/GET_SINGLE_REVIEW'
 const DELETE_SINGLE_REVIEW = 'reviews/DELETE_SINGLE_REVIEW'
 // action creators
-const loadReviews = payload => ({
+export const loadReviews = payload => ({
     type: LOAD_REVIEWS,
     payload
 });
@@ -100,13 +100,12 @@ export const deletereviewthunk = (id) => async dispatch =>{
 
 const initialState = {}
 
-
 const reviewReducer = (state = initialState, action) => {
     let newState = {...state}
     switch (action.type) {
         case DELETE_SINGLE_REVIEW:
             delete newState[action.payload]
-            return newState
+            return {...newState}
         case GET_SINGLE_REVIEW:
             const review= action.payload
             return review

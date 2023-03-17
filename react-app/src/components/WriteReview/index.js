@@ -3,7 +3,8 @@ import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { postReview } from "../../store/review";
 import { getSingleBusiness } from "../../store/business";
-
+import DynamicStars from "./DynamicStars"
+import './index.css'
 
 function WriteReviewForm() {
 
@@ -36,21 +37,15 @@ function WriteReviewForm() {
     if (!Object.values(business)[0]) return null;
 
     return (
-        <>
+        <div className="review-form-container">
             <h1>Write a review for {business.name}</h1>
             <form
             className="write-review-form"
             onSubmit={onSubmit}
             >
+                <DynamicStars class="class-dyn" stars={stars} setStars={setStars}/>
                 <div>
-                    <div onClick={e => setStars(1)}>{stars >= 1 ? (<i class="fa-solid fa-star"/>) : (<i class="fa-regular fa-star" />)}</div>
-                    <div onClick={e => setStars(2)}>{stars >= 2 ? (<i class="fa-solid fa-star"/>) : (<i class="fa-regular fa-star" />)}</div>
-                    <div onClick={e => setStars(3)}>{stars >= 3 ? (<i class="fa-solid fa-star"/>) : (<i class="fa-regular fa-star" />)}</div>
-                    <div onClick={e => setStars(4)}>{stars >= 4 ? (<i class="fa-solid fa-star"/>) : (<i class="fa-regular fa-star" />)}</div>
-                    <div onClick={e => setStars(5)}>{stars >= 5 ? (<i class="fa-solid fa-star"/>) : (<i class="fa-regular fa-star" />)}</div>
-                </div>
-                <div>
-                    <textarea
+                    <textarea id="review-text"
                     type='text'
                     onChange={(e) => setReview(e.target.value)}
                     value={review}
@@ -60,7 +55,7 @@ function WriteReviewForm() {
                     <input type="submit" />
                 </div>
             </form>
-        </>
+        </div>
     )
 
 }
