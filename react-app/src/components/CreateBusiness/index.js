@@ -22,8 +22,13 @@ export default function CreateBusinessForm () {
         { id: 2, feature: 'Delivery' },
         { id: 3, feature: 'Open All Day' },
         { id: 4, feature: 'Takeout' },
-        { id: 5, feature: 'Deliver' },
-    ]    
+        { id: 5, feature: '21+' },
+        { id: 6, feature: 'Live Music' },
+        { id: 7, feature: 'Vegan Friendly' },
+        { id: 8, feature: 'Vegeterian Friendly' },
+        { id: 9, feature: 'Pet Friendly' },
+        { id: 10, feature: 'Family Owned' },
+    ]
 
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
@@ -67,7 +72,7 @@ export default function CreateBusinessForm () {
 
     const [selectedCategory, setSelectedCategory] = useState({ 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9:false});
     const [selectedFeature, setSelectedFeature] = useState({ 1: false, 2: false, 3: false, 4: false, 5: false });
-    
+
     function handleCategoryChange(e) {
         let categoryObj = {
             ...selectedCategory,
@@ -80,7 +85,7 @@ export default function CreateBusinessForm () {
             if (selectedCategory[i]) {
                 togo.push(i)
             }
-            
+
             setCategories(togo.join())
       }
     }
@@ -90,13 +95,13 @@ export default function CreateBusinessForm () {
             ...selectedFeature,
             [e.target.value]: !selectedFeature[e.target.value]
         }
-        
+
         setSelectedFeature(featureObj)
         let togofeature = []
-        for (let i = 1; i < 6; i++) {
+        for (let i = 1; i < 11; i++) {
             if (selectedFeature[i]) {
                 let some= feautureList.find(obj => obj.id==i)
-                
+
                togofeature.push(some.feature)
             }
             console.log('sxskxsxskxsjxkisjxkisxkisxjsxjsxhsxi',togofeature.join())
@@ -204,7 +209,7 @@ export default function CreateBusinessForm () {
                     </label>
                 </div>
                 <div>
-                    
+
                         Give us a few tags for your business. <span className='validationErrors'>{validationErrors.features}</span>
                         {feautureList.map(({ id, feature }) => (
                             <>
@@ -221,7 +226,7 @@ export default function CreateBusinessForm () {
 
                             </>
                         ))}
-                    
+
                 </div>
                 <div>
                     <label>
