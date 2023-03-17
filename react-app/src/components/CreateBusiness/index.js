@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { createBusiness } from '../../store/business';
 import './index.css'
 
+
 export default function CreateBusinessForm () {
     const ownerId= useSelector((state) => state.session.user.id)
     let catList = [
@@ -80,23 +81,28 @@ export default function CreateBusinessForm () {
         }
 
         setSelectedCategory(categoryObj)
+    }
+
+    useEffect(()=>{
         let togo=[]
         for (let i = 1; i <10; i++) {
             if (selectedCategory[i]) {
                 togo.push(i)
+                console.log(togo)
             }
-
-            setCategories(togo.join())
-      }
-    }
+        }
+        setCategories(togo.join())
+    },[selectedCategory])
 
     function handleFeatureChange(e) {
         let featureObj = {
             ...selectedFeature,
             [e.target.value]: !selectedFeature[e.target.value]
         }
-
         setSelectedFeature(featureObj)
+    }
+
+    useEffect(()=>{
         let togofeature = []
         for (let i = 1; i < 11; i++) {
             if (selectedFeature[i]) {
@@ -106,7 +112,7 @@ export default function CreateBusinessForm () {
             }
             setFeatures(togofeature.join())
         }
-    }
+    },[selectedFeature])
 
     const history = useHistory();
     const dispatch = useDispatch();
@@ -248,13 +254,60 @@ export default function CreateBusinessForm () {
                     </label>
                 </div>
                 <div>
-                    <label>
-                        What state? <span className='validationErrors'>{validationErrors.state}</span>
-                        <input
-                        type='text'
-                        onChange={(e) => setState(e.target.value)}
-                        value={state}
-                        />
+                    <label for="state-dropdown">Select a state:
+                    <select id="state-dropdown" name="state" onChange={(e) => setState(e.target.value)}>
+                            <option value="">-- Select a state --</option>
+                                <option value="AL">Alabama</option>
+                                <option value="AK">Alaska</option>
+                                <option value="AZ">Arizona</option>
+                                <option value="AR">Arkansas</option>
+                                <option value="CA">California</option>
+                                <option value="CO">Colorado</option>
+                                <option value="CT">Connecticut</option>
+                                <option value="DE">Delaware</option>
+                                <option value="FL">Florida</option>
+                                <option value="GA">Georgia</option>
+                                <option value="HI">Hawaii</option>
+                                <option value="ID">Idaho</option>
+                                <option value="IL">Illinois</option>
+                                <option value="IN">Indiana</option>
+                                <option value="IA">Iowa</option>
+                                <option value="KS">Kansas</option>
+                                <option value="KY">Kentucky</option>
+                                <option value="LA">Louisiana</option>
+                                <option value="ME">Maine</option>
+                                <option value="MD">Maryland</option>
+                                <option value="MA">Massachusetts</option>
+                                <option value="MI">Michigan</option>
+                                <option value="MN">Minnesota</option>
+                                <option value="MS">Mississippi</option>
+                                <option value="MO">Missouri</option>
+                                <option value="MT">Montana</option>
+                                <option value="NE">Nebraska</option>
+                                <option value="NV">Nevada</option>
+                                <option value="NH">New Hampshire</option>
+                                <option value="NJ">New Jersey</option>
+                                <option value="NM">New Mexico</option>
+                                <option value="NY">New York</option>
+                                <option value="NC">North Carolina</option>
+                                <option value="ND">North Dakota</option>
+                                <option value="OH">Ohio</option>
+                                <option value="OK">Oklahoma</option>
+                                <option value="OR">Oregon</option>
+                                <option value="PA">Pennsylvania</option>
+                                <option value="RI">Rhode Island</option>
+                                <option value="SC">South Carolina</option>
+                                <option value="SD">South Dakota</option>
+                                <option value="TN">Tennessee</option>
+                                <option value="TX">Texas</option>
+                                <option value="UT">Utah</option>
+                                <option value="VT">Vermont</option>
+                                <option value="VA">Virginia</option>
+                                <option value="WA">Washington</option>
+                                <option value="WV">West Virginia</option>
+                                <option value="WI">Wisconsin</option>
+                                <option value="WY">Wyoming</option>
+                            </select>
                     </label>
                 </div>
                 <div>
