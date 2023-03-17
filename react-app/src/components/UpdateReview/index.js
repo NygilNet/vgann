@@ -12,12 +12,6 @@ export default function UpdateReviewForm({ oldReview }) {
     const { id } = useParams();
     const dispatch = useDispatch();
     const { closeModal } = useModal();
-<<<<<<< HEAD
-=======
-    // const currentreview=useSelector(state => state.reviews)
-    // console.log(currentreview)
-    console.log("old review ----> ", oldReview)
->>>>>>> main
 
     const [review, setReview] = useState('');
     const [stars, setStars] = useState(oldReview.stars);
@@ -29,10 +23,7 @@ export default function UpdateReviewForm({ oldReview }) {
 
     useEffect(() => {
         let tofill = async() =>{
-<<<<<<< HEAD
-=======
 
->>>>>>> main
           setReview(oldReview.review)
           setStars(oldReview.stars)
 

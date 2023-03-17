@@ -88,7 +88,6 @@ export default function CreateBusinessForm () {
         for (let i = 1; i <10; i++) {
             if (selectedCategory[i]) {
                 togo.push(i)
-                console.log(togo)
             }
         }
         setCategories(togo.join())
