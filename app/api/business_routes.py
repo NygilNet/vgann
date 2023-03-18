@@ -116,8 +116,8 @@ def create_new_business():
 def single_business(id):
     res = db.session.query(Business).filter_by(id=id).first()
     business = res.to_dict()
-    # business['images'] = [img.to_dict() for img in db.session.query(
-    #     BusinessImage).filter_by(business_id=id).all()]
+    business['images'] = [img.to_dict() for img in db.session.query(
+        BusinessImage).filter_by(business_id=id).all()]
     # business['numReviews'] = db.session.query(func.count(
     #     Review.id)).filter(Review.business_id == id).scalar()
     # business['avgRating'] = db.session.query(
