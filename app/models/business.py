@@ -54,5 +54,5 @@ class Business(db.Model):
             'numReviews': len(self.reviews),
             'previewImage': [img.to_dict() for img in self.images if img.preview == True],
             'categories':[category.to_dict() for category in self.categories],
-            # 'images': self.images
+            'images': [img.to_dict() for img in self.images]
         }
