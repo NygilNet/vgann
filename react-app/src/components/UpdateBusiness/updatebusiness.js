@@ -5,9 +5,10 @@ import { getBusinesses, updateBusiness } from '../../store/business';
 import { getSingleBusiness } from '../../store/business';
 
 export default function UpdateBusiness(){
-    const {id} =useParams();
+    const {id} = useParams();
     const dispatch = useDispatch();
     const history = useHistory();
+    const ownerId = useSelector((state) => state.session.user.id);
 
 
     let feautureList = [
@@ -23,7 +24,6 @@ export default function UpdateBusiness(){
         { id: 10, feature: 'Family Owned' },
     ]
 
-    const ownerId = useSelector((state) => state.session.user.id);
     // const business = useSelector((state) => state.business.business);
 
     const [name, setName] = useState('');
@@ -36,13 +36,14 @@ export default function UpdateBusiness(){
     const [lat, setLat] = useState(0);
     const [price, setPrice] = useState(1);
 
-    // talk about functionality of categories and image with group
-    // const [categories, setCategories] = useState(business.categories);
-    // const [image, setImage] = useState(business.image)
+    const [businessState,setBusinessState] = useState({})
+    const [currentFeat,setCurrentFeat] = useState([])
 
         useEffect(() => {
             let someState = async () => {
                 let business = await dispatch(getSingleBusiness(id))
+
+                if(business.ownerId !== ownerId) return history.push('/')
 
                 setName(business.name)
                 setDescription(business.description)
@@ -53,11 +54,13 @@ export default function UpdateBusiness(){
                 setLat(business.lat)
                 setLng(business.lng)
                 setPrice(business.price)
+                setBusinessState(business)
+                setCurrentFeat(()=> business.features.split(","))
             }
             someState()
 
         }, [dispatch, id])
-    
+
     const [validationErrors, setValidationErrors] = useState({
         name: '',
         description: '',
@@ -68,7 +71,7 @@ export default function UpdateBusiness(){
         lng: '',
         lat: '',
         price: ''
-    })    
+    })
 
 
     const [selectedFeature, setSelectedFeature] = useState({ 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false, 10:false });
@@ -91,7 +94,7 @@ export default function UpdateBusiness(){
             }
             setFeatures(togofeature.join())
         }
-    }, [selectedFeature])    
+    }, [selectedFeature])
 
 
     const onSubmit = async e => {
@@ -123,11 +126,11 @@ export default function UpdateBusiness(){
         if (updatedBusiness.lat < -90) errors.lat = 'Lattitude must be between -90 and 90';
         if (updatedBusiness.lat > 90) errors.lat = 'Lattitude must be beetween -90 and 90';
         if (!updatedBusiness.price) errors.price = 'Price is required';
-        
+
         if (!Object.values(errors).length) {
             let updateBiz = await dispatch(updateBusiness(id,updatedBusiness));
             await dispatch(getBusinesses())
-            
+
             if (updateBiz) {
                 history.push(`/businesses/${updateBiz.id}`)
             }
@@ -138,6 +141,14 @@ export default function UpdateBusiness(){
 
     }
 
+
+    useEffect(()=>{
+        let newFeaturedObj = {...selectedFeature}
+        currentFeat.forEach(el=>{
+            newFeaturedObj[feautureList.find(f=>f.feature===el).id] = true
+        })
+        setSelectedFeature(()=>newFeaturedObj)
+    },[currentFeat])
 
     return (
         <>
@@ -175,6 +186,7 @@ export default function UpdateBusiness(){
                                     type="checkbox"
                                     name="feature"
                                     value={id}
+                                    checked={selectedFeature[id]}
                                     onChange={handleFeatureChange}
                                 />
                                 {feature}
@@ -205,7 +217,7 @@ export default function UpdateBusiness(){
                 </div>
                 <div>
                     <label for="state-dropdown">Select a state: <span className='validationErrors'>{validationErrors.state}</span>
-                        <select id="state-dropdown" name="state" onChange={(e) => setState(e.target.value)}>
+                        <select id="state-dropdown" name="state" value={state} onChange={(e) => setState(e.target.value)}>
                             <option value="">-- Select a state --</option>
                             <option value="AL">Alabama</option>
                             <option value="AK">Alaska</option>
