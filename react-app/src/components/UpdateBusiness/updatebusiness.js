@@ -36,7 +36,6 @@ export default function UpdateBusiness(){
     const [lat, setLat] = useState(0);
     const [price, setPrice] = useState(1);
 
-    const [businessState,setBusinessState] = useState({})
     const [currentFeat,setCurrentFeat] = useState([])
 
         useEffect(() => {
@@ -54,7 +53,6 @@ export default function UpdateBusiness(){
                 setLat(business.lat)
                 setLng(business.lng)
                 setPrice(business.price)
-                setBusinessState(business)
                 setCurrentFeat(()=> business.features.split(","))
             }
             someState()
