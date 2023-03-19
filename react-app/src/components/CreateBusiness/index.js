@@ -11,13 +11,20 @@ export default function CreateBusinessForm () {
         { id: 1, category:'Breakfast'},
         { id: 2, category:'Burger'},
         { id: 3, category: 'Italian' },
-        { id: 4, category: 'Thai' },
-        { id: 5, category: 'Chinese' },
-        { id: 6, category: 'Pizza' },
-        { id: 7, category: 'French' },
-        { id: 8, category: 'Vietnamese' },
-        { id: 9, category: 'Cafe' },
+        { id: 4, category: 'Desert' },
+        { id: 5, category: 'Thai' },
+        { id: 6, category: 'Chinese' },
+        { id: 7, category: 'Pizza' },
+        { id: 8, category: 'French' },
+        { id: 9, category: 'Vietnamese' },
+        { id: 10, category: 'Cafe' },
         ]
+
+    let startedObj = {}
+    for(let cat in catList){
+        startedObj[cat.id] = false
+    }
+
     let feautureList = [
         { id: 1, feature: 'Outdoor seating' },
         { id: 2, feature: 'Delivery' },
@@ -71,7 +78,8 @@ export default function CreateBusinessForm () {
         image6: '',
     })
 
-    const [selectedCategory, setSelectedCategory] = useState({ 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9:false});
+    // const [selectedCategory, setSelectedCategory] = useState({ 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9:false, 10:false});
+    const [selectedCategory, setSelectedCategory] = useState(startedObj);
     const [selectedFeature, setSelectedFeature] = useState({ 1: false, 2: false, 3: false, 4: false, 5: false });
 
     function handleCategoryChange(e) {
@@ -85,7 +93,7 @@ export default function CreateBusinessForm () {
 
     useEffect(()=>{
         let togo=[]
-        for (let i = 1; i <10; i++) {
+        for (let i = 1; i <11; i++) {
             if (selectedCategory[i]) {
                 togo.push(i)
             }
