@@ -65,9 +65,12 @@ function Navigation({ isLoaded }) {
   	  }
   	};
 
-	// useEffect(()=>{
 
-	// },[searchParams])
+	function handleKeyPress(event) {
+		if (event.key === 'Enter') {
+			searchClicked();
+		}
+	  }
 
 
 	useEffect(() => {
@@ -98,11 +101,13 @@ function Navigation({ isLoaded }) {
 				</NavLink>
 			</div>
 			<div className='searchBar'>
+				<NavLink to='/businesses' id='searchBar-explore'>Explore</NavLink>
 				<input
 					type='text'
-					placeholder='Search'
+					placeholder='Try searching Burger...'
 					value={searchValue}
 					onChange={handleSearchChange}
+					onKeyPress={handleKeyPress} // added event listener here
 				/>
 				<select className='curs' value={selectedCategory} onChange={handleCategoryChange}>
 					<option value=''>All Categories</option>
