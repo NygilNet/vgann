@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { updateBusiness } from '../../store/business';
+import { getBusinesses, updateBusiness } from '../../store/business';
 import { getSingleBusiness } from '../../store/business';
 
 export default function UpdateBusiness(){
@@ -62,6 +62,7 @@ export default function UpdateBusiness(){
         }
 
         const updatedBiz = await dispatch(updateBusiness(id, updatedBusiness))
+        await dispatch(getBusinesses())
         return history.push(`/businesses/${updatedBiz.id}`)
 
     }
