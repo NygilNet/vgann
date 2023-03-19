@@ -1,13 +1,27 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { updateBusiness } from '../../store/business';
+import { getBusinesses, updateBusiness } from '../../store/business';
 import { getSingleBusiness } from '../../store/business';
 
 export default function UpdateBusiness(){
     const {id} =useParams();
     const dispatch = useDispatch();
     const history = useHistory();
+
+
+    let feautureList = [
+        { id: 1, feature: 'Outdoor seating' },
+        { id: 2, feature: 'Delivery' },
+        { id: 3, feature: 'Open All Day' },
+        { id: 4, feature: 'Takeout' },
+        { id: 5, feature: '21+' },
+        { id: 6, feature: 'Live Music' },
+        { id: 7, feature: 'Vegan Friendly' },
+        { id: 8, feature: 'Vegeterian Friendly' },
+        { id: 9, feature: 'Pet Friendly' },
+        { id: 10, feature: 'Family Owned' },
+    ]
 
     const ownerId = useSelector((state) => state.session.user.id);
     // const business = useSelector((state) => state.business.business);
@@ -43,7 +57,41 @@ export default function UpdateBusiness(){
             someState()
 
         }, [dispatch, id])
+    
+    const [validationErrors, setValidationErrors] = useState({
+        name: '',
+        description: '',
+        features: '',
+        address: '',
+        city: '',
+        state: '',
+        lng: '',
+        lat: '',
+        price: ''
+    })    
 
+
+    const [selectedFeature, setSelectedFeature] = useState({ 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false, 10:false });
+
+    function handleFeatureChange(e) {
+        let featureObj = {
+            ...selectedFeature,
+            [e.target.value]: !selectedFeature[e.target.value]
+        }
+        setSelectedFeature(featureObj)
+    }
+
+    useEffect(() => {
+        let togofeature = []
+        for (let i = 1; i < 11; i++) {
+            if (selectedFeature[i]) {
+                let some = feautureList.find(obj => obj.id == i)
+
+                togofeature.push(some.feature)
+            }
+            setFeatures(togofeature.join())
+        }
+    }, [selectedFeature])    
 
 
     const onSubmit = async e => {
@@ -61,22 +109,46 @@ export default function UpdateBusiness(){
             price
         }
 
-        const updatedBiz = await dispatch(updateBusiness(id, updatedBusiness))
-        return history.push(`/businesses/${updatedBiz.id}`)
+        const errors = {}
+        if (!updatedBusiness.name.length) errors.name = 'Name is required';
+        if (updatedBusiness.description.length < 30) errors.description = 'Description needs a minimum of 30 characters';
+        if (!updatedBusiness.features.length) errors.features = 'Tag(s) is required';
+        if (!updatedBusiness.address.length) errors.address = 'Address is required';
+        if (!updatedBusiness.city.toString().length) errors.city = 'City is required';
+        if (!updatedBusiness.state.toString().length) errors.state = 'State is required';
+        if (!updatedBusiness.lng) errors.lng = 'Longitude is required';
+        if (updatedBusiness.lng < -90 ) errors.lng = 'Longitude must be between -90 and 90';
+        if (updatedBusiness.lng > 90) errors.lng = 'Longitude must be beetween -90 and 90';
+        if (!updatedBusiness.lat) errors.lat = 'Latitude is required';
+        if (updatedBusiness.lat < -90) errors.lat = 'Lattitude must be between -90 and 90';
+        if (updatedBusiness.lat > 90) errors.lat = 'Lattitude must be beetween -90 and 90';
+        if (!updatedBusiness.price) errors.price = 'Price is required';
+        
+        if (!Object.values(errors).length) {
+            let updateBiz = await dispatch(updateBusiness(id,updatedBusiness));
+            await dispatch(getBusinesses())
+            
+            if (updateBiz) {
+                history.push(`/businesses/${updateBiz.id}`)
+            }
+
+        } else {
+            setValidationErrors(errors)
+        }
 
     }
 
 
     return (
         <>
-            <h1>Update {} </h1>
+            <h1 style={{paddingLeft:'400px'}} >Update your business </h1>
             <form
                 className='create-business-form'
                 onSubmit={onSubmit}
             >
                 <div>
                     <label>
-                        What is the name of your business?
+                        What is the name of your business? <span className='validationErrors'>{validationErrors.name}</span>
                         <input
                         type='text'
                         onChange={(e) => setName(e.target.value)}
@@ -86,7 +158,7 @@ export default function UpdateBusiness(){
                 </div>
                 <div>
                     <label>
-                        Describe your business in a few lines.
+                        Describe your business in a few lines.<span className='validationErrors'>{validationErrors.description}</span>
                         <textarea
                         onChange={(e) => setDescription(e.target.value)}
                         value={description}
@@ -94,18 +166,26 @@ export default function UpdateBusiness(){
                     </label>
                 </div>
                 <div>
-                    <label>
-                        Give us a few tags for your business. (i.e. Open All Day,Delivery,...)
-                        <textarea
-                        type='text'
-                        onChange={(e) => setFeatures(e.target.value)}
-                        value={features}
-                        ></textarea>
-                    </label>
+                    Give us a few tags for your business. <span className='validationErrors'>{validationErrors.features}</span>
+                    {feautureList.map(({ id, feature }) => (
+                        <>
+                            <label key={feature}>
+
+                                <input
+                                    type="checkbox"
+                                    name="feature"
+                                    value={id}
+                                    onChange={handleFeatureChange}
+                                />
+                                {feature}
+                            </label>
+
+                        </>
+                    ))}
                 </div>
                 <div>
                     <label>
-                        What street address is your business located at?
+                        What street address is your business located at?<span className='validationErrors'>{validationErrors.address}</span>
                         <input
                         type='text'
                         onChange={(e) => setAddress(e.target.value)}
@@ -115,7 +195,7 @@ export default function UpdateBusiness(){
                 </div>
                 <div>
                     <label>
-                        What city?
+                        What city? <span className='validationErrors'>{validationErrors.city}</span>
                         <input
                         type='text'
                         onChange={(e) => setCity(e.target.value)}
@@ -124,18 +204,65 @@ export default function UpdateBusiness(){
                     </label>
                 </div>
                 <div>
-                    <label>
-                        What state? (i.e. 'XX')
-                        <input
-                        type='text'
-                        onChange={(e) => setState(e.target.value)}
-                        value={state}
-                        />
+                    <label for="state-dropdown">Select a state: <span className='validationErrors'>{validationErrors.state}</span>
+                        <select id="state-dropdown" name="state" onChange={(e) => setState(e.target.value)}>
+                            <option value="">-- Select a state --</option>
+                            <option value="AL">Alabama</option>
+                            <option value="AK">Alaska</option>
+                            <option value="AZ">Arizona</option>
+                            <option value="AR">Arkansas</option>
+                            <option value="CA">California</option>
+                            <option value="CO">Colorado</option>
+                            <option value="CT">Connecticut</option>
+                            <option value="DE">Delaware</option>
+                            <option value="FL">Florida</option>
+                            <option value="GA">Georgia</option>
+                            <option value="HI">Hawaii</option>
+                            <option value="ID">Idaho</option>
+                            <option value="IL">Illinois</option>
+                            <option value="IN">Indiana</option>
+                            <option value="IA">Iowa</option>
+                            <option value="KS">Kansas</option>
+                            <option value="KY">Kentucky</option>
+                            <option value="LA">Louisiana</option>
+                            <option value="ME">Maine</option>
+                            <option value="MD">Maryland</option>
+                            <option value="MA">Massachusetts</option>
+                            <option value="MI">Michigan</option>
+                            <option value="MN">Minnesota</option>
+                            <option value="MS">Mississippi</option>
+                            <option value="MO">Missouri</option>
+                            <option value="MT">Montana</option>
+                            <option value="NE">Nebraska</option>
+                            <option value="NV">Nevada</option>
+                            <option value="NH">New Hampshire</option>
+                            <option value="NJ">New Jersey</option>
+                            <option value="NM">New Mexico</option>
+                            <option value="NY">New York</option>
+                            <option value="NC">North Carolina</option>
+                            <option value="ND">North Dakota</option>
+                            <option value="OH">Ohio</option>
+                            <option value="OK">Oklahoma</option>
+                            <option value="OR">Oregon</option>
+                            <option value="PA">Pennsylvania</option>
+                            <option value="RI">Rhode Island</option>
+                            <option value="SC">South Carolina</option>
+                            <option value="SD">South Dakota</option>
+                            <option value="TN">Tennessee</option>
+                            <option value="TX">Texas</option>
+                            <option value="UT">Utah</option>
+                            <option value="VT">Vermont</option>
+                            <option value="VA">Virginia</option>
+                            <option value="WA">Washington</option>
+                            <option value="WV">West Virginia</option>
+                            <option value="WI">Wisconsin</option>
+                            <option value="WY">Wyoming</option>
+                        </select>
                     </label>
                 </div>
                 <div>
                     <label>
-                        Longitude?
+                        Longitude? <span className='validationErrors'>{validationErrors.lng}</span>
                         <input
                         type='number'
                         onChange={(e) => setLng(+e.target.value)}
@@ -145,7 +272,7 @@ export default function UpdateBusiness(){
                 </div>
                 <div>
                     <label>
-                        Latitude?
+                        Latitude? <span className='validationErrors'>{validationErrors.lat}</span>
                         <input
                         type='number'
                         onChange={(e) => setLat(+e.target.value)}
@@ -155,7 +282,7 @@ export default function UpdateBusiness(){
                 </div>
                 <div>
                     <label>
-                        What price range is your business?
+                        What price range is your business? <span className='validationErrors'>{validationErrors.price}</span>
                         <select
                         onChange={(e) => setPrice(+e.target.value)}
                         value={price}
