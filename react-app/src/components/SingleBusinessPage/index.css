@@ -2,7 +2,7 @@
 
 #single-business-top-images {
     z-index: 0;
-    position: absolute;
+    position: relative;
     width: 100%;
 }
 
@@ -10,7 +10,7 @@
     color: white;
   }
 
-#single-business-top-content {
+/* #single-business-top-content {
     display: flex;
     justify-content: center;
     align-items: flex-end;
@@ -20,7 +20,7 @@
     margin: 0;
     padding: 0;
     z-index: 1;
-}
+} */
 
 
 .single-business-display-reviews-list {
