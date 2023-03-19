@@ -117,8 +117,8 @@ export default function UpdateBusiness(){
         if (!updatedBusiness.city.toString().length) errors.city = 'City is required';
         if (!updatedBusiness.state.toString().length) errors.state = 'State is required';
         if (!updatedBusiness.lng) errors.lng = 'Longitude is required';
-        if (updatedBusiness.lng < -90 ) errors.lng = 'Longitude must be between -90 and 90';
-        if (updatedBusiness.lng > 90) errors.lng = 'Longitude must be beetween -90 and 90';
+        if (updatedBusiness.lng < -180 ) errors.lng = 'Longitude must be between -180 and 180';
+        if (updatedBusiness.lng > 180) errors.lng = 'Longitude must be beetween -180 and 180';
         if (!updatedBusiness.lat) errors.lat = 'Latitude is required';
         if (updatedBusiness.lat < -90) errors.lat = 'Lattitude must be between -90 and 90';
         if (updatedBusiness.lat > 90) errors.lat = 'Lattitude must be beetween -90 and 90';
