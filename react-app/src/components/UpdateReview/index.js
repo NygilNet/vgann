@@ -75,7 +75,7 @@ export default function UpdateReviewForm({ oldReview }) {
                 </div>
                     <span className='validationErrors'>{validationErrors.review}</span>
                 <div>
-                    <input type="submit" />
+                    <input className='default-button rd-bg curs' type="submit" />
                 </div>
             </form>
         </div>
