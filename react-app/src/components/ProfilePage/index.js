@@ -9,7 +9,7 @@ import './ProfilePage.css';
 
 
 function UserProfilePage() {
-
+    const history = useHistory()
     const dispatch = useDispatch();
     const {userId} = useParams();
 
@@ -29,7 +29,9 @@ function UserProfilePage() {
 
     const isOwner = currentUser?.id === userInfo.id
 
-
+    if(!currentUser){
+        history.push('/')
+    }
     return (
         <div className='maindiv'>
 

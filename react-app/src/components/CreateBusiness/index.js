@@ -72,7 +72,7 @@ export default function CreateBusinessForm () {
     })
 
     const [selectedCategory, setSelectedCategory] = useState({ 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9:false});
-    const [selectedFeature, setSelectedFeature] = useState({ 1: false, 2: false, 3: false, 4: false, 5: false });
+    const [selectedFeature, setSelectedFeature] = useState({ 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false, 10: false });
 
     function handleCategoryChange(e) {
         let categoryObj = {
@@ -156,8 +156,8 @@ export default function CreateBusinessForm () {
         if (!newBusiness.city.toString().length) errors.city = 'City is required';
         if (!newBusiness.state.toString().length) errors.state = 'State is required';
         if (!newBusiness.lng) errors.lng = 'Longitude is required';
-        if (newBusiness.lng < -90 ) errors.lng = 'Longitude must be between -90 and 90';
-        if (newBusiness.lng > 90) errors.lng = 'Longitude must be beetween -90 and 90';
+        if (newBusiness.lng < -180 ) errors.lng = 'Longitude must be between -180 and 180';
+        if (newBusiness.lng > 180) errors.lng = 'Longitude must be beetween -180 and 180';
         if (!newBusiness.lat) errors.lat = 'Latitude is required';
         if (newBusiness.lat < -90) errors.lat = 'Lattitude must be between -90 and 90';
         if (newBusiness.lat > 90) errors.lat = 'Lattitude must be beetween -90 and 90';
