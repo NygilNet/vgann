@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { updateBusiness } from '../../store/business';
+import { getBusinesses, updateBusiness } from '../../store/business';
 import { getSingleBusiness } from '../../store/business';
 
 export default function UpdateBusiness(){
@@ -123,10 +123,11 @@ export default function UpdateBusiness(){
         if (updatedBusiness.lat < -90) errors.lat = 'Lattitude must be between -90 and 90';
         if (updatedBusiness.lat > 90) errors.lat = 'Lattitude must be beetween -90 and 90';
         if (!updatedBusiness.price) errors.price = 'Price is required';
-
+        
         if (!Object.values(errors).length) {
             let updateBiz = await dispatch(updateBusiness(id,updatedBusiness));
-
+            await dispatch(getBusinesses())
+            
             if (updateBiz) {
                 history.push(`/businesses/${updateBiz.id}`)
             }
