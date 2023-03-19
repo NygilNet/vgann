@@ -158,6 +158,7 @@ def update_business(id):
         business.state = business_data.get('state', business.state)
         business.lng = business_data.get('lng', business.lng)
         business.lat = business_data.get('lat', business.lat)
+        business.price = business_data.get('price', business.price)
         db.session.commit()
     # commit the changes to the database
     # images_data = business_data.get('images', [])
