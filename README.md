@@ -17,7 +17,7 @@ VGAN, a Yelp clone, is a website for users to post their restaurant businesses a
 * Flask Dependencies
 
 	* click = ==8.1.3
-	* gunicorn = "==20.1.0
+	* gunicorn = ==20.1.0
 	* itsdangerous = ==2.1.2
 	* python-dotenv = ==0.21.0
 	* six = ==1.16.0
