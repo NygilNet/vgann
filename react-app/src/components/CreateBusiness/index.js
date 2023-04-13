@@ -46,7 +46,7 @@ export default function CreateBusinessForm() {
     const [state, setState] = useState('');
     const [lng, setLng] = useState(null);
     const [lat, setLat] = useState(null);
-    const [price, setPrice] = useState(1);
+    const [price, setPrice] = useState(0);
     const [categories, setCategories] = useState('');
     const [image1, setImage1] = useState('')
     const [image2, setImage2] = useState('')
