@@ -4,7 +4,7 @@ import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-load
 import './BusinessMap.css'
 require('dotenv').config();
 
-mapboxgl.accessToken = 'pk.eyJ1IjoidnVzYWwwMDkiLCJhIjoiY2xnMmhuM2RqMDVpajNxcHA0bWpycnZ2ZyJ9.cTmZFdxd118DPVy8AxQfeQ'
+mapboxgl.accessToken = process.env.MAPBOX_TOKEN
 
 export default function BusinessesMap({ businesses }) {
   const mapContainer = useRef(null);
