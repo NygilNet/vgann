@@ -267,57 +267,58 @@ export default function CreateBusinessForm() {
                     ))}
 
                 </div>
-                <PlacesAutocomplete
-                    value={address}
-                    onChange={setAddress}
-                    onSelect={handleSelect}
-                    >
-                    {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                    <label className='autocomplete-label'>
-                        <div>
-                            Street Address {(submitted && validationErrors.address.length)?<p className='form-error'>{validationErrors.address}</p>:(<></>)}
-                        </div>
-                        <input
-                          {...getInputProps({
-                              placeholder: 'Address',
-                              className: 'location-search-input',
-                            })}
-                            />
-                        <div className="autocomplete-dropdown-container">
-                          {loading && <div>Loading...</div>}
-                          {!loading && suggestions.map(suggestion => {
-                              const className = 'suggestion-item'
-                            //   const className = suggestion.active
-                            //   ? 'suggestion-item--active'
-                            //   : 'suggestion-item';
-                              // inline style for demonstration purpose
-                                const style = suggestion.active
-                                ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                                : { backgroundColor: '#ffffff', cursor: 'pointer' };
-                              return (
-                                  <div className='auto-dropdown'
-                                  {...getSuggestionItemProps(suggestion, {
-                                      className,
-                                        style,
-                                    })}
-                                    >
-                                <span>{suggestion.description}</span>
-                              </div>
-                            );
-                        })}
-                        </div>
 
-                    </label>
-                    )}
-                </PlacesAutocomplete>
                 <div>
                     <label>
                         What street address is your business located at? <span className='validationErrors'>{validationErrors.address}</span>
-                        <input
+                        <PlacesAutocomplete
+                            value={address}
+                            onChange={setAddress}
+                            onSelect={handleSelect}
+                            >
+                            {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                            <label className='autocomplete-label'>
+                                <div>
+                                    Street Address {(submitted && validationErrors.address.length)?<p className='form-error'>{validationErrors.address}</p>:(<></>)}
+                                </div>
+                                <input
+                                  {...getInputProps({
+                                      placeholder: 'Address',
+                                      className: 'location-search-input',
+                                    })}
+                                    />
+                                <div className="autocomplete-dropdown-container">
+                                  {loading && <div>Loading...</div>}
+                                  {!loading && suggestions.map(suggestion => {
+                                      const className = 'suggestion-item'
+                                    //   const className = suggestion.active
+                                    //   ? 'suggestion-item--active'
+                                    //   : 'suggestion-item';
+                                      // inline style for demonstration purpose
+                                        const style = suggestion.active
+                                        ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                                        : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                                      return (
+                                          <div className='auto-dropdown'
+                                          {...getSuggestionItemProps(suggestion, {
+                                              className,
+                                                style,
+                                            })}
+                                            >
+                                        <span>{suggestion.description}</span>
+                                      </div>
+                                    );
+                                })}
+                                </div>
+
+                            </label>
+                            )}
+                        </PlacesAutocomplete>
+                        {/* <input
                             type='text'
                             onChange={(e) => setAddress(e.target.value)}
                             value={address}
-                        />
+                        /> */}
                     </label>
                 </div>
                 <div>
@@ -392,7 +393,7 @@ export default function CreateBusinessForm() {
                         </select> */}
                     </label>
                 </div>
-                <div>
+                {/* <div>
                     <label>
                         Longitude? <span className='validationErrors'>{validationErrors.lng}</span>
                         <input
@@ -411,7 +412,7 @@ export default function CreateBusinessForm() {
                             value={lat}
                         />
                     </label>
-                </div>
+                </div> */}
                 <div>
                     <label>
                         What price category does your business belong to? <span className='validationErrors'>{validationErrors.price}</span>
